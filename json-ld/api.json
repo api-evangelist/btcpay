@@ -1,0 +1,2190 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "btcpay": "https://btcpayserver.org/vocab/",
+    "openapi": "https://spec.openapis.org/oas/v3.0.0#"
+  },
+  "@type": "WebAPI",
+  "@id": "https://docs.btcpayserver.org/API/Greenfield/v1/",
+  "name": "BTCPay Greenfield API",
+  "description": "BTCPay Server is a self-hosted, open-source Bitcoin and cryptocurrency payment processor. The Greenfield API provides programmatic access to stores, invoices, wallets, Lightning Network nodes, payment requests, pull payments, payouts, webhooks, notifications, users, and server configuration.",
+  "version": "v1",
+  "license": {
+    "@type": "CreativeWork",
+    "name": "MIT",
+    "url": "https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "BTCPay Server",
+    "url": "https://btcpayserver.org",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "url": "https://chat.btcpayserver.org/"
+    }
+  },
+  "documentation": "https://docs.btcpayserver.org/API/Greenfield/v1/",
+  "termsOfService": "https://btcpayserver.org/privacy-policy/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Open-source, self-hosted \u2014 zero fees, no third-party dependency"
+  },
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://{btcpay-host}/api/v1"
+  },
+  "hasAPI": [
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/api-keys/{apikey}",
+      "name": "Revoke an API Key",
+      "description": "Revoke the current API key so that it cannot be used anymore",
+      "operationId": "ApiKeys_DeleteApiKey",
+      "applicationCategory": [
+        "API Keys"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/users/{idOrEmail}/api-keys/{apikey}",
+      "name": "Revoke an API Key of target user",
+      "description": "Revoke the API key of a target user so that it cannot be used anymore",
+      "operationId": "ApiKeys_DeleteUserApiKey",
+      "applicationCategory": [
+        "API Keys"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/api-keys/current",
+      "name": "Get the current API Key information",
+      "description": "View information about the current API key",
+      "operationId": "ApiKeys_GetCurrentApiKey",
+      "applicationCategory": [
+        "API Keys"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/api-keys/current",
+      "name": "Revoke the current API Key",
+      "description": "Revoke the current API key so that it cannot be used anymore",
+      "operationId": "ApiKeys_DeleteCurrentApiKey",
+      "applicationCategory": [
+        "API Keys"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/api-keys",
+      "name": "Create a new API Key",
+      "description": "Create a new API Key",
+      "operationId": "ApiKeys_CreateApiKey",
+      "applicationCategory": [
+        "API Keys"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/users/{idOrEmail}/api-keys",
+      "name": "Create a new API Key for a user",
+      "description": "Create a new API Key for a user",
+      "operationId": "ApiKeys_CreateUserApiKey",
+      "applicationCategory": [
+        "API Keys"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/apps/pos",
+      "name": "Create a new Point of Sale app",
+      "description": "Point of Sale app allows accepting payments for items in a virtual store",
+      "operationId": "Apps_CreatePointOfSaleApp",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/apps/pos/{appId}",
+      "name": "Update a Point of Sale app",
+      "description": "Use this endpoint for updating the properties of a POS app",
+      "operationId": "Apps_PutPointOfSaleApp",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/apps/pos/{appId}",
+      "name": "Get Point of Sale app data",
+      "description": "Returns POS app data",
+      "operationId": "Apps_GetPointOfSaleApp",
+      "applicationCategory": [
+        "Apps",
+        "Point of Sale"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/apps/crowdfund/{appId}",
+      "name": "Update a Crowdfund app",
+      "description": "Full update. GET the app first, modify the data, then PUT the complete payload.",
+      "operationId": "Apps_PutCrowdfundApp",
+      "applicationCategory": [
+        "Apps",
+        "Crowdfund"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/apps/crowdfund/{appId}",
+      "name": "Get crowdfund app data",
+      "description": "Returns crowdfund app data",
+      "operationId": "Apps_GetCrowdfundApp",
+      "applicationCategory": [
+        "Apps",
+        "Crowdfund"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/apps/crowdfund",
+      "name": "Create a new Crowdfund app",
+      "description": "",
+      "operationId": "Apps_CreateCrowdfundApp",
+      "applicationCategory": [
+        "Apps",
+        "Crowdfund"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/apps/{appId}",
+      "name": "Get basic app data",
+      "description": "Returns basic app data shared between all types of apps",
+      "operationId": "Apps_GetApp",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/apps/{appId}",
+      "name": "Delete app",
+      "description": "Deletes app with specified ID",
+      "operationId": "Apps_DeleteApp",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/apps/{appId}/image",
+      "name": "Uploads an image for an app item",
+      "description": "Uploads an image for an app item",
+      "operationId": "Apps_UploadAppItemImage",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/apps/{appId}/image/{fileId}",
+      "name": "Deletes the app item image",
+      "description": "Deletes the app item image",
+      "operationId": "App_DeleteAppItemImage",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/apps/{appId}/sales",
+      "name": "Get app sales statistics",
+      "description": "Returns sales statistics for the app",
+      "operationId": "Apps_GetAppSales",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/apps/{appId}/top-items",
+      "name": "Get app top items statistics",
+      "description": "Returns top items statistics for the app",
+      "operationId": "Apps_GetAppTopItems",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/apps",
+      "name": "Get basic app data for all apps for a store",
+      "description": "Returns basic app data for all apps for a store",
+      "operationId": "Apps_GetAllAppsForStore",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/apps",
+      "name": "Get basic app data for all apps for all stores for a user",
+      "description": "Returns basic app data for all apps for all stores",
+      "operationId": "Apps_GetAllApps",
+      "applicationCategory": [
+        "Apps"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api-keys/authorize",
+      "name": "Authorize User",
+      "description": "Redirect the browser to this endpoint to request the user to generate an api-key with specific permissions",
+      "operationId": "ApiKeys_Authorize",
+      "applicationCategory": [
+        "Authorization"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/files",
+      "name": "Get all files",
+      "description": "Load all files that exist.",
+      "operationId": "Files_GetFiles",
+      "applicationCategory": [
+        "Files"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/files",
+      "name": "Uploads a file",
+      "description": "Uploads a file",
+      "operationId": "Files_UploadFile",
+      "applicationCategory": [
+        "Files"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/files/{fileId}",
+      "name": "Get file",
+      "description": "View information about the specified file",
+      "operationId": "Files_GetFile",
+      "applicationCategory": [
+        "Files"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/files/{fileId}",
+      "name": "Delete file",
+      "description": "Deletes the file",
+      "operationId": "Files_DeleteFile",
+      "applicationCategory": [
+        "Files"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/health",
+      "name": "Get health status",
+      "description": "Check the instance health status",
+      "operationId": "Health_GetHealth",
+      "applicationCategory": [
+        "Health"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/invoices",
+      "name": "Get invoices",
+      "description": "View information about the existing invoices",
+      "operationId": "Invoices_GetInvoices",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/invoices",
+      "name": "Create a new invoice",
+      "description": "Create a new invoice",
+      "operationId": "Invoices_CreateInvoice",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}",
+      "name": "Get invoice",
+      "description": "View information about the specified invoice. The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_GetInvoice",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}",
+      "name": "Archive invoice",
+      "description": "Archives the specified invoice. The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_ArchiveInvoice",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}",
+      "name": "Update invoice",
+      "description": "Updates the specified invoice. The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_UpdateInvoice",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}/payment-methods",
+      "name": "Get invoice payment methods",
+      "description": "View information about the specified invoice's payment methods. The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_GetInvoicePaymentMethods",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}/status",
+      "name": "Mark invoice status",
+      "description": "Mark an invoice as invalid or settled. The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_MarkInvoiceStatus",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}/unarchive",
+      "name": "Unarchive invoice",
+      "description": "Unarchive an invoice. The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_UnarchiveInvoice",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}/payment-methods/{paymentMethodId}/activate",
+      "name": "Activate Payment Method",
+      "description": "Activate an invoice payment method (if lazy payments mode is enabled). The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_ActivatePaymentMethod",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}/refund",
+      "name": "Refund invoice",
+      "description": "Refund invoice. The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_Refund",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/invoices/{invoiceId}/refund/{paymentMethodId}",
+      "name": "Get invoice refund trigger data",
+      "description": "View calculated refund amounts for the specified invoice/payment-method. The store is resolved automatically from the invoice.",
+      "operationId": "Invoices_GetInvoiceRefundTriggerData",
+      "applicationCategory": [
+        "Invoices"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/info",
+      "name": "Get node information",
+      "description": "View information about the lightning node",
+      "operationId": "InternalLightningNodeApi_GetInfo",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/balance",
+      "name": "Get node balance",
+      "description": "View balance of the lightning node",
+      "operationId": "InternalLightningNodeApi_GetBalance",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/histogram",
+      "name": "Get node balance histogram",
+      "description": "View balance histogram of the lightning node",
+      "operationId": "InternalLightningNodeApi_GetHistogram",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/connect",
+      "name": "Connect to lightning node",
+      "description": "Connect to another lightning node.",
+      "operationId": "InternalLightningNodeApi_ConnectToNode",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/channels",
+      "name": "Get channels",
+      "description": "View information about the current channels of the lightning node",
+      "operationId": "InternalLightningNodeApi_GetChannels",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/channels",
+      "name": "Open channel",
+      "description": "Open a channel with another lightning node. You should connect to that node first.",
+      "operationId": "InternalLightningNodeApi_OpenChannel",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/address",
+      "name": "Get deposit address",
+      "description": "Get an on-chain deposit address for the lightning node ",
+      "operationId": "InternalLightningNodeApi_GetDepositAddress",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/payments/{paymentHash}",
+      "name": "Get payment",
+      "description": "View information about the requested lightning payment",
+      "operationId": "InternalLightningNodeApi_GetPayment",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/invoices/{id}",
+      "name": "Get invoice",
+      "description": "View information about the requested lightning invoice",
+      "operationId": "InternalLightningNodeApi_GetInvoice",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/invoices/pay",
+      "name": "Pay Lightning Invoice",
+      "description": "Pay a lightning invoice. In case the payment response times out, the status will be reported as pending and the final status can be resolved using the [Get payment](#operation/InternalLightningNodeApi_GetPayment) endpoint. The default wait time for payment responses is 30 seconds \u2014 it might take longer if multiple routes are tried or a hold invoice is getting paid.",
+      "operationId": "InternalLightningNodeApi_PayInvoice",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/invoices",
+      "name": "Get invoices",
+      "description": "View information about the lightning invoices",
+      "operationId": "InternalLightningNodeApi_GetInvoices",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/invoices",
+      "name": "Create lightning invoice",
+      "description": "Create a lightning invoice.",
+      "operationId": "InternalLightningNodeApi_CreateInvoice",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/lightning/{cryptoCode}/payments",
+      "name": "Get payments",
+      "description": "View information about the lightning payments",
+      "operationId": "InternalLightningNodeApi_GetPayments",
+      "applicationCategory": [
+        "Lightning (Internal Node)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/info",
+      "name": "Get node information",
+      "description": "View information about the lightning node",
+      "operationId": "StoreLightningNodeApi_GetInfo",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/balance",
+      "name": "Get node balance",
+      "description": "View balance of the lightning node",
+      "operationId": "StoreLightningNodeApi_GetBalance",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/histogram",
+      "name": "Get node balance histogram",
+      "description": "View balance histogram of the lightning node",
+      "operationId": "StoreLightningNodeApi_GetHistogram",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/connect",
+      "name": "Connect to lightning node",
+      "description": "Connect to another lightning node.",
+      "operationId": "StoreLightningNodeApi_ConnectToNode",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/channels",
+      "name": "Get channels",
+      "description": "View information about the current channels of the lightning node",
+      "operationId": "StoreLightningNodeApi_GetChannels",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/channels",
+      "name": "Open channel",
+      "description": "Open a channel with another lightning node. You should connect to that node first.",
+      "operationId": "StoreLightningNodeApi_OpenChannel",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/address",
+      "name": "Get deposit address",
+      "description": "Get an on-chain deposit address for the lightning node ",
+      "operationId": "StoreLightningNodeApi_GetDepositAddress",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/payments/{paymentHash}",
+      "name": "Get payment",
+      "description": "View information about the requested lightning payment",
+      "operationId": "StoreLightningNodeApi_GetPayment",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/invoices/{id}",
+      "name": "Get invoice",
+      "description": "View information about the requested lightning invoice",
+      "operationId": "StoreLightningNodeApi_GetInvoice",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/invoices/pay",
+      "name": "Pay Lightning Invoice",
+      "description": "Pay a lightning invoice. In case the payment response times out, the status will be reported as pending and the final status can be resolved using the [Get payment](#operation/StoreLightningNodeApi_GetPayment) endpoint. The default wait time for payment responses is 30 seconds \u2014 it might take longer if multiple routes are tried or a hold invoice is getting paid.",
+      "operationId": "StoreLightningNodeApi_PayInvoice",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/invoices",
+      "name": "Get invoices",
+      "description": "View information about the lightning invoices",
+      "operationId": "StoreLightningNodeApi_GetInvoices",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/invoices",
+      "name": "Create lightning invoice",
+      "description": "Create a lightning invoice.",
+      "operationId": "StoreLightningNodeApi_CreateInvoice",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning/{cryptoCode}/payments",
+      "name": "Get payments",
+      "description": "View information about the lightning payments",
+      "operationId": "StoreLightningNodeApi_GetPayments",
+      "applicationCategory": [
+        "Lightning (Store)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/misc/rate-sources",
+      "name": "Get available rate sources",
+      "description": "View available rate providers that you can use in stores",
+      "operationId": "GetRateSources",
+      "applicationCategory": [
+        "Miscelleneous"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/misc/permissions",
+      "name": "Permissions metadata",
+      "description": "The metadata of available permissions",
+      "operationId": "permissionsMetadata",
+      "applicationCategory": [
+        "Miscelleneous"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/misc/lang",
+      "name": "Language codes",
+      "description": "The supported language codes",
+      "operationId": "langCodes",
+      "applicationCategory": [
+        "Miscelleneous"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/i/{invoiceId}",
+      "name": "Invoice checkout",
+      "description": "View the checkout page of an invoice",
+      "operationId": "Invoice_Checkout",
+      "applicationCategory": [
+        "Miscelleneous"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/users/me/notifications",
+      "name": "Get notifications",
+      "description": "View current user's notifications",
+      "operationId": "Notifications_GetNotifications",
+      "applicationCategory": [
+        "Notifications (Current User)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/users/me/notifications/{id}",
+      "name": "Get notification",
+      "description": "View information about the specified notification",
+      "operationId": "Notifications_GetNotification",
+      "applicationCategory": [
+        "Notifications (Current User)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/users/me/notifications/{id}",
+      "name": "Update notification",
+      "description": "Updates the notification",
+      "operationId": "Notifications_UpdateNotification",
+      "applicationCategory": [
+        "Notifications (Current User)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/users/me/notifications/{id}",
+      "name": "Remove Notification",
+      "description": "Removes the specified notification.",
+      "operationId": "Notifications_DeleteNotification",
+      "applicationCategory": [
+        "Notifications (Current User)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/users/me/notification-settings",
+      "name": "Get notification settings",
+      "description": "View information about your notification settings",
+      "operationId": "Notifications_GetNotificationSettings",
+      "applicationCategory": [
+        "Notifications (Current User)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/users/me/notification-settings",
+      "name": "Update notification settings",
+      "description": "Updates the current user's notification settings",
+      "operationId": "Notifications_UpdateNotificationSettings",
+      "applicationCategory": [
+        "Notifications (Current User)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-requests",
+      "name": "Get payment requests",
+      "description": "View information about the existing payment requests",
+      "operationId": "PaymentRequests_GetPaymentRequests",
+      "applicationCategory": [
+        "Payment Requests"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-requests",
+      "name": "Create a new payment request",
+      "description": "Create a new payment request",
+      "operationId": "PaymentRequests_CreatePaymentRequest",
+      "applicationCategory": [
+        "Payment Requests"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/payment-requests/{paymentRequestId}",
+      "name": "Get payment request",
+      "description": "View information about the specified payment request. The store is resolved automatically from the payment request.",
+      "operationId": "PaymentRequests_GetPaymentRequest",
+      "applicationCategory": [
+        "Payment Requests"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/payment-requests/{paymentRequestId}",
+      "name": "Archive payment request",
+      "description": "Archives the specified payment request. The store is resolved automatically from the payment request.",
+      "operationId": "PaymentRequests_ArchivePaymentRequest",
+      "applicationCategory": [
+        "Payment Requests"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/payment-requests/{paymentRequestId}",
+      "name": "Update payment request",
+      "description": "Update a payment request. The store is resolved automatically from the payment request.",
+      "operationId": "PaymentRequests_UpdatePaymentRequest",
+      "applicationCategory": [
+        "Payment Requests"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/payment-requests/{paymentRequestId}/pay",
+      "name": "Create a new invoice for the payment request",
+      "description": "Create a new invoice for the payment request, or reuse an existing one. The store is resolved automatically from the payment request.",
+      "operationId": "PaymentRequests_Pay",
+      "applicationCategory": [
+        "Payment Requests"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors",
+      "name": "Get store configured payout processors",
+      "description": "Get store configured payout processors",
+      "operationId": "StorePayoutProcessors_GetStorePayoutProcessors",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors/{processor}/{paymentMethodId}",
+      "name": "Remove store configured payout processor",
+      "description": "Remove store configured payout processor",
+      "operationId": "StorePayoutProcessors_RemoveStorePayoutProcessor",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/payout-processors",
+      "name": "Get payout processors",
+      "description": "Get payout processors available in this instance",
+      "operationId": "PayoutProcessors_GetPayoutProcessors",
+      "applicationCategory": [
+        "Payout Processors"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors/OnChainAutomatedPayoutSenderFactory/{paymentMethodId}",
+      "name": "Get configured store onchain automated payout processors",
+      "description": "Get configured store onchain automated payout processors",
+      "operationId": "GreenfieldStoreAutomatedOnChainPayoutProcessorsController_GetStoreOnChainAutomatedPayoutProcessorsForPaymentMethod",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors/OnChainAutomatedPayoutSenderFactory/{paymentMethodId}",
+      "name": "Update configured store onchain automated payout processors",
+      "description": "Update configured store onchain automated payout processors",
+      "operationId": "GreenfieldStoreAutomatedOnChainPayoutProcessorsController_UpdateStoreOnChainAutomatedPayoutProcessorForPaymentMethod",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors/LightningAutomatedPayoutSenderFactory/{payoutMethodId}",
+      "name": "Get configured store Lightning automated payout processors",
+      "description": "Get configured store Lightning automated payout processors",
+      "operationId": "GreenfieldStoreAutomatedLightningPayoutProcessorsController_GetStoreLightningAutomatedPayoutProcessorsForPaymentMethod",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors/LightningAutomatedPayoutSenderFactory/{payoutMethodId}",
+      "name": "Update configured store Lightning automated payout processors",
+      "description": "Update configured store Lightning automated payout processors",
+      "operationId": "GreenfieldStoreAutomatedLightningPayoutProcessorsController_UpdateStoreLightningAutomatedPayoutProcessor",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors/OnChainAutomatedTransferSenderFactory",
+      "name": "Get configured store onchain automated payout processors",
+      "description": "Get configured store onchain automated payout processors",
+      "operationId": "GreenfieldStoreAutomatedOnChainPayoutProcessorsController_GetStoreOnChainAutomatedTransferSenderFactory",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors/OnChainAutomatedTransferSenderFactory",
+      "name": "Update configured store onchain automated payout processors",
+      "description": "Update configured store onchain automated payout processors",
+      "operationId": "GreenfieldStoreAutomatedOnChainPayoutProcessorsController_UpdateStoreOnChainAutomatedTransferSenderFactory",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payout-processors/LightningAutomatedPayoutSenderFactory",
+      "name": "Get configured store Lightning automated payout processors",
+      "description": "Get configured store Lightning automated payout processors",
+      "operationId": "GreenfieldStoreAutomatedLightningPayoutProcessorsController_GetStoreLightningAutomatedPayoutSenderFactory",
+      "applicationCategory": [
+        "Stores (Payout Processors)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/pull-payments/{pullPaymentId}/boltcards",
+      "name": "Link a boltcard to a pull payment",
+      "description": "Linking a boltcard to a pull payment will allow you to pay via NFC with it, the money will be sent from the pull payment. The boltcard keys are generated using [Deterministic Boltcard Key Generation](https://github.com/boltcard/boltcard/blob/main/docs/DETERMINISTIC.md).",
+      "operationId": "PullPayments_LinkBoltcard",
+      "applicationCategory": [
+        "Pull payments (Public)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/pull-payments",
+      "name": "Get store's pull payments",
+      "description": "Get the pull payments of a store",
+      "operationId": "PullPayments_GetPullPayments",
+      "applicationCategory": [
+        "Pull payments (Management)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/pull-payments",
+      "name": "Create a new pull payment",
+      "description": "A pull payment allows its receiver to ask for payouts up to `amount` of `currency` every `period`.",
+      "operationId": "PullPayments_CreatePullPayment",
+      "applicationCategory": [
+        "Pull payments (Management)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/pull-payments/{pullPaymentId}",
+      "name": "Get Pull Payment",
+      "description": "Get a pull payment",
+      "operationId": "PullPayments_GetPullPayment",
+      "applicationCategory": [
+        "Pull payments (Public)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/pull-payments/{pullPaymentId}",
+      "name": "Archive a pull payment",
+      "description": "Archive this pull payment (Will cancel all payouts awaiting for payment). The store is resolved automatically from the pull payment.",
+      "operationId": "PullPayments_ArchivePullPayment",
+      "applicationCategory": [
+        "Pull payments (Management)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/pull-payments/{pullPaymentId}/payouts",
+      "name": "Get Payouts",
+      "description": "Get payouts",
+      "operationId": "PullPayments_GetPayouts",
+      "applicationCategory": [
+        "Pull payments (Public)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/pull-payments/{pullPaymentId}/payouts",
+      "name": "Create Payout",
+      "description": "Create a new payout",
+      "operationId": "PullPayments_CreatePayout",
+      "applicationCategory": [
+        "Pull payments (Public)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/pull-payments/{pullPaymentId}/payouts/{payoutId}",
+      "name": "Get Payout",
+      "description": "Get payout",
+      "operationId": "PullPayments_GetPayout",
+      "applicationCategory": [
+        "Pull payments (Public)",
+        "Pull payments payout (Public)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/pull-payments/{pullPaymentId}/lnurl",
+      "name": "Get Pull Payment LNURL details",
+      "description": "Get Pull Payment LNURL details",
+      "operationId": "PullPayments_GetPullPaymentLNURL",
+      "applicationCategory": [
+        "Pull payments (Public)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payouts",
+      "name": "Create Payout",
+      "description": "Create a new payout",
+      "operationId": "Payouts_CreatePayoutThroughStore",
+      "applicationCategory": [
+        "Stores (Payouts)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payouts",
+      "name": "Get Store Payouts",
+      "description": "Get payouts",
+      "operationId": "PullPayments_GetStorePayouts",
+      "applicationCategory": [
+        "Stores (Payouts)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payouts/{payoutId}",
+      "name": "Get Payout",
+      "description": "Get payout",
+      "operationId": "GetStorePayout",
+      "applicationCategory": [
+        "Stores (Payouts)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payouts/{payoutId}",
+      "name": "Approve Payout",
+      "description": "Approve a payout",
+      "operationId": "PullPayments_ApprovePayout",
+      "applicationCategory": [
+        "Stores (Payouts)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payouts/{payoutId}",
+      "name": "Cancel Payout",
+      "description": "Cancel the payout",
+      "operationId": "PullPayments_CancelPayout",
+      "applicationCategory": [
+        "Stores (Payouts)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payouts/{payoutId}/mark-paid",
+      "name": "Mark Payout as Paid",
+      "description": "Mark a payout as paid",
+      "operationId": "PullPayments_MarkPayoutPaid",
+      "applicationCategory": [
+        "Stores (Payouts)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payouts/{payoutId}/mark",
+      "name": "Mark Payout",
+      "description": "Mark a payout with a state",
+      "operationId": "PullPayments_MarkPayout",
+      "applicationCategory": [
+        "Stores (Payouts)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/email",
+      "name": "Get server email settings",
+      "description": "Retrieve the email settings configured for the server. The password field will be masked if present.",
+      "operationId": "ServerEmail_GetSettings",
+      "applicationCategory": [
+        "ServerEmail"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/server/email",
+      "name": "Update server email settings",
+      "description": "Update server's email settings.",
+      "operationId": "ServerEmail_UpdateSettings",
+      "applicationCategory": [
+        "ServerEmail"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/info",
+      "name": "Get server info",
+      "description": "Information about the server, chains and sync states",
+      "operationId": "ServerInfo_GetServerInfo",
+      "applicationCategory": [
+        "ServerInfo"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/server/roles",
+      "name": "Get store's roles",
+      "description": "View information about the store's roles at the server's scope",
+      "operationId": "Server_GetStoreRoles",
+      "applicationCategory": [
+        "ServerInfo"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/email",
+      "name": "Get store email settings",
+      "description": "Retrieve the email settings configured for specific store. The password field will be masked if present.",
+      "operationId": "Stores_GetStoreEmailSettings",
+      "applicationCategory": [
+        "Stores (Email)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/email",
+      "name": "Update store email settings",
+      "description": "Update a store's email settings",
+      "operationId": "Stores_UpdateStoreEmailSettings",
+      "applicationCategory": [
+        "Stores (Email)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/email/send",
+      "name": "Send an email for a store",
+      "description": "Send an email using the store's SMTP server",
+      "operationId": "Stores_SendStoreEmail",
+      "applicationCategory": [
+        "Stores (Email)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning-addresses",
+      "name": "Get store configured lightning addresses",
+      "description": "Get store configured lightning addresses",
+      "operationId": "StoreLightningAddresses_GetStoreLightningAddresses",
+      "applicationCategory": [
+        "Lightning address"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning-addresses/{username}",
+      "name": "Get store configured lightning address",
+      "description": "Get store configured lightning address",
+      "operationId": "StoreLightningAddresses_GetStoreLightningAddress",
+      "applicationCategory": [
+        "Lightning address"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning-addresses/{username}",
+      "name": "Add or update store configured lightning address",
+      "description": "Add or update store configured lightning address",
+      "operationId": "StoreLightningAddresses_AddOrUpdateStoreLightningAddress",
+      "applicationCategory": [
+        "Lightning address"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/lightning-addresses/{username}",
+      "name": "Remove configured lightning address",
+      "description": "Remove store configured lightning address",
+      "operationId": "StoreLightningAddresses_RemoveStoreLightningAddress",
+      "applicationCategory": [
+        "Lightning address"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods",
+      "name": "Get store payment methods",
+      "description": "View information about the stores' configured payment methods",
+      "operationId": "StorePaymentMethods_GetStorePaymentMethods",
+      "applicationCategory": [
+        "Store (Payment Methods)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}",
+      "name": "Get store payment method",
+      "description": "View information about the stores' configured payment method",
+      "operationId": "StorePaymentMethods_GetStorePaymentMethod",
+      "applicationCategory": [
+        "Store (Payment Methods)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}",
+      "name": "Update store's payment method",
+      "description": "Update information about the stores' configured payment method",
+      "operationId": "StorePaymentMethods_UpdateStorePaymentMethod",
+      "applicationCategory": [
+        "Store (Payment Methods)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}",
+      "name": "Delete store's payment method",
+      "description": "Delete information about the stores' configured payment method",
+      "operationId": "StorePaymentMethods_DeleteStorePaymentMethod",
+      "applicationCategory": [
+        "Store (Payment Methods)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/rates",
+      "name": "Get rates",
+      "description": "Get rates on the store",
+      "operationId": "Stores_GetStoreRates",
+      "applicationCategory": [
+        "Stores (Rates)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/rates/configuration/{rateSource}",
+      "name": "Get store rate settings for the specified rate source",
+      "description": "View rate settings for the specified store and rate source (`primary` or `fallback`).",
+      "operationId": "Stores_GetStoreRateConfiguration",
+      "applicationCategory": [
+        "Stores (Rates)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/rates/configuration/{rateSource}",
+      "name": "Get store rate settings for the specified rate source",
+      "description": "Update rate settings for the specified store and rate source (`primary` or `fallback`).",
+      "operationId": "Stores_UpdateStoreRateConfiguration",
+      "applicationCategory": [
+        "Stores (Rates)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/rates/configuration/preview",
+      "name": "Preview rate configuration results",
+      "description": "Preview rate configuration results before you set it on the store",
+      "operationId": "Stores_PreviewStoreRateConfiguration",
+      "applicationCategory": [
+        "Stores (Rates)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/users",
+      "name": "Get store users",
+      "description": "View users of the specified store",
+      "operationId": "Stores_GetStoreUsers",
+      "applicationCategory": [
+        "Stores (Users)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/users",
+      "name": "Add a store user",
+      "description": "Add a store user",
+      "operationId": "Stores_AddStoreUser",
+      "applicationCategory": [
+        "Stores (Users)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/users/{idOrEmail}",
+      "name": "Updates a store user",
+      "description": "Updates a store user",
+      "operationId": "Stores_UpdateStoreUser",
+      "applicationCategory": [
+        "Stores (Users)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/users/{idOrEmail}",
+      "name": "Remove Store User",
+      "description": "Removes the specified store user. If there is no other owner, this endpoint will fail.",
+      "operationId": "Stores_RemoveStoreUser",
+      "applicationCategory": [
+        "Stores (Users)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet",
+      "name": "Get store on-chain wallet overview",
+      "description": "View information about the specified wallet",
+      "operationId": "StoreOnChainWallets_ShowOnChainWalletOverview",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/histogram",
+      "name": "Get store on-chain wallet balance histogram",
+      "description": "View the balance histogram of the specified wallet",
+      "operationId": "StoreOnChainWallets_ShowOnChainWalletHistogram",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/feerate",
+      "name": "Get store on-chain wallet fee rate",
+      "description": "Get wallet onchain fee rate",
+      "operationId": "StoreOnChainWallets_GetOnChainFeeRate",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/address",
+      "name": "Get store on-chain wallet address",
+      "description": "Get or generate address for wallet",
+      "operationId": "StoreOnChainWallets_GetOnChainWalletReceiveAddress",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/address",
+      "name": "UnReserve last store on-chain wallet address",
+      "description": "UnReserve address",
+      "operationId": "StoreOnChainWallets_UnReserveOnChainWalletReceiveAddress",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions",
+      "name": "Get store on-chain wallet transactions",
+      "description": "Get store on-chain wallet transactions",
+      "operationId": "StoreOnChainWallets_ShowOnChainWalletTransactions",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions",
+      "name": "Create store on-chain wallet transaction",
+      "description": "Create store on-chain wallet transaction. Requires `btcpay.store.cancreatetransactions` and `btcpay.store.cansigntransactions`. Also requires `btcpay.store.canbroadcasttransactions` when `proceedWithBroadcast` is true, including Payjoin.",
+      "operationId": "StoreOnChainWallets_CreateOnChainTransaction",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions/broadcast",
+      "name": "Broadcast an on-chain transaction or finalized PSBT",
+      "description": "Broadcast a raw transaction hex string or a finalized PSBT for the specified wallet.",
+      "operationId": "StoreOnChainWallets_BroadcastOnChainTransaction",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions/{transactionId}",
+      "name": "Get store on-chain wallet transaction",
+      "description": "Get store on-chain wallet transaction",
+      "operationId": "StoreOnChainWallets_GetOnChainWalletTransaction",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PATCH",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions/{transactionId}",
+      "name": "Patch store on-chain wallet transaction info",
+      "description": "Patch store on-chain wallet transaction info",
+      "operationId": "StoreOnChainWallets_PatchOnChainWalletTransaction",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/utxos",
+      "name": "Get store on-chain wallet UTXOS",
+      "description": "Get store on-chain wallet utxos",
+      "operationId": "StoreOnChainWallets_GetOnChainWalletUTXOs",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/generate",
+      "name": "Generate store on-chain wallet",
+      "description": "Generate a wallet and update the specified store's payment method to it",
+      "operationId": "StoreOnChainPaymentMethods_GenerateOnChainWallet",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/preview",
+      "name": "Preview store on-chain payment method addresses",
+      "description": "View addresses of the current payment method of the store",
+      "operationId": "StoreOnChainPaymentMethods_GetOnChainPaymentMethodPreview",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/preview",
+      "name": "Preview proposed store on-chain payment method addresses",
+      "description": "View addresses of a proposed payment method of the store",
+      "operationId": "StoreOnChainPaymentMethods_POSTOnChainPaymentMethodPreview",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects",
+      "name": "Get store on-chain wallet objects",
+      "description": "View wallet objects",
+      "operationId": "StoreOnChainWallets_GetOnChainWalletObjects",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects",
+      "name": "Add/Update store on-chain wallet objects",
+      "description": "Add/Update wallet objects",
+      "operationId": "StoreOnChainWallets_AddOrUpdateOnChainWalletObjects",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects/{objectType}/{objectId}",
+      "name": "Get store on-chain wallet object",
+      "description": "View wallet object",
+      "operationId": "StoreOnChainWallets_GetOnChainWalletObject",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects/{objectType}/{objectId}",
+      "name": "Remove store on-chain wallet objects",
+      "description": "Remove wallet object",
+      "operationId": "StoreOnChainWallets_RemoveOnChainWalletObject",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects/{objectType}/{objectId}/links",
+      "name": "Add/Update store on-chain wallet object link",
+      "description": "Add/Update wallet object link",
+      "operationId": "StoreOnChainWallets_AddOrUpdateOnChainWalletLink",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects/{objectType}/{objectId}/links/{linkType}/{linkId}",
+      "name": "Remove store on-chain wallet object links",
+      "description": "Remove wallet object link",
+      "operationId": "StoreOnChainWallets_RemoveOnChainWalletLink",
+      "applicationCategory": [
+        "Store Wallet (On Chain)"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores",
+      "name": "Get stores",
+      "description": "View information about the available stores",
+      "operationId": "Stores_GetStores",
+      "applicationCategory": [
+        "Stores"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores",
+      "name": "Create a new store",
+      "description": "Create a new store (default values can be different if the server settings use a default store template)",
+      "operationId": "Stores_CreateStore",
+      "applicationCategory": [
+        "Stores"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}",
+      "name": "Get store",
+      "description": "View information about the specified store",
+      "operationId": "Stores_GetStore",
+      "applicationCategory": [
+        "Stores"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}",
+      "name": "Update store",
+      "description": "Update the specified store (default values can be different if the server settings use a default store template)",
+      "operationId": "Stores_UpdateStore",
+      "applicationCategory": [
+        "Stores"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}",
+      "name": "Remove Store",
+      "description": "Removes the specified store. If there is another user with access, only your access will be removed.",
+      "operationId": "Stores_DeleteStore",
+      "applicationCategory": [
+        "Stores"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/logo",
+      "name": "Uploads a logo for the store",
+      "description": "Uploads a logo for the store",
+      "operationId": "Stores_UploadStoreLogo",
+      "applicationCategory": [
+        "Stores"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/logo",
+      "name": "Deletes the store logo",
+      "description": "Delete the store's logo",
+      "operationId": "Stores_DeleteStoreLogo",
+      "applicationCategory": [
+        "Stores"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/roles",
+      "name": "Get store's roles",
+      "description": "View information about the specified store's roles",
+      "operationId": "Stores_GetStoreRoles",
+      "applicationCategory": [
+        "Stores"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}",
+      "name": "Get an offering",
+      "description": "Returns a specific offering for a store.",
+      "operationId": "GetOffering",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}",
+      "name": "Update an offering",
+      "description": "Updates an existing offering for the specified store.",
+      "operationId": "UpdateOffering",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings",
+      "name": "List offerings for a store",
+      "description": "Retrieves all offerings associated with the specified store.",
+      "operationId": "GetOfferings",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings",
+      "name": "Create an offering",
+      "description": "Creates a new offering for the specified store.",
+      "operationId": "CreateOffering",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/plans",
+      "name": "Create an offering plan",
+      "description": "Creates a new plan for a specific offering.",
+      "operationId": "CreateOfferingPlan",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/plans/{planId}",
+      "name": "Get an offering plan",
+      "description": "Returns a specific plan for a given offering.",
+      "operationId": "GetOfferingPlan",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/plans/{planId}",
+      "name": "Update an offering plan",
+      "description": "Updates an existing plan for a specific offering.",
+      "operationId": "UpdateOfferingPlan",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}",
+      "name": "Get a subscriber",
+      "description": "Retrieves a subscriber for a specific offering by customer selector.",
+      "operationId": "GetSubscriber",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}",
+      "name": "Delete a subscriber",
+      "description": "Deletes a subscriber for a specific offering by customer selector.",
+      "operationId": "DeleteSubscriber",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/credits/{currency}",
+      "name": "Get subscriber credit balance",
+      "description": "Retrieves the credit balance for a subscriber in the specified currency.",
+      "operationId": "GetCredit",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/credits/{currency}",
+      "name": "Update subscriber credit balance",
+      "description": "Adds credit or charges credit for a subscriber in a given currency.",
+      "operationId": "UpdateCredit",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/suspend",
+      "name": "Suspend a subscriber",
+      "description": "Suspends a subscriber for the specified offering.",
+      "operationId": "SuspendSubscriber",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/unsuspend",
+      "name": "Unsuspend a subscriber",
+      "description": "Removes suspension from a subscriber for the specified offering.",
+      "operationId": "UnsuspendSubscriber",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/dates",
+      "name": "Update subscriber dates",
+      "description": "Manually overrides the subscription start date and/or expiration date for a subscriber.\n\nOmitting a field leaves the corresponding date unchanged. An empty body `{}` is a no-op and returns the subscriber unchanged.\n\nWhen `expirationDate` is provided, the grace period end and reminder date are recalculated automatically from the plan settings.",
+      "operationId": "UpdateSubscriberDates",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/plan-checkout/{checkoutId}",
+      "name": "Get a plan checkout",
+      "description": "Retrieves the details of a plan checkout session.",
+      "operationId": "GetPlanCheckout",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/plan-checkout/{checkoutId}",
+      "name": "Proceed with a plan checkout",
+      "description": "Continues a plan checkout session.\n\n**Behavior:**\n- If payment is required, the checkout assigns a BTCPay Server invoice and `invoiceId` will be set.\n- If no payment is required (for example, the subscriber already has enough credit or no credit purchase is needed), the plan will start immediately and `planStarted` will be `true`.",
+      "operationId": "ProceedPlanCheckout",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/plan-checkout",
+      "name": "Create a plan checkout session",
+      "description": "Creates a checkout session for purchasing or activating a plan.",
+      "operationId": "CreatePlanCheckout",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/subscriber-portal",
+      "name": "Create a subscriber portal session",
+      "description": "Creates a portal session that allows a subscriber to manage their subscriptions, view billing details, or update account information.",
+      "operationId": "CreatePortalSession",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/subscriber-portal/{portalSessionId}",
+      "name": "Get a subscriber portal session",
+      "description": "Retrieves the details of an existing subscriber portal session.",
+      "operationId": "GetPortalSession",
+      "applicationCategory": [
+        "Subscriptions"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/users/me",
+      "name": "Get current user information",
+      "description": "View information about the current user",
+      "operationId": "Users_GetCurrentUser",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/users/me",
+      "name": "Update current user information",
+      "description": "Update the current user",
+      "operationId": "Users_UpdateCurrentUser",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/users/me",
+      "name": "Deletes user profile",
+      "description": "Deletes user profile and associated user data for user making the request",
+      "operationId": "Users_DeleteCurrentUser",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/users/me/picture",
+      "name": "Uploads a profile picture for the current user",
+      "description": "Uploads a profile picture for the current user",
+      "operationId": "Users_UploadCurrentUserProfilePicture",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/users/me/picture",
+      "name": "Deletes user profile picture",
+      "description": "Deletes the user profile picture",
+      "operationId": "Users_DeleteCurrentUserProfilePicture",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/users",
+      "name": "Get all users",
+      "description": "Load all users that exist.",
+      "operationId": "Users_GetUsers",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/users",
+      "name": "Create user",
+      "description": "Create a new user.\n\nThis operation can be called without authentication in any of this cases:\n* There is not any administrator yet on the server,\n* User registrations are not disabled in the server's policies.\n\nIf the first administrator is created by this call, user registrations are automatically disabled.",
+      "operationId": "Users_CreateUser",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/users/{idOrEmail}",
+      "name": "Get user by ID or Email",
+      "description": "Get 1 user by ID or Email.",
+      "operationId": "Users_GetUser",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/users/{idOrEmail}",
+      "name": "Delete user",
+      "description": "Delete a user.\n\nMust be an admin to perform this operation.\n\nAttempting to delete the only admin user will not succeed.\n\nAll data associated with the user will be deleted as well if the operation succeeds.",
+      "operationId": "Users_DeleteUser",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/users/{idOrEmail}/lock",
+      "name": "Toggle user lock out",
+      "description": "Lock or unlock a user.\n\nMust be an admin to perform this operation.\n\nAttempting to lock the only admin user will not succeed.",
+      "operationId": "Users_ToggleUserLock",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/users/{idOrEmail}/approve",
+      "name": "Toggle user approval",
+      "description": "Approve or unapprove a user.\n\nMust be an admin to perform this operation.\n\nAttempting to (un)approve a user for which this requirement does not exist will not succeed.",
+      "operationId": "Users_ToggleUserApproval",
+      "applicationCategory": [
+        "Users"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/webhooks",
+      "name": "Get webhooks of a store",
+      "description": "View webhooks of a store",
+      "operationId": "Webhooks_GetWebhooks",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/stores/{storeId}/webhooks",
+      "name": "Create a new webhook",
+      "description": "Create a new webhook",
+      "operationId": "Webhooks_CreateWebhook",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/webhooks/{webhookId}",
+      "name": "Get a webhook",
+      "description": "View webhook",
+      "operationId": "Webhooks_GetWebhook",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "PUT",
+      "url": "https://{btcpay-host}/api/v1/webhooks/{webhookId}",
+      "name": "Update a webhook",
+      "description": "Update a webhook",
+      "operationId": "Webhooks_UpdateWebhook",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "DELETE",
+      "url": "https://{btcpay-host}/api/v1/webhooks/{webhookId}",
+      "name": "Delete a webhook",
+      "description": "Delete a webhook",
+      "operationId": "Webhooks_DeleteWebhook",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/webhooks/{webhookId}/deliveries",
+      "name": "Get latest deliveries",
+      "description": "List the latest deliveries to the webhook, ordered from the most recent",
+      "operationId": "Webhooks_GetWebhookDeliveries",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/webhooks/{webhookId}/deliveries/{deliveryId}",
+      "name": "Get a webhook delivery",
+      "description": "Information about a webhook delivery",
+      "operationId": "Webhooks_GetWebhookDelivery",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "GET",
+      "url": "https://{btcpay-host}/api/v1/webhooks/{webhookId}/deliveries/{deliveryId}/request",
+      "name": "Get the delivery's request",
+      "description": "The delivery's JSON request sent to the endpoint",
+      "operationId": "Webhooks_GetWebhookDeliveryRequests",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    },
+    {
+      "@type": "EntryPoint",
+      "httpMethod": "POST",
+      "url": "https://{btcpay-host}/api/v1/webhooks/{webhookId}/deliveries/{deliveryId}/redeliver",
+      "name": "Redeliver the delivery",
+      "description": "Redeliver the delivery",
+      "operationId": "Webhooks_RedeliverWebhookDelivery",
+      "applicationCategory": [
+        "Webhooks"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3988 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "DefinedTermSet",
+  "name": "BTCPay Server Greenfield API Vocabulary",
+  "description": "Terms, schemas, and concepts from the BTCPay Server Greenfield API v1",
+  "url": "https://docs.btcpayserver.org/API/Greenfield/v1/",
+  "hasDefinedTerm": [
+    {
+      "@type": "DefinedTerm",
+      "name": "BaseUrl",
+      "description": "Base URL of the BTCPay Server instance.",
+      "termCode": "BaseUrl"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ValidationProblemDetails",
+      "description": "An array of validation errors of the request",
+      "termCode": "ValidationProblemDetails"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ProblemDetails",
+      "description": "Description of an error happening during processing of the request",
+      "termCode": "ProblemDetails",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "code",
+          "description": "An error code describing the error"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "message",
+          "description": "User friendly error message about the error"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UnixTimestamp",
+      "description": "A unix timestamp in seconds",
+      "termCode": "UnixTimestamp"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "SpeedPolicy",
+      "description": "This is a risk mitigation parameter for the merchant to configure how they want to fulfill orders depending on the number of block confirmations for the transaction made by the consumer on the selected cryptocurrency.\n`\"HighSpeed\"`: 0 confirmations (1 confirmation if RBF enabled in transaction)   \n`\"MediumSpeed\"`: 1 confirmation   \n`\"LowMediumSpeed\"`: 2 confirmations   \n`\"LowSpeed\"`: 6 confirmations\n",
+      "termCode": "SpeedPolicy"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "TimeSpan",
+      "description": "BTCPay Server schema: TimeSpan",
+      "termCode": "TimeSpan"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "TimeSpanSeconds",
+      "description": "A span of times in seconds",
+      "termCode": "TimeSpanSeconds"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "TimeSpanDays",
+      "description": "A span of times in days",
+      "termCode": "TimeSpanDays"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "TimeSpanMinutes",
+      "description": "A span of times in minutes",
+      "termCode": "TimeSpanMinutes"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "StoreId",
+      "description": "Store ID of the item",
+      "termCode": "StoreId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceId",
+      "description": "The invoice ID",
+      "termCode": "InvoiceId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PaymentMethodId",
+      "description": "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL",
+      "termCode": "PaymentMethodId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PayoutMethodId",
+      "description": "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning",
+      "termCode": "PayoutMethodId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "HistogramData",
+      "description": "Histogram data for wallet balances over time",
+      "termCode": "HistogramData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "type",
+          "description": "The timespan of the histogram data"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "balance",
+          "description": "The current wallet balance"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "series",
+          "description": "An array of historic balances of the wallet"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "labels",
+          "description": "An array of timestamps associated with the series data"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ApiKeyData",
+      "description": "BTCPay Server schema: ApiKeyData",
+      "termCode": "ApiKeyData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "apiKey",
+          "description": "The API Key to use for API Key Authentication"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "description": "The label given by the user to this API Key"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "permissions",
+          "description": "The permissions associated to this API Key (can be scoped to a specific store)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "AppBaseData",
+      "description": "BTCPay Server schema: AppBaseData",
+      "termCode": "AppBaseData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "Id of the app"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "appName",
+          "description": "Name given to the app when it was created"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "storeId",
+          "description": "Id of the store to which the app belongs"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "created",
+          "description": "UNIX timestamp for when the app was created"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "appType",
+          "description": "Type of the app which was created"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "archived",
+          "description": "If true, the app does not appear in the apps list by default."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PointOfSaleBaseData",
+      "description": "BTCPay Server schema: PointOfSaleBaseData",
+      "termCode": "PointOfSaleBaseData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PointOfSaleAppRequest",
+      "description": "BTCPay Server schema: PointOfSaleAppRequest",
+      "termCode": "PointOfSaleAppRequest"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PointOfSaleAppData",
+      "description": "BTCPay Server schema: PointOfSaleAppData",
+      "termCode": "PointOfSaleAppData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CrowdfundBaseData",
+      "description": "BTCPay Server schema: CrowdfundBaseData",
+      "termCode": "CrowdfundBaseData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CrowdfundAppRequest",
+      "description": "BTCPay Server schema: CrowdfundAppRequest",
+      "termCode": "CrowdfundAppRequest"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CrowdfundAppData",
+      "description": "BTCPay Server schema: CrowdfundAppData",
+      "termCode": "CrowdfundAppData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "AppItem",
+      "description": "BTCPay Server schema: AppItem",
+      "termCode": "AppItem",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "Unique ID of the item"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "title",
+          "description": "The display name of the item"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "A description text for the item"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "image",
+          "description": "An image URL for the item"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "price",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "priceType",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "buyButtonText",
+          "description": "A custom text for the buy button for the item"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "inventory",
+          "description": "The remaining stock the item"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "disabled",
+          "description": "If true, the item does not appear in the list by default."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "AppSalesStats",
+      "description": "BTCPay Server schema: AppSalesStats",
+      "termCode": "AppSalesStats",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "salesCount",
+          "description": "Total sales in that period"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "series",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "AppSalesStatsItem",
+      "description": "BTCPay Server schema: AppSalesStatsItem",
+      "termCode": "AppSalesStatsItem",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "date",
+          "description": "UNIX timestamp of the beginning of that day"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "description": "Short date as label"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "salesCount",
+          "description": "Total sales on that day"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "AppItemStats",
+      "description": "BTCPay Server schema: AppItemStats",
+      "termCode": "AppItemStats",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "itemCode",
+          "description": "Item ID"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "title",
+          "description": "Item Name"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "salesCount",
+          "description": "Total sales of that item"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "total",
+          "description": "The total amount of sales of that item"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "totalFormatted",
+          "description": "The formatted total amount of sales of that item"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "FileData",
+      "description": "BTCPay Server schema: FileData",
+      "termCode": "FileData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The id of the file"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "userId",
+          "description": "The id of the user that uploaded the file"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "uri",
+          "description": "The internal URI of the file"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "url",
+          "description": "The full URL of the file"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "originalName",
+          "description": "The original name of the file"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "storageName",
+          "description": "The storage name of the file"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "created",
+          "description": "The creation date of the file as a unix timestamp"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ApplicationHealthData",
+      "description": "BTCPay Server schema: ApplicationHealthData",
+      "termCode": "ApplicationHealthData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "synchronized",
+          "description": "True if the instance is fully synchronized, according to NBXplorer"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceDataList",
+      "description": "BTCPay Server schema: InvoiceDataList",
+      "termCode": "InvoiceDataList"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "MarkInvoiceStatusRequest",
+      "description": "BTCPay Server schema: MarkInvoiceStatusRequest",
+      "termCode": "MarkInvoiceStatusRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "status",
+          "description": "Mark an invoice as completed or invalid."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceStatusMark",
+      "description": "",
+      "termCode": "InvoiceStatusMark"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceStatus",
+      "description": "The status of the invoice",
+      "termCode": "InvoiceStatus"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceAdditionalStatus",
+      "description": "An additional status that describes why an invoice is in its current status.",
+      "termCode": "InvoiceAdditionalStatus"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceDataBase",
+      "description": "BTCPay Server schema: InvoiceDataBase",
+      "termCode": "InvoiceDataBase",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "checkout",
+          "description": "Additional settings to customize the checkout flow"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "receipt",
+          "description": "Additional settings to customize the public receipt"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceData",
+      "description": "BTCPay Server schema: InvoiceData",
+      "termCode": "InvoiceData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceMetadata",
+      "description": "Additional information around the invoice that can be supplied. The mentioned properties are all optional and you can introduce any json format you wish. See [our documentation](https://docs.btcpayserver.org/Development/InvoiceMetadata/) for more information.",
+      "termCode": "InvoiceMetadata"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreateInvoiceRequest",
+      "description": "BTCPay Server schema: CreateInvoiceRequest",
+      "termCode": "CreateInvoiceRequest"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateInvoiceRequest",
+      "description": "BTCPay Server schema: UpdateInvoiceRequest",
+      "termCode": "UpdateInvoiceRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceRefundTriggerData",
+      "description": "BTCPay Server schema: InvoiceRefundTriggerData",
+      "termCode": "InvoiceRefundTriggerData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "paymentAmountThen",
+          "description": "The amount in crypto at the time the invoice was paid."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentAmountNow",
+          "description": "The current amount in crypto."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invoiceAmount",
+          "description": "The fiat amount at the rate when the refund will be sent."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentCurrency",
+          "description": "The crypto currency of the invoice"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentCurrencyDivisibility",
+          "description": "The maximum divisibility supported by the crypto currency of the invoice"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invoiceCurrencyDivisibility",
+          "description": "The maximum divisibility supported by the fiat currency of the invoice"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invoiceCurrency",
+          "description": "The fiat currency of the invoice"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "overpaidPaymentAmount",
+          "description": "The amount by which the invoice is overpaid"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CheckoutOptions",
+      "description": "BTCPay Server schema: CheckoutOptions",
+      "termCode": "CheckoutOptions",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "speedPolicy",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentMethods",
+          "description": "A specific set of payment methods to use for this invoice (ie. BTC, BTC-LightningNetwork). By default, select all payment methods enabled in the store."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "defaultPaymentMethod",
+          "description": "Default payment type for the invoice (e.g., BTC, BTC-LightningNetwork). Default payment method set for the store is used if this parameter is not specified."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "lazyPaymentMethods",
+          "description": "If true, payment methods are enabled individually upon user interaction in the invoice. Default to store's settings'"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "expirationMinutes",
+          "description": "The number of minutes after which an invoice becomes expired. Defaults to the store's settings. (The default store settings is 15)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "monitoringMinutes",
+          "description": "The number of minutes after an invoice expired after which we are still monitoring for incoming payments. Defaults to the store's settings. (The default store settings is 1440, 1 day)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentTolerance",
+          "description": "A percentage determining whether to count the invoice as paid when the invoice is paid within the specified margin of error. Defaults to the store's settings. (The default store settings is 0)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "redirectURL",
+          "description": "When the customer has paid the invoice, the URL where the customer will be redirected when clicking on the `return to store` button. You can use placeholders `{InvoiceId}` or `{OrderId}` in the URL, BTCPay Server will replace those with this invoice `id` or `metadata.orderId` respectively."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "redirectAutomatically",
+          "description": "When the customer has paid the invoice, and a `redirectURL` is set, the checkout is redirected to `redirectURL` automatically if `redirectAutomatically` is true. Defaults to the store's settings. (The default store settings is false)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "defaultLanguage",
+          "description": "The language code (eg. en-US, en, fr-FR...) of the language presented to your customer in the checkout page. BTCPay Server tries to match the best language available. If null or not set, will fallback on the store's default language. You can see the list of language codes with [this operation](#operation/langCodes)."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ReceiptOptions",
+      "description": "BTCPay Server schema: ReceiptOptions",
+      "termCode": "ReceiptOptions",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "enabled",
+          "description": "A public page will be accessible once the invoice is settled. If null or unspecified, it will fallback to the store's settings. (The default store settings is true)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "showQR",
+          "description": "Show the QR code of the receipt in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "showPayments",
+          "description": "Show the payment list in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoicePaymentMethodDataModel",
+      "description": "BTCPay Server schema: InvoicePaymentMethodDataModel",
+      "termCode": "InvoicePaymentMethodDataModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "paymentMethodId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "currency",
+          "description": "The currency of the payment method (e.g., \"BTC\" or \"LTC\")"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "destination",
+          "description": "The destination the payment must be made to"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentLink",
+          "description": "A payment link that helps pay to the payment destination"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "rate",
+          "description": "The rate between this payment method's currency and the invoice currency"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentMethodPaid",
+          "description": "The amount paid by this payment method"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "totalPaid",
+          "description": "The total amount paid by all payment methods to the invoice, converted to this payment method's currency"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "due",
+          "description": "The total amount left to be paid, converted to this payment method's currency (will be negative if overpaid)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "The invoice amount, converted to this payment method's currency"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentMethodFee",
+          "description": "The added merchant fee to pay for additional costs incurred by this payment method."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "payments",
+          "description": "Payments made with this payment method."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "activated",
+          "description": "If the payment method is activated (when lazy payments option is enabled"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "additionalData",
+          "description": "Additional data provided by the payment method."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Payment",
+      "description": "BTCPay Server schema: Payment",
+      "termCode": "Payment",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "A unique identifier for this payment"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "receivedDate",
+          "description": "The date the payment was recorded"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "value",
+          "description": "The value of the payment"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "fee",
+          "description": "The fee paid for the payment"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "status",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "destination",
+          "description": "The destination the payment was made to"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PaymentStatus",
+      "description": "The status of the payment",
+      "termCode": "PaymentStatus"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "InvoiceType",
+      "description": "The type of the invoice",
+      "termCode": "InvoiceType"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "RefundInvoiceRequest",
+      "description": "BTCPay Server schema: RefundInvoiceRequest",
+      "termCode": "RefundInvoiceRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "Name of the pull payment (Default: 'Refund' followed by the invoice id)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "Description of the pull payment"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "payoutMethodId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "refundVariant",
+          "description": "* `RateThen`: Refund the crypto currency price, at the rate the invoice got paid.\r\n* `CurrentRate`: Refund the crypto currency price, at the current rate.\r\n*`Fiat`: Refund the invoice currency, at the rate when the refund will be sent.\r\n*`OverpaidAmount`: Refund the crypto currency amount that was overpaid.\r\n*`Custom`: Specify the amount, currency, and rate of the refund. (see `customAmount` and `customCurrency`)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "subtractPercentage",
+          "description": "Optional percentage by which to reduce the refund, e.g. as processing charge or to compensate for the mining fee."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customAmount",
+          "description": "The amount to refund if the `refundVariant` is `Custom`."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customCurrency",
+          "description": "The currency to refund if the `refundVariant` is `Custom`"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ConnectToNodeRequest",
+      "description": "BTCPay Server schema: ConnectToNodeRequest",
+      "termCode": "ConnectToNodeRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "nodeURI",
+          "description": "Node URI in the form `pubkey@endpoint[:port]`"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreateLightningInvoiceRequest",
+      "description": "BTCPay Server schema: CreateLightningInvoiceRequest",
+      "termCode": "CreateLightningInvoiceRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "Amount wrapped in a string, represented in a millisatoshi string. (1000 millisatoshi = 1 satoshi)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "Description of the invoice in the BOLT11"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "descriptionHashOnly",
+          "description": "If `descriptionHashOnly` is `true` (default is `false`), then the BOLT11 returned contains a hash of the `description`, rather than the `description`, itself. This allows for much longer descriptions, but they must be communicated via some other mechanism."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "expiry",
+          "description": "Expiration time in seconds"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "privateRouteHints",
+          "description": "True if the invoice should include private route hints"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningChannelData",
+      "description": "BTCPay Server schema: LightningChannelData",
+      "termCode": "LightningChannelData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "remoteNode",
+          "description": "The public key of the node (Node ID)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isPublic",
+          "description": "Whether the node is public"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isActive",
+          "description": "Whether the node is online"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "capacity",
+          "description": "The capacity of the channel in millisatoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "localBalance",
+          "description": "The local balance of the channel in millisatoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "channelPoint",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningPaymentData",
+      "description": "BTCPay Server schema: LightningPaymentData",
+      "termCode": "LightningPaymentData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The payment's ID"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "status",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "BOLT11",
+          "description": "The BOLT11 representation of the payment"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentHash",
+          "description": "The payment hash"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "preimage",
+          "description": "The payment preimage (available when status is complete)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "createdAt",
+          "description": "The unix timestamp when the payment got created"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "totalAmount",
+          "description": "The total amount (including fees) in millisatoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "feeAmount",
+          "description": "The total fees in millisatoshi"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningInvoiceData",
+      "description": "BTCPay Server schema: LightningInvoiceData",
+      "termCode": "LightningInvoiceData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The invoice's ID"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "status",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "BOLT11",
+          "description": "The BOLT11 representation of the invoice"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paidAt",
+          "description": "The unix timestamp when the invoice got paid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "expiresAt",
+          "description": "The unix timestamp when the invoice expires"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "The amount of the invoice in millisatoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amountReceived",
+          "description": "The amount received in millisatoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentHash",
+          "description": "The payment hash"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "preimage",
+          "description": "The payment preimage (available when status is complete)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customRecords",
+          "description": "The custom TLV records attached to a keysend payment"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningInvoiceStatus",
+      "description": "",
+      "termCode": "LightningInvoiceStatus"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningPaymentStatus",
+      "description": "",
+      "termCode": "LightningPaymentStatus"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningNodeInformationData",
+      "description": "BTCPay Server schema: LightningNodeInformationData",
+      "termCode": "LightningNodeInformationData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "nodeURIs",
+          "description": "Node URIs to connect to this node in the form `pubkey@endpoint[:port]`"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "blockHeight",
+          "description": "The block height of the lightning node"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "alias",
+          "description": "The alias of the lightning node"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "color",
+          "description": "The color attribute of the lightning node"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "version",
+          "description": "The version name of the lightning node"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "peersCount",
+          "description": "The number of peers"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "activeChannelsCount",
+          "description": "The number of active channels"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "inactiveChannelsCount",
+          "description": "The number of inactive channels"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pendingChannelsCount",
+          "description": "The number of pending channels"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningNodeBalanceData",
+      "description": "BTCPay Server schema: LightningNodeBalanceData",
+      "termCode": "LightningNodeBalanceData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "onchain",
+          "description": "On-chain balance of the Lightning node"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "offchain",
+          "description": "Off-chain balance of the Lightning node"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnchainBalanceData",
+      "description": "BTCPay Server schema: OnchainBalanceData",
+      "termCode": "OnchainBalanceData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "confirmed",
+          "description": "The confirmed amount in satoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "unconfirmed",
+          "description": "The unconfirmed amount in satoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "reserved",
+          "description": "The reserved amount in satoshi"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OffchainBalanceData",
+      "description": "BTCPay Server schema: OffchainBalanceData",
+      "termCode": "OffchainBalanceData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "opening",
+          "description": "The amount of current channel openings in millisatoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "local",
+          "description": "The amount that is available on the local end of active channels in millisatoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "remote",
+          "description": "The amount that is available on the remote end of active channels in millisatoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "closing",
+          "description": "The amount of current channel closings in millisatoshi"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PayLightningInvoiceRequest",
+      "description": "BTCPay Server schema: PayLightningInvoiceRequest",
+      "termCode": "PayLightningInvoiceRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "BOLT11",
+          "description": "The BOLT11 of the invoice to pay"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "Optional explicit payment amount in millisatoshi (if specified, it overrides the BOLT11 amount)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "maxFeePercent",
+          "description": "The fee limit expressed as a percentage of the payment amount"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "maxFeeFlat",
+          "description": "The fee limit expressed as a fixed amount in satoshi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "sendTimeout",
+          "description": "The number of seconds after which the payment times out"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OpenLightningChannelRequest",
+      "description": "BTCPay Server schema: OpenLightningChannelRequest",
+      "termCode": "OpenLightningChannelRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "nodeURI",
+          "description": "Node URI in the form `pubkey@endpoint[:port]`"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "channelAmount",
+          "description": "The amount to fund (in satoshi)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "feeRate",
+          "description": "The amount to fund (in satoshi per byte)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateNotification",
+      "description": "BTCPay Server schema: UpdateNotification",
+      "termCode": "UpdateNotification",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "seen",
+          "description": "Sets the notification as seen/unseen. If left null, sets it to the opposite value"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "NotificationData",
+      "description": "BTCPay Server schema: NotificationData",
+      "termCode": "NotificationData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The id of the notification"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "identifier",
+          "description": "The identifier of the notification"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "type",
+          "description": "The type of the notification"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "body",
+          "description": "The html body of the notifications"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "storeId",
+          "description": "If related to a store, the store id of the notification"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "link",
+          "description": "The link of the notification"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "createdTime",
+          "description": "The creation time of the notification"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "seen",
+          "description": "If the notification has been seen by the user"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateNotificationSettingsRequest",
+      "description": "BTCPay Server schema: UpdateNotificationSettingsRequest",
+      "termCode": "UpdateNotificationSettingsRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "disabled",
+          "description": "List of the notification type identifiers, which should be disabled. Can also be a single item 'all'."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "NotificationSettingsData",
+      "description": "BTCPay Server schema: NotificationSettingsData",
+      "termCode": "NotificationSettingsData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "notifications",
+          "description": "The notification types"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "NotificationSettingsItemData",
+      "description": "BTCPay Server schema: NotificationSettingsItemData",
+      "termCode": "NotificationSettingsItemData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "identifier",
+          "description": "The identifier of the notification type"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "The description of the notification type"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "enabled",
+          "description": "If the notification type is enabled"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PaymentRequestDataList",
+      "description": "BTCPay Server schema: PaymentRequestDataList",
+      "termCode": "PaymentRequestDataList"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PaymentRequestData",
+      "description": "BTCPay Server schema: PaymentRequestData",
+      "termCode": "PaymentRequestData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PaymentRequestBaseData",
+      "description": "BTCPay Server schema: PaymentRequestBaseData",
+      "termCode": "PaymentRequestBaseData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "The amount of the payment request"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "title",
+          "description": "The title of the payment request"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "currency",
+          "description": "The currency of the payment request. If empty, the store's default currency code will be used."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "email",
+          "description": "The email used in invoices generated by the payment request"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "The description of the payment request"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "expiryDate",
+          "description": "The expiry date of the payment request"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "referenceId",
+          "description": "An optional user-defined identifier for this payment request."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "allowCustomPaymentAmounts",
+          "description": "Whether to allow users to create invoices that partially pay the payment request "
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "formId",
+          "description": "Form ID to request customer data"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "formResponse",
+          "description": "Form data response"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PayoutProcessorData",
+      "description": "BTCPay Server schema: PayoutProcessorData",
+      "termCode": "PayoutProcessorData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "unique identifier of the payout processor"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "friendlyName",
+          "description": "Human name of the payout processor"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "payoutMethods",
+          "description": "Supported, payment methods by this processor"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateLightningAutomatedTransferSettings",
+      "description": "BTCPay Server schema: UpdateLightningAutomatedTransferSettings",
+      "termCode": "UpdateLightningAutomatedTransferSettings",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "intervalSeconds",
+          "description": "How often should the processor run"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cancelPayoutAfterFailures",
+          "description": "How many failures should the processor tolerate before cancelling the payout"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processNewPayoutsInstantly",
+          "description": "Skip the interval when ane eligible payout has been approved (or created with pre-approval)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningAutomatedTransferSettings",
+      "description": "BTCPay Server schema: LightningAutomatedTransferSettings",
+      "termCode": "LightningAutomatedTransferSettings",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "payoutMethodId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "intervalSeconds",
+          "description": "How often should the processor run"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cancelPayoutAfterFailures",
+          "description": "How many failures should the processor tolerate before cancelling the payout"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processNewPayoutsInstantly",
+          "description": "Skip the interval when ane eligible payout has been approved (or created with pre-approval)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateOnChainAutomatedTransferSettings",
+      "description": "BTCPay Server schema: UpdateOnChainAutomatedTransferSettings",
+      "termCode": "UpdateOnChainAutomatedTransferSettings",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "feeTargetBlock",
+          "description": "How many blocks should the fee rate calculation target to confirm in. Set to 1 if not provided"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "intervalSeconds",
+          "description": "How often should the processor run"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "threshold",
+          "description": "Only process payouts when this payout sum is reached."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processNewPayoutsInstantly",
+          "description": "Skip the interval when ane eligible payout has been approved (or created with pre-approval)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainAutomatedTransferSettings",
+      "description": "BTCPay Server schema: OnChainAutomatedTransferSettings",
+      "termCode": "OnChainAutomatedTransferSettings",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "payoutMethodId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "feeTargetBlock",
+          "description": "How many blocks should the fee rate calculation target to confirm in."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "intervalSeconds",
+          "description": "How often should the processor run"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "threshold",
+          "description": "Only process payouts when this payout sum is reached."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processNewPayoutsInstantly",
+          "description": "Skip the interval when ane eligible payout has been approved (or created with pre-approval)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PullPaymentDataList",
+      "description": "BTCPay Server schema: PullPaymentDataList",
+      "termCode": "PullPaymentDataList"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PayoutDataList",
+      "description": "BTCPay Server schema: PayoutDataList",
+      "termCode": "PayoutDataList"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreatePayoutRequest",
+      "description": "BTCPay Server schema: CreatePayoutRequest",
+      "termCode": "CreatePayoutRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "destination",
+          "description": "The destination of the payout (can be an address or a BIP21 url)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "The amount of the payout in the currency of the pull payment (eg. USD)."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "payoutMethodId",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreatePayoutThroughStoreRequest",
+      "description": "BTCPay Server schema: CreatePayoutThroughStoreRequest",
+      "termCode": "CreatePayoutThroughStoreRequest"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PayoutPaymentProof",
+      "description": "Additional information around how the payout is being or has been paid out. The mentioned properties are all optional (except `proofType`) and you can introduce any json format you wish.",
+      "termCode": "PayoutPaymentProof",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "proofType",
+          "description": "The type of payment proof it is."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PayoutState",
+      "description": "The state of the payout (`AwaitingApproval`, `AwaitingPayment`, `InProgress`, `Completed`, `Cancelled`)",
+      "termCode": "PayoutState"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PayoutData",
+      "description": "BTCPay Server schema: PayoutData",
+      "termCode": "PayoutData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The id of the payout"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "revision",
+          "description": "The revision number of the payout. This revision number is incremented when the payout amount or destination is modified before the approval."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pullPaymentId",
+          "description": "The id of the pull payment this payout belongs to"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "date",
+          "description": "The creation date of the payout as a unix timestamp"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "destination",
+          "description": "The destination of the payout (can be an address or a BIP21 url)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "originalCurrency",
+          "description": "The currency before being converted into the payout's currency"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "originalAmount",
+          "description": "The amount in originalCurrency before being converted into the payout's currency"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "payoutCurrency",
+          "description": "The currency of the payout after conversion."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "payoutAmount",
+          "description": "The amount in payoutCurrency after conversion. (This property is set after the payout has been Approved)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "payoutMethodId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "state",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentProof",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": "Additional information around the payout that can be supplied. The mentioned properties are all optional and you can introduce any json format you wish."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PullPaymentData",
+      "description": "BTCPay Server schema: PullPaymentData",
+      "termCode": "PullPaymentData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "Id of the pull payment"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "Name given to pull payment when it was created"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "Description given to pull payment when it was created"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "currency",
+          "description": "The currency of the pull payment's amount"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "The amount in the currency of this pull payment as a decimal string"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "BOLT11Expiration",
+          "description": "If lightning is activated, do not accept BOLT11 invoices with expiration less than \u2026 days"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "autoApproveClaims",
+          "description": "Any payouts created for this pull payment will skip the approval phase upon creation"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "archived",
+          "description": "Whether this pull payment is archived"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "viewLink",
+          "description": "The link to a page to claim payouts to this pull payment"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LNURLData",
+      "description": "BTCPay Server schema: LNURLData",
+      "termCode": "LNURLData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "lnurlBech32",
+          "description": "Bech32 representation of LNURL"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "lnurlUri",
+          "description": "URI representation of LNURL"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateServerEmailSettings",
+      "description": "BTCPay Server schema: UpdateServerEmailSettings",
+      "termCode": "UpdateServerEmailSettings"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "GetServerEmailSettings",
+      "description": "BTCPay Server schema: GetServerEmailSettings",
+      "termCode": "GetServerEmailSettings"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ApplicationServerInfoData",
+      "description": "BTCPay Server schema: ApplicationServerInfoData",
+      "termCode": "ApplicationServerInfoData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "version",
+          "description": "BTCPay Server version"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "onion",
+          "description": "The Tor hostname"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "supportedPaymentMethods",
+          "description": "The payment methods this server supports"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "fullySynched",
+          "description": "True if the instance is fully synchronized, according to NBXplorer"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "syncStatus",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ApplicationServerInfoNodeStatusData",
+      "description": "Detailed sync status of the internal full node",
+      "termCode": "ApplicationServerInfoNodeStatusData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "headers",
+          "description": "The height of the chain of header of the internal full node"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "blocks",
+          "description": "The height of the latest validated block of the internal full node"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "verificationProgress",
+          "description": "The current synchronization progress"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ApplicationServerInfoSyncStatusData",
+      "description": "Detailed sync status",
+      "termCode": "ApplicationServerInfoSyncStatusData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "paymentMethodId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nodeInformation",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "chainHeight",
+          "description": "The height of the chain of header of the internal indexer"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "syncHeight",
+          "description": "The height of the latest indexed block of the internal indexer"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "available",
+          "description": "True if the full node and the indexer are fully synchronized"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateEmailSettings",
+      "description": "BTCPay Server schema: UpdateEmailSettings",
+      "termCode": "UpdateEmailSettings"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "GetEmailSettings",
+      "description": "BTCPay Server schema: GetEmailSettings",
+      "termCode": "GetEmailSettings"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "EmailSettingsBase",
+      "description": "BTCPay Server schema: EmailSettingsBase",
+      "termCode": "EmailSettingsBase",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "from",
+          "description": "The sender email address"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "server",
+          "description": "SMTP server host"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "port",
+          "description": "SMTP server port"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "login",
+          "description": "SMTP username"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "disableCertificateCheck",
+          "description": "Disable TLS certificate security checks"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningAddressData",
+      "description": "BTCPay Server schema: LightningAddressData",
+      "termCode": "LightningAddressData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "username",
+          "description": "The username of the lightning address"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "currencyCode",
+          "description": "The currency to generate the invoices for this lightning address in. Leave null lto use the store default."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "min",
+          "description": "The minimum amount in sats this ln address allows"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "max",
+          "description": "The maximum amount in sats this ln address allows"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invoiceMetadata",
+          "description": "The invoice metadata as JSON."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdatePaymentMethodConfig",
+      "description": "BTCPay Server schema: UpdatePaymentMethodConfig",
+      "termCode": "UpdatePaymentMethodConfig",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "enabled",
+          "description": "Whether the payment method is enabled, leave null or unspecified to not change current setting"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "config",
+          "description": "The new payment method config, leave null or unspecified to not change current setting"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "GenericPaymentMethodData",
+      "description": "BTCPay Server schema: GenericPaymentMethodData",
+      "termCode": "GenericPaymentMethodData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "enabled",
+          "description": "Whether the payment method is enabled"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentMethodId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "config",
+          "description": "Associated dynamic data based on payment method type."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LightningNetworkPaymentMethodBaseData",
+      "description": "BTCPay Server schema: LightningNetworkPaymentMethodBaseData",
+      "termCode": "LightningNetworkPaymentMethodBaseData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "connectionString",
+          "description": "The lightning connection string. Set to 'Internal Node' to use the internal node. (See [this doc](https://github.com/btcpayserver/BTCPayServer.Lightning/blob/master/README.md#examples) for some example)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LNURLPayPaymentMethodBaseData",
+      "description": "BTCPay Server schema: LNURLPayPaymentMethodBaseData",
+      "termCode": "LNURLPayPaymentMethodBaseData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "useBech32Scheme",
+          "description": "Whether to use [LUD-01](https://github.com/fiatjaf/lnurl-rfc/blob/luds/01.md)'s bech32 format or to use [LUD-17](https://github.com/fiatjaf/lnurl-rfc/blob/luds/17.md) url formatting. "
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "lud12Enabled",
+          "description": "Allow comments to be passed on via lnurl."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "lud21Enabled",
+          "description": "Whether to include a [LUD-21](https://github.com/lnurl/luds/blob/luds/21.md) verify URL in LNURL-pay callback responses, enabling external services to verify payment settlement without authentication."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "StoreRateConfiguration",
+      "description": "BTCPay Server schema: StoreRateConfiguration",
+      "termCode": "StoreRateConfiguration",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "spread",
+          "description": "A spread applies to the rate fetched in `%`. Must be `>= 0` or `<= 100`"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "preferredSource",
+          "description": "When `isCustomScript` is `false`, uses this source in the default `effectiveScript`. When `isCustomScript` is `true`, this field is ignored (set to `null`). See `/misc/rate-sources` for available sources."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isCustomScript",
+          "description": "Whether to use `preferredSource` with default script or a custom `effectiveScript`."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "effectiveScript",
+          "description": "When `isCustomScript` is `true`, this represent the custom script used to calculate a currency pair's exchange rate. Else, it represent the script generated by the default rules and `preferredSource`."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "StoreRateResult",
+      "description": "BTCPay Server schema: StoreRateResult",
+      "termCode": "StoreRateResult",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "currencyPair",
+          "description": "Currency pair in the format of `BTC_USD`"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "errors",
+          "description": "Errors relating to this currency pair fetching based on your config"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "rate",
+          "description": "the rate fetched based on the currency pair"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "StoreUserDataList",
+      "description": "BTCPay Server schema: StoreUserDataList",
+      "termCode": "StoreUserDataList"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "StoreUserData",
+      "description": "BTCPay Server schema: StoreUserData",
+      "termCode": "StoreUserData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Mnemonic",
+      "description": "A BIP39 mnemonic",
+      "termCode": "Mnemonic"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainPaymentMethodBaseData",
+      "description": "BTCPay Server schema: OnChainPaymentMethodBaseData",
+      "termCode": "OnChainPaymentMethodBaseData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "derivationScheme",
+          "description": "The derivation scheme"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "description": "A label that will be shown in the UI"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "accountKeyPath",
+          "description": "The wallet fingerprint followed by the keypath to derive the account key used for signing operation or creating PSBTs"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainPaymentMethodPreviewResultData",
+      "description": "BTCPay Server schema: OnChainPaymentMethodPreviewResultData",
+      "termCode": "OnChainPaymentMethodPreviewResultData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "addresses",
+          "description": "a list of addresses generated by the derivation scheme"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainPaymentMethodPreviewResultAddressItem",
+      "description": "BTCPay Server schema: OnChainPaymentMethodPreviewResultAddressItem",
+      "termCode": "OnChainPaymentMethodPreviewResultAddressItem",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "keyPath",
+          "description": "The key path relative to the account key path."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "address",
+          "description": "The address generated at the key path"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "GenerateOnChainWalletRequest",
+      "description": "BTCPay Server schema: GenerateOnChainWalletRequest",
+      "termCode": "GenerateOnChainWalletRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "description": "A label that will be shown in the UI"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "existingMnemonic",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "passphrase",
+          "description": "A passphrase for the BIP39 mnemonic seed"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "accountNumber",
+          "description": "The account to derive from the BIP39 mnemonic seed"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "savePrivateKeys",
+          "description": "Whether to store the seed inside BTCPay Server to enable some additional services. IF `false` AND `existingMnemonic` IS NOT SPECIFIED, BE SURE TO SECURELY STORE THE SEED IN THE RESPONSE!"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "wordList",
+          "description": "If `existingMnemonic` is not set, a mnemonic is generated using the specified wordList."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "wordCount",
+          "description": "If `existingMnemonic` is not set, a mnemonic is generated using the specified wordCount."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "scriptPubKeyType",
+          "description": "the type of wallet to generate"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainWalletOverviewData",
+      "description": "BTCPay Server schema: OnChainWalletOverviewData",
+      "termCode": "OnChainWalletOverviewData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "balance",
+          "description": "The total current balance of the wallet"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "unconfirmedBalance",
+          "description": "The current unconfirmed balance of the wallet"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "confirmedBalance",
+          "description": "The current confirmed balance of the wallet"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainWalletFeeRateData",
+      "description": "BTCPay Server schema: OnChainWalletFeeRateData",
+      "termCode": "OnChainWalletFeeRateData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "feeRate",
+          "description": "The fee rate (sats per byte) based on the wallet's configured recommended block confirmation target"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainWalletAddressData",
+      "description": "BTCPay Server schema: OnChainWalletAddressData",
+      "termCode": "OnChainWalletAddressData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "address",
+          "description": "The bitcoin address"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "keyPath",
+          "description": "the derivation path in relation to the HD account"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentLink",
+          "description": "a bip21 payment link"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "TransactionStatus",
+      "description": "BTCPay Server schema: TransactionStatus",
+      "termCode": "TransactionStatus"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LabelData",
+      "description": "BTCPay Server schema: LabelData",
+      "termCode": "LabelData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "type",
+          "description": "The type of label"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "text",
+          "description": "Information about this label"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainWalletTransactionData",
+      "description": "BTCPay Server schema: OnChainWalletTransactionData",
+      "termCode": "OnChainWalletTransactionData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "transactionHash",
+          "description": "The transaction id"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "comment",
+          "description": "A comment linked to the transaction"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "The amount the wallet balance changed with this transaction"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "blockHash",
+          "description": "The hash of the block that confirmed this transaction. Null if still unconfirmed."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "blockHeight",
+          "description": "The height of the block that confirmed this transaction. Null if still unconfirmed."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "confirmations",
+          "description": "The number of confirmations for this transaction"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "timestamp",
+          "description": "The time of the transaction"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "status",
+          "description": "The status of this transaction"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "labels",
+          "description": "Labels linked to this transaction"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainWalletUTXOData",
+      "description": "BTCPay Server schema: OnChainWalletUTXOData",
+      "termCode": "OnChainWalletUTXOData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "comment",
+          "description": "A comment linked to this utxo"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "the value of this utxo"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "link",
+          "description": "a link to the configured blockchain explorer to view the utxo"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "outpoint",
+          "description": "outpoint of this utxo"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "timestamp",
+          "description": "The time of the utxo"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "keyPath",
+          "description": "the derivation path in relation to the HD account"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "address",
+          "description": "The wallet address of this utxo"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "confirmations",
+          "description": "The number of confirmations of this utxo"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "labels",
+          "description": "Labels linked to this transaction"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreateOnChainTransactionRequestDestination",
+      "description": "BTCPay Server schema: CreateOnChainTransactionRequestDestination",
+      "termCode": "CreateOnChainTransactionRequestDestination",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "destination",
+          "description": "A wallet address or a BIP21 payment link"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "The amount to send. If `destination` is a BIP21 link, the amount must be the same or null."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "subtractFromAmount",
+          "description": "Whether to subtract the transaction fee from the provided amount. This makes the receiver receive less, or in other words: he or she pays the transaction fee. Also useful if you want to clear out your wallet. Must be false if `destination` is a BIP21 link"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreateOnChainTransactionRequest",
+      "description": "BTCPay Server schema: CreateOnChainTransactionRequest",
+      "termCode": "CreateOnChainTransactionRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "destinations",
+          "description": "What and where to send money"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "feerate",
+          "description": "Transaction fee."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "proceedWithPayjoin",
+          "description": "Whether to attempt to do a BIP78 payjoin if one of the destinations is a BIP21 with payjoin enabled"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "proceedWithBroadcast",
+          "description": "Whether to broadcast the transaction after creating it or to simply return the transaction in hex format."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "signWithSeed",
+          "description": "If false, build an unsigned PSBT and skip server-side signing (use the CreateOnChainTransactionPSBT client helper)."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "noChange",
+          "description": "Whether to send all the spent coins to the destinations (THIS CAN COST YOU SIGNIFICANT AMOUNTS OF MONEY, LEAVE FALSE UNLESS YOU KNOW WHAT YOU ARE DOING)."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "rbf",
+          "description": "Whether to enable RBF for the transaction. Leave blank to have it random (beneficial to privacy)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "excludeUnconfirmed",
+          "description": "Whether to exclude unconfirmed UTXOs from the transaction."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "selectedInputs",
+          "description": "Restrict the creation of the transactions from the outpoints provided ONLY (coin selection)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PatchOnChainTransactionRequest",
+      "description": "BTCPay Server schema: PatchOnChainTransactionRequest",
+      "termCode": "PatchOnChainTransactionRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "comment",
+          "description": "Transaction comment"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "labels",
+          "description": "Transaction labels"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreateOnChainTransactionResponse",
+      "description": "BTCPay Server schema: CreateOnChainTransactionResponse",
+      "termCode": "CreateOnChainTransactionResponse",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "psbt",
+          "description": "Unsigned PSBT in base64 format"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "BroadcastOnChainTransactionRequest",
+      "description": "BTCPay Server schema: BroadcastOnChainTransactionRequest",
+      "termCode": "BroadcastOnChainTransactionRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "transaction",
+          "description": "A finalized PSBT (base64) or raw transaction hex string"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainWalletObjectId",
+      "description": "BTCPay Server schema: OnChainWalletObjectId",
+      "termCode": "OnChainWalletObjectId",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "type",
+          "description": "The type of wallet object"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The identifier of the wallet object (unique per type, per wallet)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "AddOnChainWalletObjectLinkRequest",
+      "description": "BTCPay Server schema: AddOnChainWalletObjectLinkRequest",
+      "termCode": "AddOnChainWalletObjectLinkRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "data",
+          "description": "The data of the link"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainWalletObjectLink",
+      "description": "BTCPay Server schema: OnChainWalletObjectLink",
+      "termCode": "OnChainWalletObjectLink",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "type",
+          "description": "The type of wallet object"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The identifier of the wallet object (unique per type, per wallet)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "linkData",
+          "description": "The data of the link"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "objectData",
+          "description": "The data of the neighbour's node (`null` if there isn't any data or `includeNeighbourData` is `false`)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnChainWalletObjectData",
+      "description": "BTCPay Server schema: OnChainWalletObjectData",
+      "termCode": "OnChainWalletObjectData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "data",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "links",
+          "description": "Links of this object"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "RoleData",
+      "description": "BTCPay Server schema: RoleData",
+      "termCode": "RoleData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "role",
+          "description": "The role's name"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "permissions",
+          "description": "The permissions attached to this role"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isServerRole",
+          "description": "Whether this role is at the scope of the store or scope of the server"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "StoreDataList",
+      "description": "BTCPay Server schema: StoreDataList",
+      "termCode": "StoreDataList"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "StoreData",
+      "description": "BTCPay Server schema: StoreData",
+      "termCode": "StoreData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PaymentMethodCriteriaData",
+      "description": "BTCPay Server schema: PaymentMethodCriteriaData",
+      "termCode": "PaymentMethodCriteriaData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "paymentMethodId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "currencyCode",
+          "description": "The currency"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "amount",
+          "description": "The amount"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "above",
+          "description": "If the criterion is for above or below the amount"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "StoreBaseData",
+      "description": "BTCPay Server schema: StoreBaseData",
+      "termCode": "StoreBaseData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "The name of the store"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "website",
+          "description": "The absolute url of the store"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "supportUrl",
+          "description": "The support URI of the store, can contain the placeholders `{OrderId}` and `{InvoiceId}`. Can be any valid URI, such as a website, email, and nostr."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "logoUrl",
+          "description": "Absolute URL to a logo file or a reference to an uploaded file id with `fileid:ID`"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cssUrl",
+          "description": "Absolute URL to CSS file to customize the public/customer-facing pages of the store. (Invoice, Payment Request, Pull Payment, etc.) or a reference to an uploaded file id with `fileid:ID`"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentSoundUrl",
+          "description": "Absolute URL to a sound file or a reference to an uploaded file id with `fileid:ID`"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "brandColor",
+          "description": "The brand color of the store in HEX format"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "applyBrandColorToBackend",
+          "description": "Apply the brand color to the store's backend as well"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "defaultCurrency",
+          "description": "The default currency of the store"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "additionalTrackedRates",
+          "description": "Additional rates to track.\nThe rates of those currencies, in addition to the default currency, will be recorded when a new invoice is created. The rates will then be accessible through reports."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invoiceExpiration",
+          "description": "The time after which an invoice is considered expired if not paid. The value will be rounded down to a minute."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "refundBOLT11Expiration",
+          "description": "The minimum expiry of BOLT11 invoices accepted for refunds by default. (in days)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "displayExpirationTimer",
+          "description": "The time left that will trigger the countdown timer on the checkout page to be shown. The value will be rounded down to a minute."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "monitoringExpiration",
+          "description": "The time after which an invoice which has been paid but not confirmed will be considered invalid. The value will be rounded down to a minute."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "speedPolicy",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "lightningDescriptionTemplate",
+          "description": "The BOLT11 description of the lightning invoice in the checkout. You can use placeholders '{StoreName}', '{ItemDescription}' and '{OrderId}'."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentTolerance",
+          "description": "Consider an invoice fully paid, even if the payment is missing 'x' % of the full amount."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "archived",
+          "description": "If true, the store does not appear in the stores list by default."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anyoneCanCreateInvoice",
+          "description": "If true, then no authentication is needed to create invoices on this store."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "receipt",
+          "description": "Additional settings to customize the public receipt"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "lightningAmountInSatoshi",
+          "description": "If true, lightning payment methods show amount in satoshi in the checkout page."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "lightningPrivateRouteHints",
+          "description": "Should private route hints be included in the lightning payment of the checkout page."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "onChainWithLnInvoiceFallback",
+          "description": "Unify on-chain and lightning payment URL."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "redirectAutomatically",
+          "description": "After successful payment, should the checkout page redirect the user automatically to the redirect URL of the invoice?"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "showRecommendedFee",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "recommendedFeeBlockTarget",
+          "description": "The fee rate recommendation in the checkout page for the on-chain payment to be confirmed after 'x' blocks."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "defaultLang",
+          "description": "The default language to use in the checkout page. (The different translations available are listed [here](https://github.com/btcpayserver/btcpayserver/tree/master/BTCPayServer/wwwroot/locales)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "htmlTitle",
+          "description": "The HTML title of the checkout page (when you over the tab in your browser)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "networkFeeMode",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "payJoinEnabled",
+          "description": "If true, payjoin will be proposed in the checkout page if possible. ([More information](https://docs.btcpayserver.org/Payjoin/))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "autoDetectLanguage",
+          "description": "If true, the language on the checkout page will adapt to the language defined by the user's browser settings"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "showPayInWalletButton",
+          "description": "If true, the \"Pay in wallet\" button will be shown on the checkout page (Checkout V2)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "showStoreHeader",
+          "description": "If true, the store header will be shown on the checkout page (Checkout V2)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "celebratePayment",
+          "description": "If true, payments on the checkout page will be celebrated with confetti (Checkout V2)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "playSoundOnPayment",
+          "description": "If true, sounds on the checkout page will be enabled (Checkout V2)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "lazyPaymentMethods",
+          "description": "If true, payment methods are enabled individually upon user interaction in the invoice"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "defaultPaymentMethod",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "paymentMethodCriteria",
+          "description": "The criteria required to activate specific payment methods."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "NetworkFeeMode",
+      "description": "Check whether network fee should be added to the invoice if on-chain payment is used. ([More information](https://docs.btcpayserver.org/FAQ/Stores/#add-network-fee-to-invoice-vary-with-mining-fees))",
+      "termCode": "NetworkFeeMode"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PortalSessionId",
+      "description": "Identifier of the portal session.",
+      "termCode": "PortalSessionId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PlanCheckoutId",
+      "description": "Unique identifier of the plan checkout session.",
+      "termCode": "PlanCheckoutId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OnPayBehavior",
+      "description": "Defines how the system should behave when payment is processed during a plan checkout or migration.\n* `SoftMigration`: Starts the plan only if payment is due. If no payment is due yet, the amount is added as credit instead of starting the plan.\n* `HardMigration`: Starts the plan immediately, even if payment is not due. If the user already paid for unused time, the unused portion is refunded before starting the plan.",
+      "termCode": "OnPayBehavior"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PlanCheckoutModel",
+      "description": "Represents a checkout session for activating or purchasing a subscription plan.",
+      "termCode": "PlanCheckoutModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "subscriber",
+          "description": "Subscriber associated with the checkout. (It can be null if the checkout is for a new subscriber, and the users didn't [proceed with the checkout](#operation/ProceedPlanCheckout))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "plan",
+          "description": "Plan being purchased or activated."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "baseUrl",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invoiceId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "successRedirectUrl",
+          "description": "URL to redirect the user after checkout success. (The `checkoutPlanId` query parameter will be added to the URL.)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "expiration",
+          "description": "Checkout expiration timestamp."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "redirectUrl",
+          "description": "URL where the user is redirected to proceed with payment."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invoiceMetadata",
+          "description": "Custom metadata that will be attached to the invoice when it is created."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": "Custom metadata for the checkout."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "newSubscriber",
+          "description": "Indicates whether the checkout is for a new subscriber."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isTrial",
+          "description": "Indicates if the checkout activates a trial."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "created",
+          "description": "Timestamp when checkout was created."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "planStarted",
+          "description": "Indicates if the plan has already been activated."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "newSubscriberMetadata",
+          "description": "Metadata for creating a new subscriber."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "refundAmount",
+          "description": "Refund amount applied during migration."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creditedByInvoice",
+          "description": "Amount credited due to invoice settlement."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "onPayBehavior",
+          "description": "Defines how to apply payment behavior."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isExpired",
+          "description": "Indicates whether the checkout session has expired."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "url",
+          "description": "Public URL for accessing the checkout session."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creditPurchase",
+          "description": "Credit amount to purchase to top-up the account. Used when the user wants to top-up his credits. This will not automatically renew the plan."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreatePlanCheckoutRequest",
+      "description": "Request payload for initiating a plan checkout session.",
+      "termCode": "CreatePlanCheckoutRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "storeId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "offeringId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "planId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customerSelector",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "durationMinutes",
+          "description": "How long the checkout session is valid, in minutes."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "onPayBehavior",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "newSubscriberMetadata",
+          "description": "Metadata used when creating a new subscriber."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invoiceMetadata",
+          "description": "Metadata attached to the created invoice."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": "Custom metadata for the checkout session."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isTrial",
+          "description": "Indicates if the checkout starts a trial."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creditPurchase",
+          "description": "Amount of credit to purchase."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "successRedirectLink",
+          "description": "URL to redirect the user after checkout success. (This default to offering's successRedirectLink, also, the `checkoutPlanId` query parameter will be added to the URL.)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "newSubscriberEmail",
+          "description": "Email address for creating a new subscriber. Keep `null` to let the user choose an email address in the checkout page."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "SuspendSubscriberRequest",
+      "description": "Request payload for suspending a subscriber.",
+      "termCode": "SuspendSubscriberRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "reason",
+          "description": "Reason for the suspension."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateSubscriberDatesRequest",
+      "description": "Request payload for updating subscriber dates. All fields are optional \u2014 omitting a field leaves the corresponding date unchanged.",
+      "termCode": "UpdateSubscriberDatesRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "startDate",
+          "description": "New subscription start date as a Unix timestamp. Omit to leave the current start date unchanged."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "expirationDate",
+          "description": "New expiration date as a Unix timestamp. Updates `trialEnd` if the subscriber is in a trial, otherwise updates `periodEnd`. Grace period end and reminder date are recalculated automatically. Omit to leave the current expiration date unchanged."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CustomerSelector",
+      "description": "Flexible identifier for selecting a customer. Supports: customer ID (e.g., `cust_abc123`), an email (e.g., `user@example.com`), or a key/value identity (e.g., `Email:user@example.com`).",
+      "termCode": "CustomerSelector"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PlanId",
+      "description": "Plan's ID",
+      "termCode": "PlanId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OfferingId",
+      "description": "Offering's ID",
+      "termCode": "OfferingId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreateOfferingModel",
+      "description": "New offering data to create.",
+      "termCode": "CreateOfferingModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "appName",
+          "description": "Display name of the related [application](#tag/Apps)."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "successRedirectUrl",
+          "description": "The default URL to redirect to after a plan checkout is successful."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": "Custom metadata for the offering."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "features",
+          "description": "List of features included in this offering."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CustomerId",
+      "description": "Unique identifier of the customer.",
+      "termCode": "CustomerId"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CustomerModel",
+      "description": "Represents a customer associated with a store.",
+      "termCode": "CustomerModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "storeId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "externalId",
+          "description": "External system identifier for the customer."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "identities",
+          "description": "Identity attributes for matching and lookup (e.g., email, username)."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": "Custom metadata associated with the customer."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "SubscriberModel",
+      "description": "Represents a subscriber of an offering.",
+      "termCode": "SubscriberModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "created",
+          "description": "Timestamp when the subscription was created."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customer",
+          "description": "Customer associated with the subscription."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "offering",
+          "description": "Offering associated with the subscription."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "plan",
+          "description": "Current active plan of the subscriber."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "periodEnd",
+          "description": "End of the current billing period."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "trialEnd",
+          "description": "End of the subscriber's trial period."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gracePeriodEnd",
+          "description": "End of the grace period."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isActive",
+          "description": "Indicates if the subscription is active. (Phase is not `Expired`, and not suspended)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isSuspended",
+          "description": "Indicates if the subscription is suspended."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "suspensionReason",
+          "description": "Reason for suspension, if applicable."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "autoRenew",
+          "description": "Indicates if the subscription renews automatically."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": "Custom metadata for the subscription."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processingInvoiceId",
+          "description": "ID of the invoice being processed."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nextPlan",
+          "description": "Plan scheduled for next billing cycle."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "scheduledPlan",
+          "description": "Plan scheduled to activate at the end of the current billing period."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "scheduledPlanActivatesAt",
+          "description": "Timestamp when the scheduled plan change will activate."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "phase",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OfferingModel",
+      "description": "BTCPay Server schema: OfferingModel",
+      "termCode": "OfferingModel"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "UpdateCreditRequest",
+      "description": "Request payload for updating subscriber credit.",
+      "termCode": "UpdateCreditRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "credit",
+          "description": "Amount of credit to add as a numeric string."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "charge",
+          "description": "Amount to deduct as a numeric string."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "Short description explaining the credit change."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "allowOverdraft",
+          "description": "Indicates if the credit balance is allowed to go negative."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreditModel",
+      "description": "Represents a subscriber's credit balance in a specific currency.",
+      "termCode": "CreditModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "currency",
+          "description": "Currency code of the credit balance."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "value",
+          "description": "Current credit value as a numeric string."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreatePlanRequest",
+      "description": "Request payload for creating a new offering plan.",
+      "termCode": "CreatePlanRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "Display name of the plan."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "Short description of the plan."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "currency",
+          "description": "Currency code for the plan price."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gracePeriodDays",
+          "description": "Number of grace period days after expiry."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "optimisticActivation",
+          "description": "Indicates if the plan is activated before payment confirmation."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "price",
+          "description": "Price of the plan as a numeric string."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "renewable",
+          "description": "Indicates if the plan can be renewed."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "trialDays",
+          "description": "Number of trial days before billing."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": "Custom metadata for the plan."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "recurringType",
+          "description": "Recurring interval for billing."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "features",
+          "description": "List of features from the offering included in this plan."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "CreatePortalSessionRequest",
+      "description": "Request payload for creating a subscriber portal session.",
+      "termCode": "CreatePortalSessionRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "storeId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "offeringId",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customerSelector",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "durationMinutes",
+          "description": "Duration in minutes before the portal session expires."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "PortalSessionModel",
+      "description": "Represents a subscriber portal session used for managing subscriptions, billing, and account details.",
+      "termCode": "PortalSessionModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "baseUrl",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "subscriber",
+          "description": "The subscriber associated with this portal session."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "expiration",
+          "description": "Expiration timestamp for the portal session."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isExpired",
+          "description": "Indicates whether the portal session is expired."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "url",
+          "description": "Public URL where the subscriber can access the portal session."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "SubscriptionPhase",
+      "description": "Lifecycle phase of the subscription.",
+      "termCode": "SubscriptionPhase"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "FeatureModel",
+      "description": "Represents a feature that can be included in an offering or plan.",
+      "termCode": "FeatureModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "Unique identifier of the feature."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "Short description of the feature."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "OfferingPlanModel",
+      "description": "Represents a pricing plan for an offering.",
+      "termCode": "OfferingPlanModel",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "Display name of the plan."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "status",
+          "description": "Current status of the plan."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "price",
+          "description": "Price of the plan as a numeric string."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "currency",
+          "description": "Currency code for the price."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "recurringType",
+          "description": "Recurring interval for billing."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gracePeriodDays",
+          "description": "Number of grace period days after expiry."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "trialDays",
+          "description": "Number of trial days before billing."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "description",
+          "description": "Short description of the plan."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "memberCount",
+          "description": "Maximum number of members allowed under this plan."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "optimisticActivation",
+          "description": "Indicates if the plan is activated before payment confirmation."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "features",
+          "description": "List of feature identifiers included in this plan."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "renewable",
+          "description": "Indicates if the plan can be renewed."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "metadata",
+          "description": "Custom metadata for the plan."
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookSubscriptionEvent",
+      "description": "Base data for subscription webhooks.",
+      "termCode": "WebhookSubscriptionEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookSubscriberEvent",
+      "description": "Callback sent for subscription events tied to a subscriber.",
+      "termCode": "WebhookSubscriberEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookSubscriberCreditedEvent",
+      "description": "Callback sent if the `type` is `SubscriberCredited`",
+      "termCode": "WebhookSubscriberCreditedEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookSubscriberChargedEvent",
+      "description": "Callback sent if the `type` is `SubscriberCharged`",
+      "termCode": "WebhookSubscriberChargedEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookSubscriberPhaseChangedEvent",
+      "description": "Callback sent if the `type` is `SubscriberPhaseChanged`",
+      "termCode": "WebhookSubscriberPhaseChangedEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookSubscriberDisabledReason",
+      "description": "Reason why the subscriber was disabled.",
+      "termCode": "WebhookSubscriberDisabledReason"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookSubscriberDisabledEvent",
+      "description": "Callback sent if the `type` is `SubscriberDisabled`",
+      "termCode": "WebhookSubscriberDisabledEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookPlanStartedEvent",
+      "description": "Callback sent if the `type` is `PlanStarted`",
+      "termCode": "WebhookPlanStartedEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ApplicationUserData",
+      "description": "BTCPay Server schema: ApplicationUserData",
+      "termCode": "ApplicationUserData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The id of the user"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "email",
+          "description": "The email of the user"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "The name of the user"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "imageUrl",
+          "description": "The profile picture URL of the user"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "invitationUrl",
+          "description": "The pending invitation URL of the user"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "emailConfirmed",
+          "description": "True if the email has been confirmed by the user"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "requiresEmailConfirmation",
+          "description": "True if the email requires confirmation to log in"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "approved",
+          "description": "True if an admin has approved the user"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "requiresApproval",
+          "description": "True if the instance requires approval to log in"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "storeQuota",
+          "description": "Per-user override for the max number of stores this user can create. Null means the server default applies"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "created",
+          "description": "The creation date of the user as a unix timestamp. Null if created before v1.0.5.6"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "disabled",
+          "description": "True if an admin has disabled the user"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "roles",
+          "description": "The roles of the user"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "LockUserRequest",
+      "description": "BTCPay Server schema: LockUserRequest",
+      "termCode": "LockUserRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "locked",
+          "description": "Whether to lock or unlock the user"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ApproveUserRequest",
+      "description": "BTCPay Server schema: ApproveUserRequest",
+      "termCode": "ApproveUserRequest",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "approved",
+          "description": "Whether to approve or unapprove the user"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookDeliveryList",
+      "description": "BTCPay Server schema: WebhookDeliveryList",
+      "termCode": "WebhookDeliveryList"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookDeliveryData",
+      "description": "BTCPay Server schema: WebhookDeliveryData",
+      "termCode": "WebhookDeliveryData",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "The id of the delivery"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "timestamp",
+          "description": "Timestamp of when the delivery should have been broadcasted"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "deliveryTime",
+          "description": "Timestamp of when the delivery has actually been broadcasted. A delay with `timestamp` means your service either failed to process earlier deliveries or is taking too long to respond."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "httpCode",
+          "description": "HTTP code received by the remote service, if any."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "errorMessage",
+          "description": "User friendly error message, if any."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "status",
+          "description": "Whether the delivery failed or not (possible values are: `Failed`, `HttpError`, `HttpSuccess`)"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookDataList",
+      "description": "BTCPay Server schema: WebhookDataList",
+      "termCode": "WebhookDataList"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookData",
+      "description": "BTCPay Server schema: WebhookData",
+      "termCode": "WebhookData"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookDataCreate",
+      "description": "BTCPay Server schema: WebhookDataCreate",
+      "termCode": "WebhookDataCreate"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookDataCreateResult",
+      "description": "BTCPay Server schema: WebhookDataCreateResult",
+      "termCode": "WebhookDataCreateResult"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookDataUpdate",
+      "description": "BTCPay Server schema: WebhookDataUpdate",
+      "termCode": "WebhookDataUpdate"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookDataBase",
+      "description": "BTCPay Server schema: WebhookDataBase",
+      "termCode": "WebhookDataBase",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "enabled",
+          "description": "Whether this webhook is enabled or not"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "automaticRedelivery",
+          "description": "If true, BTCPay Server will retry to redeliver any failed delivery after 10 seconds, 1 minutes and up to 6 times after 10 minutes."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "url",
+          "description": "The endpoint where BTCPay Server will make the POST request with the webhook body"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "authorizedEvents",
+          "description": "Which event should be received by this endpoint"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookEvent",
+      "description": "BTCPay Server schema: WebhookEvent",
+      "termCode": "WebhookEvent",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "deliveryId",
+          "description": "The delivery id of the webhook"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "webhookId",
+          "description": "The id of the webhook"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "originalDeliveryId",
+          "description": "If this delivery is a redelivery, the is the delivery id of the original delivery."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "isRedelivery",
+          "description": "True if this delivery is a redelivery"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "type",
+          "description": "The type of this event, current available are `InvoiceCreated`, `InvoiceReceivedPayment`, `InvoiceProcessing`, `InvoiceExpired`, `InvoiceSettled`, `InvoiceInvalid`, `InvoicePaymentSettled`, `PaymentRequestCreated`, `PaymentRequestUpdated`, `PaymentRequestArchived`, `PaymentRequestStatusChanged`, `PayoutCreated`, `PayoutApproved`, `PayoutUpdated`, `SubscriberCreated`, `SubscriberCredited`, `SubscriberCharged`, `SubscriberActivated`, `SubscriberPhaseChanged`, `SubscriberDisabled`, `PaymentReminder`, `PlanStarted`, and `SubscriberNeedUpgrade`."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "timestamp",
+          "description": "The timestamp when this delivery has been created"
+        }
+      ]
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookInvoiceEvent",
+      "description": "BTCPay Server schema: WebhookInvoiceEvent",
+      "termCode": "WebhookInvoiceEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookInvoiceSettledEvent",
+      "description": "Callback sent if the `type` is `InvoiceSettled`",
+      "termCode": "WebhookInvoiceSettledEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookInvoiceInvalidEvent",
+      "description": "Callback sent if the `type` is `InvoiceInvalid`",
+      "termCode": "WebhookInvoiceInvalidEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookInvoiceProcessingEvent",
+      "description": "Callback sent if the `type` is `InvoiceProcessing`",
+      "termCode": "WebhookInvoiceProcessingEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookInvoiceReceivedPaymentEvent",
+      "description": "Callback sent if the `type` is `InvoiceReceivedPayment`",
+      "termCode": "WebhookInvoiceReceivedPaymentEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookInvoicePaymentSettledEvent",
+      "description": "Callback sent if the `type` is `InvoicePaymentSettled`",
+      "termCode": "WebhookInvoicePaymentSettledEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "WebhookInvoiceExpiredEvent",
+      "description": "Callback sent if the `type` is `InvoiceExpired`",
+      "termCode": "WebhookInvoiceExpiredEvent"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "API Keys",
+      "description": "API Key operations",
+      "termCode": "tag:API Keys"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Apps",
+      "description": "App operations",
+      "termCode": "tag:Apps"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Crowdfund",
+      "description": "Crowdfund operations",
+      "termCode": "tag:Crowdfund"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Point of Sale",
+      "description": "Point of Sale operations",
+      "termCode": "tag:Point of Sale"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Authorization",
+      "description": "Authorization operations",
+      "termCode": "tag:Authorization"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Files",
+      "description": "File operations",
+      "termCode": "tag:Files"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Health",
+      "description": "Health operations",
+      "termCode": "tag:Health"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Invoices",
+      "description": "Invoice operations",
+      "termCode": "tag:Invoices"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Lightning (Internal Node)",
+      "description": "Lightning (Internal Node) operations",
+      "termCode": "tag:Lightning (Internal Node)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Lightning (Store)",
+      "description": "Lightning (Store) operations",
+      "termCode": "tag:Lightning (Store)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Miscelleneous",
+      "description": "Miscelleneous operations",
+      "termCode": "tag:Miscelleneous"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Notifications (Current User)",
+      "description": "Notifications operations",
+      "termCode": "tag:Notifications (Current User)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Payment Requests",
+      "description": "Payment Requests operations",
+      "termCode": "tag:Payment Requests"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Stores (Payout Processors)",
+      "description": "Stores (Payout Processors) operations",
+      "termCode": "tag:Stores (Payout Processors)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Payout Processors",
+      "description": "Payout Processors operations",
+      "termCode": "tag:Payout Processors"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Pull payments (Management)",
+      "description": "Pull payments (Management) operations",
+      "termCode": "tag:Pull payments (Management)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Pull payments (Public)",
+      "description": "Pull payments (Public) operations",
+      "termCode": "tag:Pull payments (Public)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Pull payments payout (Public)",
+      "description": "Pull payments payout (Public) operations",
+      "termCode": "tag:Pull payments payout (Public)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Stores (Payouts)",
+      "description": "Store pull payment payout operations",
+      "termCode": "tag:Stores (Payouts)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ServerEmail",
+      "description": "Server Email Settings operations",
+      "termCode": "tag:ServerEmail"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "ServerInfo",
+      "description": "Server Info operations",
+      "termCode": "tag:ServerInfo"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Stores (Email)",
+      "description": "Store Emails operations",
+      "termCode": "tag:Stores (Email)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Lightning address",
+      "description": "Lightning address configuration",
+      "termCode": "tag:Lightning address"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Store (Payment Methods)",
+      "description": "Store Payment Methods operations",
+      "termCode": "tag:Store (Payment Methods)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Stores (Rates)",
+      "description": "Stores rate information and configuration",
+      "termCode": "tag:Stores (Rates)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Stores (Users)",
+      "description": "Store Users operations",
+      "termCode": "tag:Stores (Users)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Store Wallet (On Chain)",
+      "description": "Store Wallet (On Chain) operations",
+      "termCode": "tag:Store Wallet (On Chain)"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Stores",
+      "description": "Store operations",
+      "termCode": "tag:Stores"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Subscriptions",
+      "description": "Subscription operations",
+      "termCode": "tag:Subscriptions"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Users",
+      "description": "User operations",
+      "termCode": "tag:Users"
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "Webhooks",
+      "description": "Webhook operations",
+      "termCode": "tag:Webhooks"
+    }
+  ]
+}
