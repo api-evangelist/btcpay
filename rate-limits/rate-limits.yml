@@ -1,0 +1,33 @@
+name: BTCPay Server Rate Limits
+description: >-
+  BTCPay Server is self-hosted open-source software. Rate limiting behavior is
+  determined by the server administrator and the hosting environment, not by a
+  central vendor. The BTCPay Server software includes configurable rate limiting
+  functionality (using AspNetCoreRateLimit or equivalent middleware) that
+  operators may enable, tune, or disable entirely.
+rateLimits:
+  - name: Default API Rate Limit
+    description: >-
+      No hard rate limit is enforced by default in the standard BTCPay Server
+      distribution. Server administrators may configure rate limiting via
+      environment variables or appsettings.json. Common configurations limit
+      requests per IP or per API key per minute.
+    requests: null
+    period: null
+    scope: per instance (operator-configured)
+    enforcement: optional
+  - name: Lightning Network Operations
+    description: >-
+      Lightning Network API calls (opening channels, paying invoices, etc.) may
+      be subject to additional throttling at the node level, independent of the
+      HTTP API rate limit configuration.
+    requests: null
+    period: null
+    scope: per Lightning node
+    enforcement: node-dependent
+notes: >-
+  Operators deploying BTCPay Server at scale should review the ASP.NET Core
+  rate limiting middleware options and the BTCPay Server documentation on
+  server administration. Third-party hosting providers set their own limits and
+  terms of service.
+url: https://docs.btcpayserver.org/Administration/

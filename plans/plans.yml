@@ -1,0 +1,49 @@
+name: BTCPay Server Plans
+description: >-
+  BTCPay Server is free and open-source software released under the MIT license.
+  There are no SaaS subscription tiers or licensing fees. Users may self-host
+  at no cost on their own infrastructure, or choose a third-party BTCPay Server
+  hosting provider. Community-run shared servers ("third-party hosts") may
+  charge their own fees, but the software itself is always free.
+plans:
+  - name: Self-Hosted (Free)
+    description: >-
+      Download and run BTCPay Server on your own hardware or cloud VPS.
+      Full access to all features including stores, invoices, Lightning Network,
+      wallets, plugins, and the complete Greenfield REST API.
+    price: 0
+    currency: USD
+    unit: ""
+    rateLimits: none
+    features:
+      - Full Greenfield REST API access
+      - Unlimited stores and invoices
+      - Lightning Network (LND, CLN, Eclair)
+      - On-chain Bitcoin wallet
+      - Point-of-sale apps
+      - Payment buttons and links
+      - Pull payments and payouts
+      - Webhooks and notifications
+      - Plugin/extension system
+      - WooCommerce, Shopify, Magento integrations
+      - No transaction fees
+      - No third-party dependency
+  - name: Third-Party Hosted
+    description: >-
+      Community-run BTCPay Server instances that host the software on behalf of
+      merchants. Fees and feature sets vary by provider. See the official list
+      of third-party hosts at btcpayserver.org/third-party-hosts/.
+    price: varies
+    currency: USD
+    unit: month
+    rateLimits: varies
+    features:
+      - Managed BTCPay Server instance
+      - Greenfield REST API access (host-dependent)
+      - Varies by hosting provider
+notes: >-
+  Because BTCPay Server is self-hosted open-source software, API rate limits,
+  resource quotas, and additional charges are determined entirely by the
+  operator of each instance, not by a central vendor. The software imposes no
+  built-in API call limits beyond those configured by the server administrator.
+url: https://btcpayserver.org/third-party-hosts/

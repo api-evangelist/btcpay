@@ -1,0 +1,102 @@
+name: BTCPay Server
+description: >-
+  BTCPay Server is a self-hosted, open-source Bitcoin and cryptocurrency payment
+  processor with a comprehensive REST API (Greenfield API v1) for managing
+  stores, invoices, wallets, Lightning Network nodes, payment requests, pull
+  payments, webhooks, users, and server configuration. It operates with zero
+  fees, no third-party dependency, and is released under the MIT license.
+image: https://btcpayserver.org/images/btcpay-logo.svg
+tags:
+  - Bitcoin
+  - Cryptocurrency
+  - Payments
+  - Lightning Network
+  - Open Source
+  - Self-Hosted
+created: "2026-06-13"
+modified: "2026-06-13"
+url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/apis.yml
+specificationVersion: "0.19"
+apis:
+  - name: BTCPay Server Greenfield API
+    description: >-
+      The Greenfield API is BTCPay Server's primary REST API, providing
+      programmatic access to stores, invoices, wallets, Lightning Network nodes,
+      payment requests, pull payments, payouts, webhooks, notifications, users,
+      API keys, apps, files, reports, server health, and server configuration.
+      Authentication is via API keys or HTTP Basic Auth. The OpenAPI 3.0
+      specification is served at /swagger/v1/swagger.json on any BTCPay Server
+      instance.
+    image: https://btcpayserver.org/images/btcpay-logo.svg
+    humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+    baseURL: https://{btcpay-host}/api/v1
+    tags:
+      - Bitcoin
+      - Cryptocurrency
+      - Payments
+      - Lightning Network
+      - Invoices
+      - Wallets
+    properties:
+      - type: Documentation
+        url: https://docs.btcpayserver.org/API/Greenfield/v1/
+      - type: OpenAPI
+        url: https://{btcpay-host}/swagger/v1/swagger.json
+      - type: GitHubRepository
+        url: https://github.com/btcpayserver/btcpayserver
+      - type: Authentication
+        url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+      - type: Plans
+        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+      - type: RateLimits
+        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+      - type: FinOps
+        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+    contact:
+      - FN: BTCPay Server Community
+        url: https://chat.btcpayserver.org/
+        email: ""
+    meta:
+      - key: license
+        value: MIT
+      - key: openSource
+        value: "true"
+      - key: selfHosted
+        value: "true"
+      - key: specFormat
+        value: OpenAPI 3.0
+common:
+  - type: Website
+    url: https://btcpayserver.org
+  - type: Documentation
+    url: https://docs.btcpayserver.org
+  - type: GitHubOrganization
+    url: https://github.com/btcpayserver
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Blog
+    url: https://blog.btcpayserver.org
+  - type: Mattermost
+    url: https://chat.btcpayserver.org/
+  - type: Twitter
+    url: https://twitter.com/btcpayserver
+  - type: YouTube
+    url: https://www.youtube.com/c/BTCPayServer
+  - type: Changelog
+    url: https://github.com/btcpayserver/btcpayserver/releases
+  - type: StatusPage
+    url: https://status.btcpayserver.org
+  - type: Support
+    url: https://docs.btcpayserver.org/Support/
+  - type: License
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+  - type: Contributing
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/CONTRIBUTING.md
+  - type: Integrations
+    url: https://docs.btcpayserver.org/Integrations/
+  - type: PrivacyPolicy
+    url: https://btcpayserver.org/privacy-policy/
+maintainers:
+  - FN: API Evangelist
+    url: https://apievangelist.com
+    email: kin@apievangelist.com

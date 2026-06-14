@@ -1,0 +1,65 @@
+name: BTCPay Server FinOps
+description: >-
+  BTCPay Server is free, open-source software (MIT license) with no vendor
+  transaction fees, no API call fees, and no licensing costs. Cost of ownership
+  is limited to infrastructure (hosting, domain, SSL), optional Lightning
+  Network channel liquidity, and operator/developer time. There is no
+  pay-as-you-go metering or usage-based billing from the BTCPay Server project.
+costs:
+  - name: Software License
+    description: Free and open-source under the MIT license.
+    amount: 0
+    currency: USD
+    unit: one-time
+  - name: Transaction Fees
+    description: >-
+      BTCPay Server charges zero transaction fees. Bitcoin on-chain network fees
+      (miner fees) and Lightning Network routing fees are paid to the Bitcoin
+      network, not to BTCPay Server.
+    amount: 0
+    currency: USD
+    unit: per transaction
+  - name: API Usage Fees
+    description: No per-call or per-request API fees of any kind.
+    amount: 0
+    currency: USD
+    unit: per API call
+  - name: Self-Hosted Infrastructure
+    description: >-
+      Typical monthly cost of a VPS (e.g., Hetzner, Vultr, Linode) suitable
+      for running BTCPay Server with Lightning Network support. Costs vary by
+      provider, region, and resource requirements.
+    amount: 5
+    amountMax: 40
+    currency: USD
+    unit: per month
+    note: operator-incurred cost, not charged by BTCPay Server project
+  - name: Third-Party Hosting
+    description: >-
+      Community-run managed BTCPay Server instances. Fees vary by provider.
+      Some providers offer free tiers.
+    amount: 0
+    amountMax: 50
+    currency: USD
+    unit: per month
+    note: charged by individual hosting providers, not BTCPay Server project
+  - name: Lightning Network Channel Liquidity
+    description: >-
+      Optional on-chain Bitcoin required to open Lightning channels. Funds are
+      not fees — they are capital deposited into payment channels and can be
+      recovered when channels are closed.
+    amount: varies
+    currency: BTC
+    unit: one-time deposit per channel
+notes: >-
+  Because BTCPay Server is self-hosted, all FinOps considerations relate to
+  infrastructure and Bitcoin network costs rather than SaaS subscription fees.
+  The project has no revenue model that charges API users; sustainability comes
+  from donations, grants, and sponsorships via OpenCollective and direct
+  contributor funding.
+funding:
+  - name: OpenCollective
+    url: https://opencollective.com/btcpayserver
+  - name: GitHub Sponsors
+    url: https://github.com/sponsors/btcpayserver
+url: https://btcpayserver.org
