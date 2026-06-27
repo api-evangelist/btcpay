@@ -44,7 +44,7 @@ apis:
         url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/openapi/openapi.json
       - type: OpenAPI
         url: https://{btcpay-host}/swagger/v1/swagger.json
-      - type: JSONLd
+      - type: JSONLD
         url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
       - type: Vocabulary
         url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
@@ -88,7 +88,7 @@ common:
     url: https://twitter.com/btcpayserver
   - type: YouTube
     url: https://www.youtube.com/c/BTCPayServer
-  - type: Changelog
+  - type: ChangeLog
     url: https://github.com/btcpayserver/btcpayserver/releases
   - type: StatusPage
     url: https://status.btcpayserver.org
