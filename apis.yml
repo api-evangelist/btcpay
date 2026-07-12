@@ -72,6 +72,10 @@ apis:
       - key: specFormat
         value: OpenAPI 3.0
 common:
+  - type: DomainSecurity
+    url: security/btcpay-domain-security.yml
+  - type: Authentication
+    url: authentication/btcpay-authentication.yml
   - type: Website
     url: https://btcpayserver.org
   - type: Documentation

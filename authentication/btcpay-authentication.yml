@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/openapi.json
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: API_Key
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+  sources:
+  - openapi/openapi.json
+- name: Basic
+  type: http
+  scheme: basic
+  description: HTTP Basic Authentication with email and password
+  sources:
+  - openapi/openapi.json
