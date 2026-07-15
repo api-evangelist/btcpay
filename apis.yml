@@ -72,6 +72,8 @@ apis:
       - key: specFormat
         value: OpenAPI 3.0
 common:
+  - type: AgenticAccess
+    url: agentic-access/btcpay-agentic-access.yml
   - type: DomainSecurity
     url: security/btcpay-domain-security.yml
   - type: Authentication

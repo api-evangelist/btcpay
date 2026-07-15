@@ -1,0 +1,3017 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/openapi.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 195
+  by_action_class:
+    acting: 102
+    connected: 93
+  by_consequence:
+    safety-critical: 6
+    read: 93
+    write: 54
+    physical: 42
+  human_in_the_loop_required: 6
+operations:
+- path: /api/v1/api-keys/{apikey}
+  method: delete
+  operationId: ApiKeys_DeleteApiKey
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - unrestricted
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/users/{idOrEmail}/api-keys/{apikey}
+  method: delete
+  operationId: ApiKeys_DeleteUserApiKey
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - unrestricted
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/api-keys/current
+  method: get
+  operationId: ApiKeys_GetCurrentApiKey
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canmanageusers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/api-keys/current
+  method: delete
+  operationId: ApiKeys_DeleteCurrentApiKey
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/api-keys
+  method: post
+  operationId: ApiKeys_CreateApiKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - unrestricted
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/{idOrEmail}/api-keys
+  method: post
+  operationId: ApiKeys_CreateUserApiKey
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.server.canmanageusers
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/apps/pos
+  method: post
+  operationId: Apps_CreatePointOfSaleApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/apps/pos/{appId}
+  method: put
+  operationId: Apps_PutPointOfSaleApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/apps/pos/{appId}
+  method: get
+  operationId: Apps_GetPointOfSaleApp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/apps/crowdfund/{appId}
+  method: put
+  operationId: Apps_PutCrowdfundApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/apps/crowdfund/{appId}
+  method: get
+  operationId: Apps_GetCrowdfundApp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/apps/crowdfund
+  method: post
+  operationId: Apps_CreateCrowdfundApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/apps/{appId}
+  method: get
+  operationId: Apps_GetApp
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmodifystoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/apps/{appId}
+  method: delete
+  operationId: Apps_DeleteApp
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/apps/{appId}/image
+  method: post
+  operationId: Apps_UploadAppItemImage
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/apps/{appId}/image/{fileId}
+  method: delete
+  operationId: App_DeleteAppItemImage
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/apps/{appId}/sales
+  method: get
+  operationId: Apps_GetAppSales
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmodifystoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/apps/{appId}/top-items
+  method: get
+  operationId: Apps_GetAppTopItems
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmodifystoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/apps
+  method: get
+  operationId: Apps_GetAllAppsForStore
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmodifystoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/apps
+  method: get
+  operationId: Apps_GetAllApps
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmodifystoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api-keys/authorize
+  method: get
+  operationId: ApiKeys_Authorize
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/files
+  method: get
+  operationId: Files_GetFiles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canmodifyserversettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/files
+  method: post
+  operationId: Files_UploadFile
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.server.canmodifyserversettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/files/{fileId}
+  method: get
+  operationId: Files_GetFile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canmodifyserversettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/files/{fileId}
+  method: delete
+  operationId: Files_DeleteFile
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.server.canmodifyserversettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/health
+  method: get
+  operationId: Health_GetHealth
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/invoices
+  method: get
+  operationId: Invoices_GetInvoices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewinvoices
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/invoices
+  method: post
+  operationId: Invoices_CreateInvoice
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.cancreateinvoice
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/invoices/{invoiceId}
+  method: get
+  operationId: Invoices_GetInvoice
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewinvoices
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/invoices/{invoiceId}
+  method: delete
+  operationId: Invoices_ArchiveInvoice
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifyinvoices
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/invoices/{invoiceId}
+  method: put
+  operationId: Invoices_UpdateInvoice
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifyinvoices
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/invoices/{invoiceId}/payment-methods
+  method: get
+  operationId: Invoices_GetInvoicePaymentMethods
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewinvoices
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/invoices/{invoiceId}/status
+  method: post
+  operationId: Invoices_MarkInvoiceStatus
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifyinvoices
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/invoices/{invoiceId}/unarchive
+  method: post
+  operationId: Invoices_UnarchiveInvoice
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifyinvoices
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/invoices/{invoiceId}/payment-methods/{paymentMethodId}/activate
+  method: post
+  operationId: Invoices_ActivatePaymentMethod
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canviewinvoices
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/invoices/{invoiceId}/refund
+  method: post
+  operationId: Invoices_Refund
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.cancreatepullpayments
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/invoices/{invoiceId}/refund/{paymentMethodId}
+  method: get
+  operationId: Invoices_GetInvoiceRefundTriggerData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.cancreatepullpayments
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/lightning/{cryptoCode}/info
+  method: get
+  operationId: InternalLightningNodeApi_GetInfo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/lightning/{cryptoCode}/balance
+  method: get
+  operationId: InternalLightningNodeApi_GetBalance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/lightning/{cryptoCode}/histogram
+  method: get
+  operationId: InternalLightningNodeApi_GetHistogram
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/lightning/{cryptoCode}/connect
+  method: post
+  operationId: InternalLightningNodeApi_ConnectToNode
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/server/lightning/{cryptoCode}/channels
+  method: get
+  operationId: InternalLightningNodeApi_GetChannels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/lightning/{cryptoCode}/channels
+  method: post
+  operationId: InternalLightningNodeApi_OpenChannel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/server/lightning/{cryptoCode}/address
+  method: post
+  operationId: InternalLightningNodeApi_GetDepositAddress
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/server/lightning/{cryptoCode}/payments/{paymentHash}
+  method: get
+  operationId: InternalLightningNodeApi_GetPayment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/lightning/{cryptoCode}/invoices/{id}
+  method: get
+  operationId: InternalLightningNodeApi_GetInvoice
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canviewlightninginvoiceinternalnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/lightning/{cryptoCode}/invoices/pay
+  method: post
+  operationId: InternalLightningNodeApi_PayInvoice
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/server/lightning/{cryptoCode}/invoices
+  method: get
+  operationId: InternalLightningNodeApi_GetInvoices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canviewlightninginvoiceinternalnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/lightning/{cryptoCode}/invoices
+  method: post
+  operationId: InternalLightningNodeApi_CreateInvoice
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.server.cancreatelightninginvoiceinternalnode
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/server/lightning/{cryptoCode}/payments
+  method: get
+  operationId: InternalLightningNodeApi_GetPayments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canuseinternallightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/info
+  method: get
+  operationId: StoreLightningNodeApi_GetInfo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canuselightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/balance
+  method: get
+  operationId: StoreLightningNodeApi_GetBalance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canuselightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/histogram
+  method: get
+  operationId: StoreLightningNodeApi_GetHistogram
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canuselightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/connect
+  method: post
+  operationId: StoreLightningNodeApi_ConnectToNode
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.cancreatelightninginvoice
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/channels
+  method: get
+  operationId: StoreLightningNodeApi_GetChannels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.cancreatelightninginvoice
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/channels
+  method: post
+  operationId: StoreLightningNodeApi_OpenChannel
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.cancreatelightninginvoice
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/address
+  method: post
+  operationId: StoreLightningNodeApi_GetDepositAddress
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.cancreatelightninginvoice
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/payments/{paymentHash}
+  method: get
+  operationId: StoreLightningNodeApi_GetPayment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canuselightningnode
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/invoices/{id}
+  method: get
+  operationId: StoreLightningNodeApi_GetInvoice
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewlightninginvoice
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/invoices/pay
+  method: post
+  operationId: StoreLightningNodeApi_PayInvoice
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.cancreatelightninginvoice
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/invoices
+  method: get
+  operationId: StoreLightningNodeApi_GetInvoices
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewlightninginvoice
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/invoices
+  method: post
+  operationId: StoreLightningNodeApi_CreateInvoice
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.server.cancreatelightninginvoiceinternalnode
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/lightning/{cryptoCode}/payments
+  method: get
+  operationId: StoreLightningNodeApi_GetPayments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.cancreatelightninginvoice
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /misc/rate-sources
+  method: get
+  operationId: GetRateSources
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /misc/permissions
+  method: get
+  operationId: permissionsMetadata
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /misc/lang
+  method: get
+  operationId: langCodes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /i/{invoiceId}
+  method: get
+  operationId: Invoice_Checkout
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users/me/notifications
+  method: get
+  operationId: Notifications_GetNotifications
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.user.canmanagenotificationsforuser
+    - btcpay.user.canviewnotificationsforuser
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users/me/notifications/{id}
+  method: get
+  operationId: Notifications_GetNotification
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.user.canmanagenotificationsforuser
+    - btcpay.user.canviewnotificationsforuser
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users/me/notifications/{id}
+  method: put
+  operationId: Notifications_UpdateNotification
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.canmanagenotificationsforuser
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/me/notifications/{id}
+  method: delete
+  operationId: Notifications_DeleteNotification
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.canmanagenotificationsforuser
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/me/notification-settings
+  method: get
+  operationId: Notifications_GetNotificationSettings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.user.canmanagenotificationsforuser
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users/me/notification-settings
+  method: put
+  operationId: Notifications_UpdateNotificationSettings
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.canmanagenotificationsforuser
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-requests
+  method: get
+  operationId: PaymentRequests_GetPaymentRequests
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewpaymentrequests
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-requests
+  method: post
+  operationId: PaymentRequests_CreatePaymentRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifypaymentrequests
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/payment-requests/{paymentRequestId}
+  method: get
+  operationId: PaymentRequests_GetPaymentRequest
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewpaymentrequests
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/payment-requests/{paymentRequestId}
+  method: delete
+  operationId: PaymentRequests_ArchivePaymentRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifypaymentrequests
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/payment-requests/{paymentRequestId}
+  method: put
+  operationId: PaymentRequests_UpdatePaymentRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifypaymentrequests
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/payment-requests/{paymentRequestId}/pay
+  method: post
+  operationId: PaymentRequests_Pay
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canviewpaymentrequests
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payout-processors
+  method: get
+  operationId: StorePayoutProcessors_GetStorePayoutProcessors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payout-processors/{processor}/{paymentMethodId}
+  method: delete
+  operationId: StorePayoutProcessors_RemoveStorePayoutProcessor
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/payout-processors
+  method: get
+  operationId: PayoutProcessors_GetPayoutProcessors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payout-processors/OnChainAutomatedPayoutSenderFactory/{paymentMethodId}
+  method: get
+  operationId: GreenfieldStoreAutomatedOnChainPayoutProcessorsController_GetStoreOnChainAutomatedPayoutProcessorsForPaymentMethod
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payout-processors/OnChainAutomatedPayoutSenderFactory/{paymentMethodId}
+  method: put
+  operationId: GreenfieldStoreAutomatedOnChainPayoutProcessorsController_UpdateStoreOnChainAutomatedPayoutProcessorForPaymentMethod
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - btcpay.store.canviewstoresettings
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/stores/{storeId}/payout-processors/LightningAutomatedPayoutSenderFactory/{payoutMethodId}
+  method: get
+  operationId: GreenfieldStoreAutomatedLightningPayoutProcessorsController_GetStoreLightningAutomatedPayoutProcessorsForPaymentMethod
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payout-processors/LightningAutomatedPayoutSenderFactory/{payoutMethodId}
+  method: put
+  operationId: GreenfieldStoreAutomatedLightningPayoutProcessorsController_UpdateStoreLightningAutomatedPayoutProcessor
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - btcpay.store.canviewstoresettings
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/stores/{storeId}/payout-processors/OnChainAutomatedTransferSenderFactory
+  method: get
+  operationId: GreenfieldStoreAutomatedOnChainPayoutProcessorsController_GetStoreOnChainAutomatedTransferSenderFactory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payout-processors/OnChainAutomatedTransferSenderFactory
+  method: put
+  operationId: GreenfieldStoreAutomatedOnChainPayoutProcessorsController_UpdateStoreOnChainAutomatedTransferSenderFactory
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - btcpay.store.canviewstoresettings
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /api/v1/stores/{storeId}/payout-processors/LightningAutomatedPayoutSenderFactory
+  method: get
+  operationId: GreenfieldStoreAutomatedLightningPayoutProcessorsController_GetStoreLightningAutomatedPayoutSenderFactory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/pull-payments/{pullPaymentId}/boltcards
+  method: post
+  operationId: PullPayments_LinkBoltcard
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/pull-payments
+  method: get
+  operationId: PullPayments_GetPullPayments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmanagepullpayments
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/pull-payments
+  method: post
+  operationId: PullPayments_CreatePullPayment
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.cancreatenonapprovedpullpayments
+    - btcpay.store.cancreatepullpayments
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/pull-payments/{pullPaymentId}
+  method: get
+  operationId: PullPayments_GetPullPayment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/pull-payments/{pullPaymentId}
+  method: delete
+  operationId: PullPayments_ArchivePullPayment
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canarchivepullpayments
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/pull-payments/{pullPaymentId}/payouts
+  method: get
+  operationId: PullPayments_GetPayouts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/pull-payments/{pullPaymentId}/payouts
+  method: post
+  operationId: PullPayments_CreatePayout
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/pull-payments/{pullPaymentId}/payouts/{payoutId}
+  method: get
+  operationId: PullPayments_GetPayout
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/pull-payments/{pullPaymentId}/lnurl
+  method: get
+  operationId: PullPayments_GetPullPaymentLNURL
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payouts
+  method: post
+  operationId: Payouts_CreatePayoutThroughStore
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.cancreatenonapprovedpullpayments
+    - btcpay.store.cancreatepullpayments
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payouts
+  method: get
+  operationId: PullPayments_GetStorePayouts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payouts/{payoutId}
+  method: get
+  operationId: GetStorePayout
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmanagepullpayments
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payouts/{payoutId}
+  method: post
+  operationId: PullPayments_ApprovePayout
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagepullpayments
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payouts/{payoutId}
+  method: delete
+  operationId: PullPayments_CancelPayout
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagepullpayments
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payouts/{payoutId}/mark-paid
+  method: post
+  operationId: PullPayments_MarkPayoutPaid
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagepullpayments
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payouts/{payoutId}/mark
+  method: post
+  operationId: PullPayments_MarkPayout
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagepullpayments
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/server/email
+  method: get
+  operationId: ServerEmail_GetSettings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canmodifyserversettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/email
+  method: put
+  operationId: ServerEmail_UpdateSettings
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.server.canmodifyserversettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/server/info
+  method: get
+  operationId: ServerInfo_GetServerInfo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/server/roles
+  method: get
+  operationId: Server_GetStoreRoles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canmodifyserversettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/email
+  method: get
+  operationId: Stores_GetStoreEmailSettings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmodifystoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/email
+  method: put
+  operationId: Stores_UpdateStoreEmailSettings
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/email/send
+  method: post
+  operationId: Stores_SendStoreEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/lightning-addresses
+  method: get
+  operationId: StoreLightningAddresses_GetStoreLightningAddresses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning-addresses/{username}
+  method: get
+  operationId: StoreLightningAddresses_GetStoreLightningAddress
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/lightning-addresses/{username}
+  method: post
+  operationId: StoreLightningAddresses_AddOrUpdateStoreLightningAddress
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/lightning-addresses/{username}
+  method: delete
+  operationId: StoreLightningAddresses_RemoveStoreLightningAddress
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods
+  method: get
+  operationId: StorePaymentMethods_GetStorePaymentMethods
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}
+  method: get
+  operationId: StorePaymentMethods_GetStorePaymentMethod
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}
+  method: put
+  operationId: StorePaymentMethods_UpdateStorePaymentMethod
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}
+  method: delete
+  operationId: StorePaymentMethods_DeleteStorePaymentMethod
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/rates
+  method: get
+  operationId: Stores_GetStoreRates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/rates/configuration/{rateSource}
+  method: get
+  operationId: Stores_GetStoreRateConfiguration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/rates/configuration/{rateSource}
+  method: put
+  operationId: Stores_UpdateStoreRateConfiguration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/rates/configuration/preview
+  method: post
+  operationId: Stores_PreviewStoreRateConfiguration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/users
+  method: get
+  operationId: Stores_GetStoreUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmodifystoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/users
+  method: post
+  operationId: Stores_AddStoreUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/users/{idOrEmail}
+  method: put
+  operationId: Stores_UpdateStoreUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/users/{idOrEmail}
+  method: delete
+  operationId: Stores_RemoveStoreUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet
+  method: get
+  operationId: StoreOnChainWallets_ShowOnChainWalletOverview
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/histogram
+  method: get
+  operationId: StoreOnChainWallets_ShowOnChainWalletHistogram
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/feerate
+  method: get
+  operationId: StoreOnChainWallets_GetOnChainFeeRate
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/address
+  method: get
+  operationId: StoreOnChainWallets_GetOnChainWalletReceiveAddress
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/address
+  method: delete
+  operationId: StoreOnChainWallets_UnReserveOnChainWalletReceiveAddress
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagewallettransactions
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions
+  method: get
+  operationId: StoreOnChainWallets_ShowOnChainWalletTransactions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions
+  method: post
+  operationId: StoreOnChainWallets_CreateOnChainTransaction
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.cancreatetransactions
+    - btcpay.store.cansigntransactions
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions/broadcast
+  method: post
+  operationId: StoreOnChainWallets_BroadcastOnChainTransaction
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canbroadcasttransactions
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions/{transactionId}
+  method: get
+  operationId: StoreOnChainWallets_GetOnChainWalletTransaction
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/transactions/{transactionId}
+  method: patch
+  operationId: StoreOnChainWallets_PatchOnChainWalletTransaction
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagewallettransactions
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/utxos
+  method: get
+  operationId: StoreOnChainWallets_GetOnChainWalletUTXOs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/generate
+  method: post
+  operationId: StoreOnChainPaymentMethods_GenerateOnChainWallet
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/preview
+  method: get
+  operationId: StoreOnChainPaymentMethods_GetOnChainPaymentMethodPreview
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/preview
+  method: post
+  operationId: StoreOnChainPaymentMethods_POSTOnChainPaymentMethodPreview
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagewalletsettings
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects
+  method: get
+  operationId: StoreOnChainWallets_GetOnChainWalletObjects
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects
+  method: post
+  operationId: StoreOnChainWallets_AddOrUpdateOnChainWalletObjects
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagewallettransactions
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects/{objectType}/{objectId}
+  method: get
+  operationId: StoreOnChainWallets_GetOnChainWalletObject
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewwallet
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects/{objectType}/{objectId}
+  method: delete
+  operationId: StoreOnChainWallets_RemoveOnChainWalletObject
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagewallettransactions
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects/{objectType}/{objectId}/links
+  method: post
+  operationId: StoreOnChainWallets_AddOrUpdateOnChainWalletLink
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagewallettransactions
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/payment-methods/{paymentMethodId}/wallet/objects/{objectType}/{objectId}/links/{linkType}/{linkId}
+  method: delete
+  operationId: StoreOnChainWallets_RemoveOnChainWalletLink
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagewallettransactions
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores
+  method: get
+  operationId: Stores_GetStores
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores
+  method: post
+  operationId: Stores_CreateStore
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}
+  method: get
+  operationId: Stores_GetStore
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewstoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}
+  method: put
+  operationId: Stores_UpdateStore
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}
+  method: delete
+  operationId: Stores_DeleteStore
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/logo
+  method: post
+  operationId: Stores_UploadStoreLogo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/logo
+  method: delete
+  operationId: Stores_DeleteStoreLogo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifystoresettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/roles
+  method: get
+  operationId: Stores_GetStoreRoles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmodifystoresettings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}
+  method: get
+  operationId: GetOffering
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewofferings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}
+  method: put
+  operationId: UpdateOffering
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifyofferings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/offerings
+  method: get
+  operationId: GetOfferings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewofferings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/offerings
+  method: post
+  operationId: CreateOffering
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifyofferings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/plans
+  method: post
+  operationId: CreateOfferingPlan
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifyofferings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/plans/{planId}
+  method: get
+  operationId: GetOfferingPlan
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewofferings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/plans/{planId}
+  method: put
+  operationId: UpdateOfferingPlan
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmodifyofferings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}
+  method: get
+  operationId: GetSubscriber
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canviewofferings
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}
+  method: delete
+  operationId: DeleteSubscriber
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmanagesubscribers
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/credits/{currency}
+  method: get
+  operationId: GetCredit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.canmanagesubscribers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/credits/{currency}
+  method: post
+  operationId: UpdateCredit
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.cancreditsubscribers
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/suspend
+  method: post
+  operationId: SuspendSubscriber
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmanagesubscribers
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/unsuspend
+  method: post
+  operationId: UnsuspendSubscriber
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmanagesubscribers
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/offerings/{offeringId}/subscribers/{customerSelector}/dates
+  method: put
+  operationId: UpdateSubscriberDates
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmanagesubscribers
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/plan-checkout/{checkoutId}
+  method: get
+  operationId: GetPlanCheckout
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/plan-checkout/{checkoutId}
+  method: post
+  operationId: ProceedPlanCheckout
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/plan-checkout
+  method: post
+  operationId: CreatePlanCheckout
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - btcpay.store.canmanagesubscribers
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/subscriber-portal
+  method: post
+  operationId: CreatePortalSession
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.canmanagesubscribers
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/subscriber-portal/{portalSessionId}
+  method: get
+  operationId: GetPortalSession
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users/me
+  method: get
+  operationId: Users_GetCurrentUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.user.canviewprofile
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users/me
+  method: put
+  operationId: Users_UpdateCurrentUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.canmodifyprofile
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/me
+  method: delete
+  operationId: Users_DeleteCurrentUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.candeleteuser
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/me/picture
+  method: post
+  operationId: Users_UploadCurrentUserProfilePicture
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.canmodifyprofile
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/me/picture
+  method: delete
+  operationId: Users_DeleteCurrentUserProfilePicture
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.canmodifyprofile
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users
+  method: get
+  operationId: Users_GetUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canviewusers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users
+  method: post
+  operationId: Users_CreateUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.server.cancreateuser
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/{idOrEmail}
+  method: get
+  operationId: Users_GetUser
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.server.canviewusers
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/users/{idOrEmail}
+  method: delete
+  operationId: Users_DeleteUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.candeleteuser
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/{idOrEmail}/lock
+  method: post
+  operationId: Users_ToggleUserLock
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.canmodifyserversettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/users/{idOrEmail}/approve
+  method: post
+  operationId: Users_ToggleUserApproval
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.user.canmodifyserversettings
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/stores/{storeId}/webhooks
+  method: get
+  operationId: Webhooks_GetWebhooks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/stores/{storeId}/webhooks
+  method: post
+  operationId: Webhooks_CreateWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/webhooks/{webhookId}
+  method: get
+  operationId: Webhooks_GetWebhook
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/webhooks/{webhookId}
+  method: put
+  operationId: Webhooks_UpdateWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/webhooks/{webhookId}
+  method: delete
+  operationId: Webhooks_DeleteWebhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/webhooks/{webhookId}/deliveries
+  method: get
+  operationId: Webhooks_GetWebhookDeliveries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}
+  method: get
+  operationId: Webhooks_GetWebhookDelivery
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}/request
+  method: get
+  operationId: Webhooks_GetWebhookDeliveryRequests
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}/redeliver
+  method: post
+  operationId: Webhooks_RedeliverWebhookDelivery
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - btcpay.store.webhooks.canmodifywebhooks
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
