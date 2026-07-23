@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys ServerInfo API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: ServerInfo
+  description: Server Info operations
+paths:
+  /api/v1/server/info:
+    get:
+      tags:
+      - ServerInfo
+      summary: Get server info
+      description: Information about the server, chains and sync states
+      operationId: ServerInfo_GetServerInfo
+      responses:
+        '200':
+          description: Server information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationServerInfoData'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key: []
+        Basic: []
+  /api/v1/server/roles:
+    get:
+      tags:
+      - ServerInfo
+      summary: Get store's roles
+      description: View information about the store's roles at the server's scope
+      operationId: Server_GetStoreRoles
+      responses:
+        '200':
+          description: The user roles available at the server's scope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleData'
+        '403':
+          description: If you are authenticated but forbidden to get the store's roles
+        '404':
+          description: Store not found
+      security:
+      - API_Key:
+        - btcpay.server.canmodifyserversettings
+        Basic: []
+components:
+  schemas:
+    ApplicationServerInfoSyncStatusData:
+      type: object
+      description: Detailed sync status
+      properties:
+        paymentMethodId:
+          $ref: '#/components/schemas/PaymentMethodId'
+        nodeInformation:
+          $ref: '#/components/schemas/ApplicationServerInfoNodeStatusData'
+        chainHeight:
+          type: integer
+          description: The height of the chain of header of the internal indexer
+        syncHeight:
+          type: number
+          format: integer
+          nullable: true
+          description: The height of the latest indexed block of the internal indexer
+        available:
+          type: boolean
+          description: True if the full node and the indexer are fully synchronized
+          nullable: false
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          nullable: false
+          description: An error code describing the error
+        message:
+          type: string
+          nullable: false
+          description: User friendly error message about the error
+    ApplicationServerInfoData:
+      type: object
+      properties:
+        version:
+          type: string
+          description: BTCPay Server version
+        onion:
+          type: string
+          description: The Tor hostname
+        supportedPaymentMethods:
+          type: array
+          description: The payment methods this server supports
+          items:
+            type: string
+        fullySynched:
+          type: boolean
+          description: True if the instance is fully synchronized, according to NBXplorer
+        syncStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationServerInfoSyncStatusData'
+    RoleData:
+      type: object
+      properties:
+        id:
+          description: The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)
+          type: string
+          nullable: false
+          example: Owner
+        role:
+          description: The role's name
+          type: string
+          nullable: false
+          example: Owner
+        permissions:
+          description: The permissions attached to this role
+          type: array
+          items:
+            type: string
+          example:
+          - btcpay.store.canmodifystoresettings
+        isServerRole:
+          description: Whether this role is at the scope of the store or scope of the server
+          type: boolean
+          example: true
+    ApplicationServerInfoNodeStatusData:
+      type: object
+      nullable: true
+      description: Detailed sync status of the internal full node
+      properties:
+        headers:
+          type: integer
+          description: The height of the chain of header of the internal full node
+        blocks:
+          type: integer
+          description: The height of the latest validated block of the internal full node
+        verificationProgress:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          description: The current synchronization progress
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

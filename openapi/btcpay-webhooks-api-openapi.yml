@@ -1,0 +1,415 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys Webhooks API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Webhooks
+  description: Webhook operations
+paths:
+  /api/v1/stores/{storeId}/webhooks:
+    parameters:
+    - $ref: '#/components/parameters/StoreId'
+    get:
+      tags:
+      - Webhooks
+      summary: Get webhooks of a store
+      description: View webhooks of a store
+      operationId: Webhooks_GetWebhooks
+      responses:
+        '200':
+          description: List of webhooks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookDataList'
+        '404':
+          description: The key is not found for this list of webhooks
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+    post:
+      operationId: Webhooks_CreateWebhook
+      tags:
+      - Webhooks
+      summary: Create a new webhook
+      description: Create a new webhook
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookDataCreate'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: Information about the new webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookDataCreateResult'
+        '400':
+          description: A list of errors that occurred when creating the webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+  /api/v1/webhooks/{webhookId}:
+    parameters:
+    - $ref: '#/components/parameters/WebhookId'
+    get:
+      tags:
+      - Webhooks
+      summary: Get a webhook
+      description: View webhook
+      operationId: Webhooks_GetWebhook
+      responses:
+        '200':
+          description: A webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookData'
+        '404':
+          description: The webhook has not been found
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+    put:
+      operationId: Webhooks_UpdateWebhook
+      tags:
+      - Webhooks
+      summary: Update a webhook
+      description: Update a webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookDataUpdate'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: Information about the updated webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookData'
+        '400':
+          description: A list of errors that occurred when creating the webhook
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+    delete:
+      operationId: Webhooks_DeleteWebhook
+      tags:
+      - Webhooks
+      summary: Delete a webhook
+      description: Delete a webhook
+      responses:
+        '200':
+          description: The webhook has been deleted
+        '404':
+          description: The webhook does not exist
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+  /api/v1/webhooks/{webhookId}/deliveries:
+    parameters:
+    - $ref: '#/components/parameters/WebhookId'
+    get:
+      operationId: Webhooks_GetWebhookDeliveries
+      tags:
+      - Webhooks
+      summary: Get latest deliveries
+      description: List the latest deliveries to the webhook, ordered from the most recent
+      parameters:
+      - name: count
+        in: query
+        description: The number of latest deliveries to fetch
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of deliveries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookDeliveryList'
+        '404':
+          description: The key is not found for this list of deliveries
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+  /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}:
+    parameters:
+    - $ref: '#/components/parameters/WebhookId'
+    - $ref: '#/components/parameters/DeliveryId'
+    get:
+      operationId: Webhooks_GetWebhookDelivery
+      tags:
+      - Webhooks
+      summary: Get a webhook delivery
+      description: Information about a webhook delivery
+      responses:
+        '200':
+          description: Information about a delivery
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookDeliveryData'
+        '404':
+          description: The delivery does not exist.
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+  /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}/request:
+    parameters:
+    - $ref: '#/components/parameters/WebhookId'
+    - $ref: '#/components/parameters/DeliveryId'
+    get:
+      operationId: Webhooks_GetWebhookDeliveryRequests
+      tags:
+      - Webhooks
+      summary: Get the delivery's request
+      description: The delivery's JSON request sent to the endpoint
+      responses:
+        '200':
+          description: The delivery's JSON Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          description: The delivery does not exist.
+        '409':
+          description: '`webhookdelivery-pruned`: This webhook delivery has been pruned, so it can''t be redelivered.'
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+  /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}/redeliver:
+    parameters:
+    - $ref: '#/components/parameters/WebhookId'
+    - $ref: '#/components/parameters/DeliveryId'
+    post:
+      operationId: Webhooks_RedeliverWebhookDelivery
+      tags:
+      - Webhooks
+      summary: Redeliver the delivery
+      description: Redeliver the delivery
+      responses:
+        '200':
+          description: The new delivery id being broadcasted. (Broadcast happens asynchronously with this call)
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          description: The delivery does not exist.
+        '409':
+          description: '`webhookdelivery-pruned`: This webhook delivery has been pruned, so it can''t be redelivered.'
+      security:
+      - API_Key:
+        - btcpay.store.webhooks.canmodifywebhooks
+        Basic: []
+components:
+  schemas:
+    WebhookDataUpdate:
+      allOf:
+      - $ref: '#/components/schemas/WebhookDataBase'
+      - type: object
+        properties:
+          secret:
+            type: string
+            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will not be changed.
+            nullable: true
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    WebhookData:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The id of the webhook
+            nullable: false
+      - $ref: '#/components/schemas/WebhookDataBase'
+    WebhookDataCreateResult:
+      allOf:
+      - $ref: '#/components/schemas/WebhookData'
+      - type: object
+        properties:
+          secret:
+            type: string
+            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). Value of the auto-generated or custom secret.
+            nullable: true
+    WebhookDeliveryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebhookDeliveryData'
+    WebhookDataCreate:
+      allOf:
+      - $ref: '#/components/schemas/WebhookDataBase'
+      - type: object
+        properties:
+          secret:
+            type: string
+            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will be auto-generated.
+            nullable: true
+    WebhookDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebhookData'
+    WebhookDeliveryData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the delivery
+          nullable: false
+        timestamp:
+          type: number
+          nullable: false
+          description: Timestamp of when the delivery should have been broadcasted
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        deliveryTime:
+          type: number
+          nullable: false
+          description: Timestamp of when the delivery has actually been broadcasted. A delay with `timestamp` means your service either failed to process earlier deliveries or is taking too long to respond.
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        httpCode:
+          type: number
+          description: HTTP code received by the remote service, if any.
+          nullable: true
+        errorMessage:
+          type: string
+          description: User friendly error message, if any.
+        status:
+          type: string
+          description: 'Whether the delivery failed or not (possible values are: `Failed`, `HttpError`, `HttpSuccess`)'
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    WebhookDataBase:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+          description: Whether this webhook is enabled or not
+          nullable: false
+          default: true
+        automaticRedelivery:
+          type: boolean
+          description: If true, BTCPay Server will retry to redeliver any failed delivery after 10 seconds, 1 minutes and up to 6 times after 10 minutes.
+          nullable: false
+          default: true
+        url:
+          type: string
+          description: The endpoint where BTCPay Server will make the POST request with the webhook body
+          nullable: false
+        authorizedEvents:
+          type: object
+          description: Which event should be received by this endpoint
+          properties:
+            everything:
+              type: boolean
+              description: If true, the endpoint will receive all events related to the store.
+              nullable: false
+              default: true
+            specificEvents:
+              type: array
+              items:
+                type: string
+              description: 'If `everything` is false, the specific events that the endpoint is interested in. Current events are: `InvoiceCreated`, `InvoiceReceivedPayment`, `InvoiceProcessing`, `InvoiceExpired`, `InvoiceSettled`, `InvoiceInvalid`, `InvoicePaymentSettled`, `PaymentRequestCreated`, `PaymentRequestUpdated`, `PaymentRequestArchived`, `PaymentRequestStatusChanged`, `PayoutCreated`, `PayoutApproved`, `PayoutUpdated`, `SubscriberCreated`, `SubscriberCredited`, `SubscriberCharged`, `SubscriberActivated`, `SubscriberPhaseChanged`, `SubscriberDisabled`, `PaymentReminder`, `PlanStarted`, `SubscriberNeedUpgrade`.'
+              nullable: false
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            nullable: false
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            nullable: false
+            description: User friendly error message about the validation
+  parameters:
+    WebhookId:
+      name: webhookId
+      in: path
+      required: true
+      description: The webhook id
+      schema:
+        type: string
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    DeliveryId:
+      name: deliveryId
+      in: path
+      required: true
+      description: The id of the delivery
+      schema:
+        type: string
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

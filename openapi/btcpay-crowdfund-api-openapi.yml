@@ -1,0 +1,381 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys Crowdfund API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Crowdfund
+  description: Crowdfund operations
+paths:
+  /api/v1/apps/crowdfund/{appId}:
+    parameters:
+    - $ref: '#/components/parameters/AppId'
+    put:
+      operationId: Apps_PutCrowdfundApp
+      summary: Update a Crowdfund app
+      description: Full update. GET the app first, modify the data, then PUT the complete payload.
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrowdfundAppRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: App details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrowdfundAppData'
+        '404':
+          description: Crowdfund app with specified ID was not found
+        '422':
+          description: Unable to validate the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+      tags:
+      - Crowdfund
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+    get:
+      tags:
+      - Crowdfund
+      operationId: Apps_GetCrowdfundApp
+      summary: Get crowdfund app data
+      description: Returns crowdfund app data
+      responses:
+        '200':
+          description: Crowdfund app data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrowdfundAppData'
+        '404':
+          description: Crowdfund app with specified ID was not found
+  /api/v1/stores/{storeId}/apps/crowdfund:
+    parameters:
+    - $ref: '#/components/parameters/StoreId'
+    post:
+      operationId: Apps_CreateCrowdfundApp
+      summary: Create a new Crowdfund app
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrowdfundAppRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: Created app details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrowdfundAppData'
+        '422':
+          description: Unable to validate the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+      tags:
+      - Crowdfund
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+components:
+  schemas:
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    CrowdfundAppRequest:
+      allOf:
+      - $ref: '#/components/schemas/CrowdfundBaseData'
+      - type: object
+        properties:
+          perksTemplate:
+            type: string
+            description: JSON of perks available in the app
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            nullable: false
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            nullable: false
+            description: User friendly error message about the validation
+    CrowdfundAppData:
+      allOf:
+      - $ref: '#/components/schemas/CrowdfundBaseData'
+      - type: object
+        properties:
+          perks:
+            type: object
+            description: JSON of perks available in the app
+            example:
+            - description: null
+              id: test perk
+              image: null
+              price:
+                type: 2
+                formatted: $100.00
+                value: 100.0
+              title: test perk
+              buyButtonText: null
+              inventory: null
+              paymentMethods: null
+              disabled: false
+            - description: this is an amazing perk
+              id: test test
+              image: https://mainnet.demo.btcpayserver.org/img/errorpages/404_nicolas.jpg
+              price:
+                type: 1
+                formatted: $69.42
+                value: 69.42
+              title: test test
+              buyButtonText: null
+              inventory: 5
+              paymentMethods: null
+              disabled: false
+            - description: null
+              id: f$t45hj764325
+              image: null
+              price:
+                type: 0
+                formatted: null
+                value: null
+              title: amazing perk
+              buyButtonText: button text
+              inventory: null
+              paymentMethods: null
+              disabled: true
+    CrowdfundBaseData:
+      allOf:
+      - $ref: '#/components/schemas/AppBaseData'
+      - type: object
+        properties:
+          title:
+            type: string
+            description: Display title of the app
+            example: My crowdfund app
+            nullable: true
+          description:
+            type: string
+            description: App description
+            example: My crowdfund description
+            nullable: true
+          enabled:
+            type: boolean
+            description: Whether the app is enabled to be viewed by everyone
+            example: true
+            nullable: true
+          enforceTargetAmount:
+            type: boolean
+            description: Whether contributions over the set target amount are allowed
+            example: false
+            nullable: true
+          startDate:
+            type: number
+            description: UNIX timestamp for crowdfund start time (https://www.unixtimestamp.com/)
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+            example: 768658369
+            nullable: true
+          endDate:
+            type: number
+            description: UNIX timestamp for crowdfund end time (https://www.unixtimestamp.com/)
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+            example: 771336769
+            nullable: true
+          targetCurrency:
+            type: string
+            description: Target currency for the crowdfund
+            example: BTC
+            nullable: true
+          targetAmount:
+            type: number
+            description: Target amount for the crowdfund
+            example: 420.69
+            nullable: true
+          mainImageUrl:
+            type: string
+            description: URL for image used as a cover image for the app
+            nullable: true
+          notificationUrl:
+            type: string
+            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
+            nullable: true
+          tagline:
+            type: string
+            description: Tagline for the app displayed to user
+            example: I can't believe it's not butter
+            nullable: true
+          disqusEnabled:
+            type: boolean
+            description: Whether Disqus is enabled for the app
+            nullable: true
+          disqusShortname:
+            type: string
+            description: Disqus shortname to used for the app
+            nullable: true
+          soundsEnabled:
+            type: boolean
+            description: Whether sounds on new contributions are enabled
+            example: false
+            nullable: true
+          animationsEnabled:
+            type: boolean
+            description: Whether background animations on new contributions are enabled
+            example: true
+            nullable: true
+          resetEveryAmount:
+            type: number
+            description: Contribution goal reset frequency amount
+            example: 1
+            nullable: true
+          resetEvery:
+            type: string
+            description: Contribution goal reset frequency
+            example: Day
+            nullable: true
+          displayPerksValue:
+            type: boolean
+            description: Whether perk values are displayed
+            example: false
+            nullable: true
+          displayPerksRanking:
+            type: boolean
+            description: Whether perk ranking is displayed
+            example: false
+            nullable: true
+          sortPerksByPopularity:
+            type: boolean
+            description: Whether perks are sorted by popularity
+            default: true
+            nullable: true
+          sounds:
+            type: array
+            description: Array of custom sounds which can be used on new contributions
+            items:
+              type: string
+            example:
+            - https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav
+            nullable: true
+          animationColors:
+            type: array
+            description: Array of custom HEX colors which can be used for background animations on new contributions
+            items:
+              type: string
+            example:
+            - '#FF0000'
+            - '#00FF00'
+            - '#0000FF'
+            nullable: true
+          htmlLang:
+            type: string
+            description: Used for SEO, the [HTML Lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) of the page
+            nullable: true
+            example: en
+          htmlMetaTags:
+            type: string
+            description: Used for SEO, the [Meta tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) of the page
+            nullable: true
+            example: <meta name="description" content="Your description">
+          formId:
+            type: string
+            description: Form ID to request customer data
+            nullable: true
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type: boolean
+          description: If true, the app does not appear in the apps list by default.
+          default: false
+          nullable: true
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    AppId:
+      name: appId
+      in: path
+      required: true
+      description: App ID
+      schema:
+        type: string
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

@@ -1,0 +1,463 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys Pull payments (Public) API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Pull payments (Public)
+  description: Pull payments (Public) operations
+paths:
+  /api/v1/pull-payments/{pullPaymentId}/boltcards:
+    parameters:
+    - name: pullPaymentId
+      in: path
+      required: true
+      description: The ID of the pull payment
+      schema:
+        type: string
+    post:
+      operationId: PullPayments_LinkBoltcard
+      summary: Link a boltcard to a pull payment
+      description: Linking a boltcard to a pull payment will allow you to pay via NFC with it, the money will be sent from the pull payment. The boltcard keys are generated using [Deterministic Boltcard Key Generation](https://github.com/boltcard/boltcard/blob/main/docs/DETERMINISTIC.md).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - UID
+              type: object
+              properties:
+                UID:
+                  type: string
+                  example: 46ab87ff36a3b7
+                  description: The `UID` of the NTag424
+                  nullable: false
+                onExisting:
+                  type: string
+                  x-enumNames:
+                  - KeepVersion
+                  - UpdateVersion
+                  enum:
+                  - KeepVersion
+                  - UpdateVersion
+                  default: UpdateVersion
+                  description: "What to do if the boltcard is already linked.\n * `KeepVersion` will return the keys (K0-K4) that are already registered.\n * `UpdateVersion` will increment the version of the key, and thus return different keys (K0-K4). (See [Deterministic Boltcard Key Generation](https://github.com/boltcard/boltcard/blob/main/docs/DETERMINISTIC.md))"
+      responses:
+        '200':
+          description: The boltcard has been linked to the pull payment.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  LNURLW:
+                    type: string
+                    description: The lnurl withdraw of the server
+                    example: lnurlw://example.com/boltcard
+                  version:
+                    type: number
+                    description: The version of the registration (See [Deterministic Boltcard Key Generation](https://github.com/boltcard/boltcard/blob/main/docs/DETERMINISTIC.md))
+                  K0:
+                    type: string
+                    description: The public key K0 of the boltcard
+                    example: 02a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b
+                  K1:
+                    type: string
+                    description: The public key K1 of the boltcard
+                    example: 02a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b
+                  K2:
+                    type: string
+                    description: The public key K2 of the boltcard
+                    example: 02a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b
+                  K3:
+                    type: string
+                    description: The public key K3 of the boltcard
+                    example: 02a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b
+                  K4:
+                    type: string
+                    description: The public key K4 of the boltcard
+                    example: 02a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b
+        '404':
+          description: 'The pull payment has not been found. Well-known error code is: `pullpayment-not-found`'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      tags:
+      - Pull payments (Public)
+      security: []
+  /api/v1/pull-payments/{pullPaymentId}:
+    parameters:
+    - name: pullPaymentId
+      in: path
+      required: true
+      description: The ID of the pull payment
+      schema:
+        type: string
+    get:
+      summary: Get Pull Payment
+      operationId: PullPayments_GetPullPayment
+      description: Get a pull payment
+      responses:
+        '200':
+          description: Information about the pull payment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PullPaymentData'
+        '404':
+          description: Pull payment not found
+      tags:
+      - Pull payments (Public)
+      security: []
+  /api/v1/pull-payments/{pullPaymentId}/payouts:
+    parameters:
+    - name: pullPaymentId
+      in: path
+      required: true
+      description: The ID of the pull payment
+      schema:
+        type: string
+    get:
+      summary: Get Payouts
+      operationId: PullPayments_GetPayouts
+      description: Get payouts
+      parameters:
+      - name: includeCancelled
+        in: query
+        required: false
+        description: Whether this should list cancelled payouts
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: The payouts of the pull payment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutDataList'
+        '404':
+          description: Pull payment not found
+      tags:
+      - Pull payments (Public)
+      security: []
+    post:
+      summary: Create Payout
+      description: Create a new payout
+      operationId: PullPayments_CreatePayout
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePayoutRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: A new payout has been created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutData'
+        '404':
+          description: Pull payment not found
+        '422':
+          description: Unable to validate the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '400':
+          description: 'Well-known error codes are: `duplicate-destination`, `expired`, `not-started`, `archived`, `overdraft`, `amount-too-low`, `payment-method-not-supported`'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      tags:
+      - Pull payments (Public)
+      security: []
+  /api/v1/pull-payments/{pullPaymentId}/payouts/{payoutId}:
+    parameters:
+    - name: pullPaymentId
+      in: path
+      required: true
+      description: The ID of the pull payment
+      schema:
+        type: string
+    - name: payoutId
+      in: path
+      required: true
+      description: The ID of the pull payment payout
+      schema:
+        type: string
+    get:
+      summary: Get Payout
+      operationId: PullPayments_GetPayout
+      description: Get payout
+      responses:
+        '200':
+          description: A specific payout of a pull payment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutData'
+        '404':
+          description: Pull payment payout not found
+      tags:
+      - Pull payments (Public)
+      security: []
+  /api/v1/pull-payments/{pullPaymentId}/lnurl:
+    parameters:
+    - name: pullPaymentId
+      in: path
+      required: true
+      description: The ID of the pull payment
+      schema:
+        type: string
+    get:
+      summary: Get Pull Payment LNURL details
+      operationId: PullPayments_GetPullPaymentLNURL
+      description: Get Pull Payment LNURL details
+      responses:
+        '200':
+          description: Pull payment LNURL details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LNURLData'
+        '404':
+          description: Pull payment not found
+        '400':
+          description: Pull payment found but does not support LNURL
+      tags:
+      - Pull payments (Public)
+      security: []
+components:
+  schemas:
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
+    PayoutDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PayoutData'
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          nullable: false
+          description: An error code describing the error
+        message:
+          type: string
+          nullable: false
+          description: User friendly error message about the error
+    PayoutData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the payout
+        revision:
+          type: integer
+          description: The revision number of the payout. This revision number is incremented when the payout amount or destination is modified before the approval.
+        pullPaymentId:
+          type: string
+          description: The id of the pull payment this payout belongs to
+        date:
+          type: string
+          description: The creation date of the payout as a unix timestamp
+        destination:
+          type: string
+          example: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+          description: The destination of the payout (can be an address or a BIP21 url)
+        originalCurrency:
+          type: string
+          example: USD
+          description: The currency before being converted into the payout's currency
+        originalAmount:
+          type: string
+          format: decimal
+          nullable: false
+          example: '10399.18'
+          description: The amount in originalCurrency before being converted into the payout's currency
+        payoutCurrency:
+          type: string
+          example: BTC
+          description: The currency of the payout after conversion.
+        payoutAmount:
+          type: string
+          format: decimal
+          nullable: true
+          example: '1.12300000'
+          description: The amount in payoutCurrency after conversion. (This property is set after the payout has been Approved)
+        payoutMethodId:
+          $ref: '#/components/schemas/PayoutMethodId'
+        state:
+          $ref: '#/components/schemas/PayoutState'
+        paymentProof:
+          $ref: '#/components/schemas/PayoutPaymentProof'
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional information around the payout that can be supplied. The mentioned properties are all optional and you can introduce any json format you wish.
+          example:
+            source: Payout created through the API
+          anyOf:
+          - title: General information
+            properties:
+              source:
+                type: string
+                nullable: true
+                description: The source of the payout creation. Shown on the payout list page.
+              sourceLink:
+                type: string
+                format: url
+                nullable: true
+                description: A link to the source of the payout creation. Shown on the payout list page.
+    PayoutPaymentProof:
+      type: object
+      additionalProperties: true
+      description: Additional information around how the payout is being or has been paid out. The mentioned properties are all optional (except `proofType`) and you can introduce any json format you wish.
+      properties:
+        proofType:
+          type: string
+          description: The type of payment proof it is.
+      anyOf:
+      - properties:
+          link:
+            type: string
+            format: url
+            nullable: true
+            description: A link to the proof of payout payment.
+      - properties:
+          id:
+            type: string
+            nullable: true
+            description: A unique identifier to the proof of payout payment.
+    PayoutState:
+      type: string
+      example: AwaitingPayment
+      description: The state of the payout (`AwaitingApproval`, `AwaitingPayment`, `InProgress`, `Completed`, `Cancelled`)
+      x-enumNames:
+      - AwaitingApproval
+      - AwaitingPayment
+      - InProgress
+      - Completed
+      - Cancelled
+      enum:
+      - AwaitingApproval
+      - AwaitingPayment
+      - InProgress
+      - Completed
+      - Cancelled
+    LNURLData:
+      type: object
+      properties:
+        lnurlBech32:
+          type: string
+          description: Bech32 representation of LNURL
+          example: lightning:lnurl1dp68gup69uhnzv3h9cczuvpwxyarzdp3xsez7sj5gvh42j2vfe24ynp0wa5hg6rywfshwtmswqhngvntdd6x6uzvx4jrvu2kvvur23n8v46rwjpexcc45563fn53w7
+        lnurlUri:
+          type: string
+          description: URI representation of LNURL
+          example: lnurlw://example.com/BTC/UILNURL/withdraw/pp/42kktmpL5d6qVc85Fget7H961ZSQ
+    CreatePayoutRequest:
+      type: object
+      properties:
+        destination:
+          type: string
+          example: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+          description: The destination of the payout (can be an address or a BIP21 url)
+        amount:
+          type: string
+          format: decimal
+          example: '10399.18'
+          description: The amount of the payout in the currency of the pull payment (eg. USD).
+        payoutMethodId:
+          $ref: '#/components/schemas/PayoutMethodId'
+    PullPaymentData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the pull payment
+        name:
+          type: string
+          description: Name given to pull payment when it was created
+        description:
+          type: string
+          description: Description given to pull payment when it was created
+        currency:
+          type: string
+          example: BTC
+          description: The currency of the pull payment's amount
+        amount:
+          type: string
+          format: decimal
+          example: '1.12000000'
+          description: The amount in the currency of this pull payment as a decimal string
+        BOLT11Expiration:
+          type: string
+          example: 30
+          description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
+        autoApproveClaims:
+          type: boolean
+          example: false
+          default: false
+          nullable: true
+          description: Any payouts created for this pull payment will skip the approval phase upon creation
+        archived:
+          type: boolean
+          description: Whether this pull payment is archived
+        viewLink:
+          type: string
+          description: The link to a page to claim payouts to this pull payment
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            nullable: false
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            nullable: false
+            description: User friendly error message about the validation
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

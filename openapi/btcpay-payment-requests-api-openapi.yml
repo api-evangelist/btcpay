@@ -1,0 +1,733 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys Payment Requests API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Payment Requests
+  description: Payment Requests operations
+paths:
+  /api/v1/stores/{storeId}/payment-requests:
+    get:
+      tags:
+      - Payment Requests
+      summary: Get payment requests
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      description: View information about the existing payment requests
+      operationId: PaymentRequests_GetPaymentRequests
+      responses:
+        '200':
+          description: List of payment requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequestDataList'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.store.canviewpaymentrequests
+        Basic: []
+    post:
+      tags:
+      - Payment Requests
+      summary: Create a new payment request
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      description: Create a new payment request
+      operationId: PaymentRequests_CreatePaymentRequest
+      responses:
+        '200':
+          description: Information about the new payment request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequestData'
+        '400':
+          description: A list of errors that occurred when creating the payment request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '403':
+          description: If you are authenticated but forbidden to add new payment requests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequestBaseData'
+      security:
+      - API_Key:
+        - btcpay.store.canmodifypaymentrequests
+        Basic: []
+  /api/v1/payment-requests/{paymentRequestId}:
+    get:
+      tags:
+      - Payment Requests
+      summary: Get payment request
+      parameters:
+      - name: paymentRequestId
+        in: path
+        required: true
+        description: The payment request to fetch
+        schema:
+          type: string
+      description: View information about the specified payment request. The store is resolved automatically from the payment request.
+      operationId: PaymentRequests_GetPaymentRequest
+      responses:
+        '200':
+          description: specified payment request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequestData'
+        '403':
+          description: If you are authenticated but forbidden to view the specified payment request
+        '404':
+          description: The key is not found for this payment request
+      security:
+      - API_Key:
+        - btcpay.store.canviewpaymentrequests
+        Basic: []
+    delete:
+      tags:
+      - Payment Requests
+      summary: Archive payment request
+      description: Archives the specified payment request. The store is resolved automatically from the payment request.
+      operationId: PaymentRequests_ArchivePaymentRequest
+      parameters:
+      - name: paymentRequestId
+        in: path
+        required: true
+        description: The payment request to remove
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The payment request has been archived
+        '400':
+          description: A list of errors that occurred when archiving the payment request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '403':
+          description: If you are authenticated but forbidden to archive the specified payment request
+        '404':
+          description: The key is not found for this payment request
+      security:
+      - API_Key:
+        - btcpay.store.canmodifypaymentrequests
+        Basic: []
+    put:
+      tags:
+      - Payment Requests
+      summary: Update payment request
+      parameters:
+      - name: paymentRequestId
+        in: path
+        required: true
+        description: The payment request to update
+        schema:
+          type: string
+      description: Update a payment request. The store is resolved automatically from the payment request.
+      operationId: PaymentRequests_UpdatePaymentRequest
+      responses:
+        '200':
+          description: The updated payment request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequestData'
+        '400':
+          description: A list of errors that occurred when updating the payment request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '403':
+          description: If you are authenticated but forbidden to update the payment request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequestBaseData'
+      security:
+      - API_Key:
+        - btcpay.store.canmodifypaymentrequests
+        Basic: []
+  /api/v1/payment-requests/{paymentRequestId}/pay:
+    post:
+      tags:
+      - Payment Requests
+      summary: Create a new invoice for the payment request
+      parameters:
+      - name: paymentRequestId
+        in: path
+        required: true
+        description: The payment request to create
+        schema:
+          type: string
+      operationId: PaymentRequests_Pay
+      description: Create a new invoice for the payment request, or reuse an existing one. The store is resolved automatically from the payment request.
+      requestBody:
+        description: Invoice creation request
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                amount:
+                  type: string
+                  format: decimal
+                  minimum: 0
+                  exclusiveMinimum: true
+                  description: The amount of the invoice. If `null` or `unspecified`, it will be set to the payment request's due amount. Note that the payment's request `allowCustomPaymentAmounts` must be `true`, or a 422 error will be sent back.'
+                  nullable: true
+                  example: '0.1'
+                allowPendingInvoiceReuse:
+                  type: boolean
+                  nullable: true
+                  default: false
+                  description: If `true`, this endpoint will not necessarily create a new invoice, and instead attempt to give back a pending one for this payment request.
+      responses:
+        '200':
+          description: A new invoice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceData'
+        '422':
+          description: Unable to validate the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '400':
+          description: 'Well-known error codes are: `archived`, `already-paid`, `expired`'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.store.canviewpaymentrequests
+        Basic: []
+components:
+  schemas:
+    CheckoutOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        speedPolicy:
+          type: string
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/SpeedPolicy'
+        paymentMethods:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: A specific set of payment methods to use for this invoice (ie. BTC, BTC-LightningNetwork). By default, select all payment methods enabled in the store.
+        defaultPaymentMethod:
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodId'
+          type: string
+          nullable: true
+          description: Default payment type for the invoice (e.g., BTC, BTC-LightningNetwork). Default payment method set for the store is used if this parameter is not specified.
+        lazyPaymentMethods:
+          type: boolean
+          nullable: true
+          description: If true, payment methods are enabled individually upon user interaction in the invoice. Default to store's settings'
+        expirationMinutes:
+          type: number
+          nullable: true
+          description: The number of minutes after which an invoice becomes expired. Defaults to the store's settings. (The default store settings is 15)
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanMinutes'
+        monitoringMinutes:
+          type: number
+          nullable: true
+          description: The number of minutes after an invoice expired after which we are still monitoring for incoming payments. Defaults to the store's settings. (The default store settings is 1440, 1 day)
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanMinutes'
+        paymentTolerance:
+          type: number
+          format: double
+          nullable: true
+          minimum: 0.0
+          maximum: 100.0
+          default: 0.0
+          description: A percentage determining whether to count the invoice as paid when the invoice is paid within the specified margin of error. Defaults to the store's settings. (The default store settings is 0)
+        redirectURL:
+          type: string
+          nullable: true
+          description: When the customer has paid the invoice, the URL where the customer will be redirected when clicking on the `return to store` button. You can use placeholders `{InvoiceId}` or `{OrderId}` in the URL, BTCPay Server will replace those with this invoice `id` or `metadata.orderId` respectively.
+        redirectAutomatically:
+          type: boolean
+          nullable: true
+          description: When the customer has paid the invoice, and a `redirectURL` is set, the checkout is redirected to `redirectURL` automatically if `redirectAutomatically` is true. Defaults to the store's settings. (The default store settings is false)
+        defaultLanguage:
+          type: string
+          nullable: true
+          description: The language code (eg. en-US, en, fr-FR...) of the language presented to your customer in the checkout page. BTCPay Server tries to match the best language available. If null or not set, will fallback on the store's default language. You can see the list of language codes with [this operation](#operation/langCodes).
+    InvoiceStatus:
+      type: string
+      description: The status of the invoice
+      x-enumNames:
+      - New
+      - Processing
+      - Expired
+      - Invalid
+      - Settled
+      enum:
+      - New
+      - Processing
+      - Expired
+      - Invalid
+      - Settled
+    InvoiceMetadata:
+      type: object
+      additionalProperties: true
+      description: Additional information around the invoice that can be supplied. The mentioned properties are all optional and you can introduce any json format you wish. See [our documentation](https://docs.btcpayserver.org/Development/InvoiceMetadata/) for more information.
+      example:
+        orderId: pos-app_346KRC5BjXXXo8cRFKwTBmdR6ZJ4
+        orderUrl: https://localhost:14142/apps/346KRC5BjXXXo8cRFKwTBmdR6ZJ4/pos
+        itemDesc: Tea shop
+        posData:
+          tip: 0.48
+          cart:
+          - id: pu erh
+            count: 1
+            image: ~/img/pos-sample/pu-erh.jpg
+            price:
+              type: 2
+              value: 2
+              formatted: $2.00
+            title: Pu Erh
+            inventory: null
+          - id: rooibos
+            count: 1
+            image: ~/img/pos-sample/rooibos.jpg
+            price:
+              type: 2
+              value: 1.2
+              formatted: $1.20
+            title: Rooibos
+            inventory: null
+          total: 3.68
+          subTotal: 3.2
+          customAmount: 0
+          discountAmount: 0
+          discountPercentage: 0
+        receiptData:
+          Tip: $0.48
+          Cart:
+            Pu Erh: $2.00 x 1 = $2.00
+            Rooibos: $1.20 x 1 = $1.20
+      anyOf:
+      - title: Order information
+        properties:
+          orderId:
+            type: string
+            nullable: true
+            description: Refers to the order ID from an external system, such as an e-commerce platform like WooCommerce. This property is indexed, allowing for efficient invoice searches using the `orderId`.
+          orderUrl:
+            type: string
+            nullable: true
+            description: Refers to a URL linking back to the order page of the external system. This link is displayed in the invoice details view.
+          taxIncluded:
+            type: number
+            nullable: true
+            description: Represents the tax amount in the invoice currency. This information will appear in the invoice details view. During invoice creation, the value is automatically rounded to significant digits and ensured not to be greater than the invoice's price.
+          physical:
+            type: string
+            nullable: true
+            description: Indicates if this is a physical good; displayed in the invoice details view and in the BitPay API-compatible endpoints.
+      - title: Point of Sale (Cart view)
+        properties:
+          posData:
+            type: object
+            description: A custom JSON object that represents information displayed in the invoice details view.
+      - title: Product information
+        properties:
+          itemDesc:
+            type: string
+            nullable: true
+            description: When using the Point of Sale (except in keypad or cart view), this field is set to the item description of the purchased item. This information is included in the CSV invoice export feature and appears in the invoice details view.
+          itemCode:
+            type: string
+            nullable: true
+            description: When using the Point of Sale (except in keypad or cart view), this field is set to the item code of the purchased item. This information is included in the CSV invoice export feature and appears in the invoice details view.
+      - title: Payment request information
+        properties:
+          paymentRequestId:
+            type: string
+            nullable: true
+            description: In the invoice details view, a link is provided for navigating to the payment request page associated with the invoice.
+      - title: Buyer informations
+        properties:
+          buyerName:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+          buyerEmail:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+          buyerCountry:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+          buyerZip:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+          buyerState:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+          buyerCity:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+          buyerAddress1:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+          buyerAddress2:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+          buyerPhone:
+            type: string
+            description: Visible in the invoice details view and in the BitPay API-compatible endpoints.
+            nullable: true
+      - title: Receipt information
+        properties:
+          receiptData:
+            type: object
+            description: A custom JSON object that represents information displayed on the receipt page of an invoice.
+            nullable: true
+    InvoiceId:
+      type: string
+      description: The invoice ID
+      example: HMprBnL9BTXWuPvpoKBS6e
+    TimeSpanMinutes:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: minutes
+      description: A span of times in minutes
+    SpeedPolicy:
+      type: string
+      description: "This is a risk mitigation parameter for the merchant to configure how they want to fulfill orders depending on the number of block confirmations for the transaction made by the consumer on the selected cryptocurrency.\n`\"HighSpeed\"`: 0 confirmations (1 confirmation if RBF enabled in transaction)   \n`\"MediumSpeed\"`: 1 confirmation   \n`\"LowMediumSpeed\"`: 2 confirmations   \n`\"LowSpeed\"`: 6 confirmations\n"
+      x-enumNames:
+      - HighSpeed
+      - MediumSpeed
+      - LowSpeed
+      - LowMediumSpeed
+      enum:
+      - HighSpeed
+      - MediumSpeed
+      - LowSpeed
+      - LowMediumSpeed
+    ReceiptOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+          nullable: true
+          description: A public page will be accessible once the invoice is settled. If null or unspecified, it will fallback to the store's settings. (The default store settings is true)
+        showQR:
+          type: boolean
+          nullable: true
+          default: null
+          description: Show the QR code of the receipt in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
+        showPayments:
+          type: boolean
+          nullable: true
+          default: null
+          description: Show the payment list in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          nullable: false
+          description: An error code describing the error
+        message:
+          type: string
+          nullable: false
+          description: User friendly error message about the error
+    TimeSpan:
+      type: number
+      format: int32
+      example: 90
+    InvoiceType:
+      type: string
+      description: The type of the invoice
+      x-enumNames:
+      - Standard
+      - TopUp
+      enum:
+      - Standard
+      - TopUp
+    PaymentRequestData:
+      allOf:
+      - $ref: '#/components/schemas/PaymentRequestBaseData'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The id of the payment request
+            nullable: false
+          storeId:
+            type: string
+            nullable: false
+            description: The store identifier that the payment request belongs to
+            allOf:
+            - $ref: '#/components/schemas/StoreId'
+          status:
+            type: string
+            enum:
+            - Pending
+            - Completed
+            - Processing
+            - Expired
+            description: 'Represents the status of a payment request:
+
+              * `Pending`: Not enough has been paid or settled.
+
+              * `Completed`: Paid and fully settled.
+
+              * `Expired`: Expired before full settlement.
+
+              * `Processing`: Paid enough, awaiting full settlement.'
+            nullable: false
+          createdTime:
+            type: number
+            description: The creation date of the payment request
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+            nullable: false
+    InvoiceDataBase:
+      properties:
+        metadata:
+          $ref: '#/components/schemas/InvoiceMetadata'
+        checkout:
+          type: object
+          nullable: true
+          description: Additional settings to customize the checkout flow
+          allOf:
+          - $ref: '#/components/schemas/CheckoutOptions'
+        receipt:
+          type: object
+          nullable: true
+          description: Additional settings to customize the public receipt
+          allOf:
+          - $ref: '#/components/schemas/ReceiptOptions'
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    PaymentRequestBaseData:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          type: string
+          format: decimal
+          minimum: 0
+          exclusiveMinimum: true
+          description: The amount of the payment request
+          nullable: false
+        title:
+          type: string
+          description: The title of the payment request
+          nullable: false
+        currency:
+          type: string
+          format: ISO 4217 Currency code(BTC, EUR, USD, etc)
+          description: The currency of the payment request. If empty, the store's default currency code will be used.
+          nullable: true
+        email:
+          type: string
+          description: The email used in invoices generated by the payment request
+          nullable: true
+          format: email
+        description:
+          type: string
+          description: The description of the payment request
+          nullable: true
+          format: html
+        expiryDate:
+          type: number
+          description: The expiry date of the payment request
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        referenceId:
+          type: string
+          description: An optional user-defined identifier for this payment request.
+          nullable: true
+          example: INV-123493
+        allowCustomPaymentAmounts:
+          type: boolean
+          description: 'Whether to allow users to create invoices that partially pay the payment request '
+          nullable: true
+        formId:
+          type: string
+          description: Form ID to request customer data
+          nullable: true
+        formResponse:
+          type: object
+          description: Form data response
+          nullable: true
+    InvoiceData:
+      allOf:
+      - $ref: '#/components/schemas/InvoiceDataBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            $ref: '#/components/schemas/InvoiceId'
+          storeId:
+            description: The store identifier that the invoice belongs to
+            allOf:
+            - $ref: '#/components/schemas/StoreId'
+          amount:
+            type: string
+            format: decimal
+            description: The amount of the invoice. Note that the amount will be zero for a top-up invoice that is paid after invoice expiry.
+            example: '5.00'
+          paidAmount:
+            type: string
+            format: decimal
+            description: The actual amount paid by the customer/buyer.
+            example: '5.00'
+          currency:
+            type: string
+            description: The currency of the invoice
+            example: USD
+          type:
+            $ref: '#/components/schemas/InvoiceType'
+          checkoutLink:
+            type: string
+            description: The link to the checkout page, where you can redirect the customer
+          createdTime:
+            description: The creation time of the invoice
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+          expirationTime:
+            description: The expiration time of the invoice
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+          monitoringExpiration:
+            description: Expiration time for monitoring of the invoice for any changes
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+          status:
+            $ref: '#/components/schemas/InvoiceStatus'
+          additionalStatus:
+            $ref: '#/components/schemas/InvoiceAdditionalStatus'
+          availableStatusesForManualMarking:
+            type: array
+            description: The statuses the invoice can be manually marked as
+            items:
+              $ref: '#/components/schemas/InvoiceStatus'
+          archived:
+            type: boolean
+            description: true if the invoice is archived
+    PaymentRequestDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PaymentRequestData'
+    InvoiceAdditionalStatus:
+      type: string
+      description: An additional status that describes why an invoice is in its current status.
+      x-enumNames:
+      - None
+      - PaidLate
+      - PaidPartial
+      - Marked
+      - Invalid
+      - PaidOver
+      enum:
+      - None
+      - PaidLate
+      - PaidPartial
+      - Marked
+      - Invalid
+      - PaidOver
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            nullable: false
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            nullable: false
+            description: User friendly error message about the validation
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

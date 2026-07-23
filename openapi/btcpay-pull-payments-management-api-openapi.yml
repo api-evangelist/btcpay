@@ -1,0 +1,239 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys Pull payments (Management) API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Pull payments (Management)
+  description: Pull payments (Management) operations
+paths:
+  /api/v1/stores/{storeId}/pull-payments:
+    parameters:
+    - $ref: '#/components/parameters/StoreId'
+    get:
+      operationId: PullPayments_GetPullPayments
+      summary: Get store's pull payments
+      parameters:
+      - name: includeArchived
+        in: query
+        required: false
+        description: Whether this should list archived pull payments
+        schema:
+          type: boolean
+          default: false
+      description: Get the pull payments of a store
+      responses:
+        '200':
+          description: List of pull payments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PullPaymentDataList'
+        '403':
+          description: If you are authenticated but forbidden to get the data
+      tags:
+      - Pull payments (Management)
+      security:
+      - API_Key:
+        - btcpay.store.canmanagepullpayments
+        Basic: []
+    post:
+      operationId: PullPayments_CreatePullPayment
+      summary: Create a new pull payment
+      description: A pull payment allows its receiver to ask for payouts up to `amount` of `currency` every `period`.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the pull payment
+                  nullable: true
+                description:
+                  type: string
+                  description: The description of the pull payment
+                  nullable: true
+                amount:
+                  type: string
+                  format: decimal
+                  example: '0.1'
+                  description: The amount in `currency` of this pull payment as a decimal string
+                currency:
+                  type: string
+                  example: BTC
+                  description: The currency of the amount.
+                BOLT11Expiration:
+                  type: string
+                  example: 30
+                  default: 30
+                  nullable: true
+                  description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
+                autoApproveClaims:
+                  type: boolean
+                  example: false
+                  default: false
+                  nullable: true
+                  description: Any payouts created for this pull payment will skip the approval phase upon creation
+                startsAt:
+                  type: integer
+                  format: unix timestamp in seconds
+                  example: 1592312018
+                  nullable: true
+                  description: When this pull payment is effective. Already started if null or unspecified.
+                expiresAt:
+                  type: integer
+                  format: unix timestamp in seconds
+                  example: 1593129600
+                  nullable: true
+                  description: When this pull payment expires. Never expires if null or unspecified.
+                payoutMethods:
+                  type: array
+                  description: The list of supported payout methods supported by this pull payment. Available options can be queried from the `StorePaymentMethods_GetStorePaymentMethods` endpoint. If `null`, all available payout methods will be supported.
+                  items:
+                    type: string
+                    example: BTC
+                  nullable: true
+      responses:
+        '200':
+          description: The create pull payment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PullPaymentData'
+        '422':
+          description: Unable to validate the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+      tags:
+      - Pull payments (Management)
+      security:
+      - API_Key:
+        - btcpay.store.cancreatepullpayments
+        - btcpay.store.cancreatenonapprovedpullpayments
+        Basic: []
+  /api/v1/pull-payments/{pullPaymentId}:
+    parameters:
+    - name: pullPaymentId
+      in: path
+      required: true
+      description: The ID of the pull payment
+      schema:
+        type: string
+    delete:
+      operationId: PullPayments_ArchivePullPayment
+      summary: Archive a pull payment
+      description: Archive this pull payment (Will cancel all payouts awaiting for payment). The store is resolved automatically from the pull payment.
+      responses:
+        '200':
+          description: The pull payment has been archived
+        '404':
+          description: 'The pull payment has not been found. Well-known error code is: `pullpayment-not-found`'
+      tags:
+      - Pull payments (Management)
+      security:
+      - API_Key:
+        - btcpay.store.canarchivepullpayments
+        Basic: []
+components:
+  schemas:
+    PullPaymentDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PullPaymentData'
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    PullPaymentData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the pull payment
+        name:
+          type: string
+          description: Name given to pull payment when it was created
+        description:
+          type: string
+          description: Description given to pull payment when it was created
+        currency:
+          type: string
+          example: BTC
+          description: The currency of the pull payment's amount
+        amount:
+          type: string
+          format: decimal
+          example: '1.12000000'
+          description: The amount in the currency of this pull payment as a decimal string
+        BOLT11Expiration:
+          type: string
+          example: 30
+          description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
+        autoApproveClaims:
+          type: boolean
+          example: false
+          default: false
+          nullable: true
+          description: Any payouts created for this pull payment will skip the approval phase upon creation
+        archived:
+          type: boolean
+          description: Whether this pull payment is archived
+        viewLink:
+          type: string
+          description: The link to a page to claim payouts to this pull payment
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            nullable: false
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            nullable: false
+            description: User friendly error message about the validation
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

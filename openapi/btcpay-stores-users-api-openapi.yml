@@ -1,0 +1,299 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys Stores (Users) API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Stores (Users)
+  description: Store Users operations
+paths:
+  /api/v1/stores/{storeId}/users:
+    get:
+      tags:
+      - Stores (Users)
+      summary: Get store users
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      description: View users of the specified store
+      operationId: Stores_GetStoreUsers
+      responses:
+        '200':
+          description: specified store users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreUserDataList'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store's users
+        '404':
+          description: The store could not be found
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+    post:
+      tags:
+      - Stores (Users)
+      summary: Add a store user
+      description: Add a store user
+      operationId: Stores_AddStoreUser
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreUserData'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: The user was added
+        '400':
+          description: A list of errors that occurred when adding the store user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '403':
+          description: If you are authenticated but forbidden to add new store users
+        '404':
+          description: The store or user could not be found
+        '409':
+          description: 'Error code: `duplicate-store-user-role`. Removing this user would result in the store having no owner.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+  /api/v1/stores/{storeId}/users/{idOrEmail}:
+    put:
+      tags:
+      - Stores (Users)
+      summary: Updates a store user
+      description: Updates a store user
+      operationId: Stores_UpdateStoreUser
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/UserIdOrEmail'
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreUserData'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: The user was updated
+        '400':
+          description: A list of errors that occurred when updating the store user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '403':
+          description: If you are authenticated but forbidden to update store users
+        '404':
+          description: The store or user could not be found
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+    delete:
+      tags:
+      - Stores (Users)
+      summary: Remove Store User
+      operationId: Stores_RemoveStoreUser
+      description: Removes the specified store user. If there is no other owner, this endpoint will fail.
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/UserIdOrEmail'
+      responses:
+        '200':
+          description: The user has been removed
+        '400':
+          description: A list of errors that occurred when removing the store user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '409':
+          description: 'Error code: `store-user-role-orphaned`. Removing this user would result in the store having no owner.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: If you are authenticated but forbidden to remove the specified store user
+        '404':
+          description: The store or user could not be found
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+components:
+  schemas:
+    ApplicationUserData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The id of the user
+          nullable: false
+        email:
+          type: string
+          description: The email of the user
+          nullable: false
+        name:
+          type: string
+          description: The name of the user
+          nullable: true
+        imageUrl:
+          type: string
+          description: The profile picture URL of the user
+          nullable: true
+        invitationUrl:
+          type: string
+          description: The pending invitation URL of the user
+          nullable: true
+        emailConfirmed:
+          type: boolean
+          description: True if the email has been confirmed by the user
+        requiresEmailConfirmation:
+          type: boolean
+          description: True if the email requires confirmation to log in
+        approved:
+          type: boolean
+          description: True if an admin has approved the user
+        requiresApproval:
+          type: boolean
+          description: True if the instance requires approval to log in
+        storeQuota:
+          type: number
+          nullable: true
+          description: Per-user override for the max number of stores this user can create. Null means the server default applies
+        created:
+          type: number
+          nullable: true
+          description: The creation date of the user as a unix timestamp. Null if created before v1.0.5.6
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        disabled:
+          type: boolean
+          description: True if an admin has disabled the user
+        roles:
+          type: array
+          nullable: false
+          items:
+            type: string
+          description: The roles of the user
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          nullable: false
+          description: An error code describing the error
+        message:
+          type: string
+          nullable: false
+          description: User friendly error message about the error
+    StoreUserDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/StoreUserData'
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    StoreUserData:
+      allOf:
+      - type: object
+        properties:
+          userId:
+            type: string
+            description: The id of the user (Deprecated, use `id` instead)
+            nullable: false
+            deprecated: true
+          role:
+            type: string
+            description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest` (Deprecated, use `storeRole` instead)
+            nullable: false
+            deprecated: true
+          storeRole:
+            type: string
+            description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest`
+            nullable: false
+      - $ref: '#/components/schemas/ApplicationUserData'
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            nullable: false
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            nullable: false
+            description: User friendly error message about the validation
+  parameters:
+    UserIdOrEmail:
+      name: idOrEmail
+      in: path
+      required: true
+      description: The user's id or email
+      schema:
+        type: string
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

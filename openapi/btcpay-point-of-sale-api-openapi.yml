@@ -1,0 +1,298 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys Point of Sale API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Point of Sale
+  description: Point of Sale operations
+paths:
+  /api/v1/apps/pos/{appId}:
+    parameters:
+    - $ref: '#/components/parameters/AppId'
+    get:
+      tags:
+      - Point of Sale
+      operationId: Apps_GetPointOfSaleApp
+      summary: Get Point of Sale app data
+      description: Returns POS app data
+      responses:
+        '200':
+          description: POS app data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointOfSaleAppData'
+        '404':
+          description: POS app with specified ID was not found
+components:
+  schemas:
+    AppItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: green-tea
+          description: Unique ID of the item
+        title:
+          type: string
+          example: Green Tea
+          description: The display name of the item
+        description:
+          type: string
+          example: Lovely, fresh and tender.
+          description: A description text for the item
+        image:
+          type: string
+          example: http://teashop.com/img/green-tea.jpg
+          description: An image URL for the item
+        price:
+          type: string
+          format: decimal
+          nullable: true
+          example: '21.0'
+        priceType:
+          type: string
+          x-enumNames:
+          - Fixed
+          - Topup
+          - Minimum
+          enum:
+          - Fixed
+          - Topup
+          - Minimum
+        buyButtonText:
+          type: string
+          example: Buy me!
+          description: A custom text for the buy button for the item
+        inventory:
+          type: integer
+          nullable: true
+          example: 21
+          description: The remaining stock the item
+        disabled:
+          type: boolean
+          description: If true, the item does not appear in the list by default.
+          default: false
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    PointOfSaleBaseData:
+      allOf:
+      - $ref: '#/components/schemas/AppBaseData'
+      - type: object
+        properties:
+          title:
+            type: string
+            description: Display title of the app
+            example: My PoS app
+            nullable: true
+          description:
+            type: string
+            description: App description
+            example: This is my amazing PoS app
+            nullable: true
+          defaultView:
+            type: string
+            description: App view type (e.g., static, cart, etc...)
+            example: Cart
+            x-enumNames:
+            - Static
+            - Cart
+            - Light
+            - Print
+            enum:
+            - Static
+            - Cart
+            - Light
+            - Print
+            nullable: true
+          showItems:
+            type: boolean
+            default: false
+            description: Display item selection for keypad
+            example: true
+            nullable: true
+          showCustomAmount:
+            type: boolean
+            description: Whether the option to enter a custom amount is shown
+            example: true
+            nullable: true
+          showDiscount:
+            default: false
+            type: boolean
+            description: Whether the option to enter a discount is shown
+            example: false
+            nullable: true
+          showSearch:
+            type: boolean
+            description: Display the search bar
+            example: false
+            default: true
+            nullable: true
+          showCategories:
+            type: boolean
+            description: Display the list of categories
+            example: false
+            default: true
+            nullable: true
+          enableTips:
+            default: false
+            type: boolean
+            description: Whether the option to enter a tip is shown
+            example: true
+            nullable: true
+          currency:
+            type: string
+            description: Currency used for the app
+            example: BTC
+            nullable: true
+          fixedAmountPayButtonText:
+            type: string
+            description: Payment button text template for items with a set price
+            example: Buy for {0}
+            nullable: true
+          customAmountPayButtonText:
+            type: string
+            description: Payment button text which appears for items which allow user to input a custom amount
+            example: Pay
+            nullable: true
+          tipText:
+            type: string
+            description: Prompt which appears next to the tip amount field if tipping is enabled
+            example: Do you want to leave a tip?
+            nullable: true
+          customTipPercentages:
+            type: array
+            description: Array of predefined tip percentage amounts
+            items:
+              type: number
+            default:
+            - 15
+            - 18
+            - 20
+            nullable: true
+          notificationUrl:
+            type: string
+            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
+            nullable: true
+          redirectUrl:
+            type: string
+            description: URL user is redirected to once invoice is paid
+            nullable: true
+          redirectAutomatically:
+            type: boolean
+            description: Whether user is redirected to specified redirect URL automatically after the invoice is paid
+            example: true
+            nullable: true
+          htmlLang:
+            type: string
+            description: Used for SEO, the [HTML Lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) of the page
+            nullable: true
+            example: en
+          htmlMetaTags:
+            type: string
+            description: Used for SEO, the [Meta tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) of the page
+            nullable: true
+            example: <meta name="description" content="Your description">
+          formId:
+            type: string
+            description: Form ID to request customer data
+            nullable: true
+    PointOfSaleAppData:
+      allOf:
+      - $ref: '#/components/schemas/PointOfSaleBaseData'
+      - type: object
+        properties:
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/AppItem'
+            description: JSON object of app items
+            example:
+            - id: green tea
+              title: Green Tea
+              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
+              image: ~/img/pos-sample/green-tea.jpg
+              price: '1.0'
+              priceType: Fixed
+              buyButtonText: null
+              inventory: 5
+              paymentMethods: null
+              disabled: false
+            - id: black tea
+              title: Black Tea
+              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
+              image: ~/img/pos-sample/black-tea.jpg
+              price: '2.0'
+              priceType: Fixed
+              buyButtonText: Test Buy Button Text
+              inventory: null
+              paymentMethods: null
+              disabled: false
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type: boolean
+          description: If true, the app does not appear in the apps list by default.
+          default: false
+          nullable: true
+  parameters:
+    AppId:
+      name: appId
+      in: path
+      required: true
+      description: App ID
+      schema:
+        type: string
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

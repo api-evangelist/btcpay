@@ -1,0 +1,848 @@
+openapi: 3.0.0
+info:
+  title: BTCPay Greenfield API Keys Lightning (Internal Node) API
+  version: v1
+  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Lightning (Internal Node)
+  description: Lightning (Internal Node) operations
+paths:
+  /api/v1/server/lightning/{cryptoCode}/info:
+    get:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get node information
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: View information about the lightning node
+      operationId: InternalLightningNodeApi_GetInfo
+      responses:
+        '200':
+          description: Lightning node information such as reachable nodeinfos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningNodeInformationData'
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: The lightning node configuration was not found
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/balance:
+    get:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get node balance
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: View balance of the lightning node
+      operationId: InternalLightningNodeApi_GetBalance
+      responses:
+        '200':
+          description: Lightning node balance for on-chain and off-chain funds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningNodeBalanceData'
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: The lightning node configuration was not found
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/histogram:
+    get:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get node balance histogram
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: View balance histogram of the lightning node
+      operationId: InternalLightningNodeApi_GetHistogram
+      responses:
+        '200':
+          description: Lightning node balance histogram for off-chain funds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistogramData'
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: The lightning node configuration was not found
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/connect:
+    post:
+      tags:
+      - Lightning (Internal Node)
+      summary: Connect to lightning node
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: Connect to another lightning node.
+      operationId: InternalLightningNodeApi_ConnectToNode
+      responses:
+        '200':
+          description: Successfully connected
+        '422':
+          description: Unable to validate the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '400':
+          description: 'Well-known error codes are: `could-not-connect`'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: The lightning node configuration was not found
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectToNodeRequest'
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/channels:
+    get:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get channels
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: View information about the current channels of the lightning node
+      operationId: InternalLightningNodeApi_GetChannels
+      responses:
+        '200':
+          description: list of channels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightningChannelData'
+        '404':
+          description: The lightning node configuration was not found
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+    post:
+      tags:
+      - Lightning (Internal Node)
+      summary: Open channel
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: Open a channel with another lightning node. You should connect to that node first.
+      operationId: InternalLightningNodeApi_OpenChannel
+      responses:
+        '200':
+          description: Successfully opened
+        '422':
+          description: Unable to validate the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '400':
+          description: 'Well-known error codes are: `channel-already-exists`, `cannot-afford-funding`, `need-more-confirmations`, `peer-not-connected`'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The lightning node configuration was not found
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenLightningChannelRequest'
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/address:
+    post:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get deposit address
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: 'Get an on-chain deposit address for the lightning node '
+      operationId: InternalLightningNodeApi_GetDepositAddress
+      responses:
+        '200':
+          description: deposit address
+          content:
+            application/json:
+              schema:
+                type: string
+                description: A bitcoin address belonging to the lightning node
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: The lightning node configuration was not found
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/payments/{paymentHash}:
+    get:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get payment
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      - name: paymentHash
+        in: path
+        required: true
+        description: The payment hash of the lightning payment.
+        schema:
+          type: string
+      description: View information about the requested lightning payment
+      operationId: InternalLightningNodeApi_GetPayment
+      responses:
+        '200':
+          description: Lightning payment data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningPaymentData'
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: 'The lightning node configuration or the specified invoice was not found '
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/invoices/{id}:
+    get:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get invoice
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      - name: id
+        in: path
+        required: true
+        description: The id of the lightning invoice.
+        schema:
+          type: string
+      description: View information about the requested lightning invoice
+      operationId: InternalLightningNodeApi_GetInvoice
+      responses:
+        '200':
+          description: Lightning invoice data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningInvoiceData'
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: 'The lightning node configuration or the specified invoice was not found '
+      security:
+      - API_Key:
+        - btcpay.server.canviewlightninginvoiceinternalnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/invoices/pay:
+    post:
+      tags:
+      - Lightning (Internal Node)
+      summary: Pay Lightning Invoice
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: Pay a lightning invoice. In case the payment response times out, the status will be reported as pending and the final status can be resolved using the [Get payment](#operation/InternalLightningNodeApi_GetPayment) endpoint. The default wait time for payment responses is 30 seconds — it might take longer if multiple routes are tried or a hold invoice is getting paid.
+      operationId: InternalLightningNodeApi_PayInvoice
+      responses:
+        '200':
+          description: Successfully paid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningPaymentData'
+        '202':
+          description: Payment initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningPaymentData'
+        '422':
+          description: Unable to validate the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '400':
+          description: 'Well-known error codes are: `could-not-find-route`, `generic-error`'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: The lightning node configuration was not found
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayLightningInvoiceRequest'
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/invoices:
+    get:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get invoices
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      - name: pendingOnly
+        in: query
+        required: false
+        description: Limit to pending invoices only
+        schema:
+          type: boolean
+          nullable: true
+          default: false
+      - name: offsetIndex
+        in: query
+        required: false
+        description: The index of an invoice that will be used as the start of the list
+        schema:
+          type: number
+          nullable: true
+          default: 0
+      description: View information about the lightning invoices
+      operationId: InternalLightningNodeApi_GetInvoices
+      responses:
+        '200':
+          description: Lightning invoice data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightningInvoiceData'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: Unable to access the lightning node
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.server.canviewlightninginvoiceinternalnode
+        Basic: []
+    post:
+      tags:
+      - Lightning (Internal Node)
+      summary: Create lightning invoice
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      description: Create a lightning invoice.
+      operationId: InternalLightningNodeApi_CreateInvoice
+      responses:
+        '200':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningInvoiceData'
+        '400':
+          description: 'Well-known error codes are: `invoice-error`'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: Unable to access the lightning node
+        '404':
+          description: The lightning node configuration was not found
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLightningInvoiceRequest'
+      security:
+      - API_Key:
+        - btcpay.server.cancreatelightninginvoiceinternalnode
+        Basic: []
+  /api/v1/server/lightning/{cryptoCode}/payments:
+    get:
+      tags:
+      - Lightning (Internal Node)
+      summary: Get payments
+      parameters:
+      - $ref: '#/components/parameters/CryptoCode'
+      - name: includePending
+        in: query
+        required: false
+        description: Also include pending payments
+        schema:
+          type: boolean
+          nullable: true
+          default: false
+      - name: offsetIndex
+        in: query
+        required: false
+        description: The index of a payment that will be used as the start of the list
+        schema:
+          type: number
+          nullable: true
+          default: 0
+      description: View information about the lightning payments
+      operationId: InternalLightningNodeApi_GetPayments
+      responses:
+        '200':
+          description: Lightning payment data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightningPaymentData'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '503':
+          description: Unable to access the lightning node
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.server.canuseinternallightningnode
+        Basic: []
+components:
+  schemas:
+    LightningInvoiceStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unpaid
+      - Paid
+      - Expired
+      enum:
+      - Unpaid
+      - Paid
+      - Expired
+    LightningPaymentStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Pending
+      - Complete
+      - Failed
+      enum:
+      - Unknown
+      - Pending
+      - Complete
+      - Failed
+    LightningPaymentData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The payment's ID
+        status:
+          $ref: '#/components/schemas/LightningPaymentStatus'
+        BOLT11:
+          type: string
+          description: The BOLT11 representation of the payment
+          nullable: false
+        paymentHash:
+          type: string
+          description: The payment hash
+          nullable: false
+        preimage:
+          type: string
+          description: The payment preimage (available when status is complete)
+        createdAt:
+          type: number
+          description: The unix timestamp when the payment got created
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        totalAmount:
+          type: string
+          description: The total amount (including fees) in millisatoshi
+        feeAmount:
+          type: string
+          description: The total fees in millisatoshi
+    LightningInvoiceData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The invoice's ID
+        status:
+          $ref: '#/components/schemas/LightningInvoiceStatus'
+        BOLT11:
+          type: string
+          description: The BOLT11 representation of the invoice
+          nullable: false
+        paidAt:
+          type: number
+          description: The unix timestamp when the invoice got paid
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        expiresAt:
+          description: The unix timestamp when the invoice expires
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        amount:
+          type: string
+          description: The amount of the invoice in millisatoshi
+        amountReceived:
+          type: string
+          description: The amount received in millisatoshi
+        paymentHash:
+          type: string
+          description: The payment hash
+        preimage:
+          type: string
+          nullable: true
+          description: The payment preimage (available when status is complete)
+        customRecords:
+          type: object
+          nullable: true
+          description: The custom TLV records attached to a keysend payment
+    ConnectToNodeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        nodeURI:
+          type: string
+          nullable: true
+          description: Node URI in the form `pubkey@endpoint[:port]`
+    TimeSpanSeconds:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: seconds
+      description: A span of times in seconds
+    LightningNodeInformationData:
+      type: object
+      properties:
+        nodeURIs:
+          type: array
+          description: Node URIs to connect to this node in the form `pubkey@endpoint[:port]`
+          items:
+            type: string
+        blockHeight:
+          type: integer
+          description: The block height of the lightning node
+        alias:
+          type: string
+          nullable: true
+          description: The alias of the lightning node
+        color:
+          type: string
+          nullable: true
+          description: The color attribute of the lightning node
+        version:
+          type: string
+          nullable: true
+          description: The version name of the lightning node
+        peersCount:
+          type: integer
+          nullable: true
+          description: The number of peers
+        activeChannelsCount:
+          type: integer
+          nullable: true
+          description: The number of active channels
+        inactiveChannelsCount:
+          type: integer
+          nullable: true
+          description: The number of inactive channels
+        pendingChannelsCount:
+          type: integer
+          nullable: true
+          description: The number of pending channels
+    LightningChannelData:
+      type: object
+      additionalProperties: false
+      properties:
+        remoteNode:
+          type: string
+          nullable: false
+          description: The public key of the node (Node ID)
+        isPublic:
+          type: boolean
+          description: Whether the node is public
+        isActive:
+          type: boolean
+          description: Whether the node is online
+        capacity:
+          type: string
+          description: The capacity of the channel in millisatoshi
+          nullable: false
+        localBalance:
+          type: string
+          description: The local balance of the channel in millisatoshi
+          nullable: false
+        channelPoint:
+          type: string
+          nullable: true
+    CreateLightningInvoiceRequest:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount wrapped in a string, represented in a millisatoshi string. (1000 millisatoshi = 1 satoshi)
+          nullable: false
+        description:
+          type: string
+          nullable: true
+          description: Description of the invoice in the BOLT11
+        descriptionHashOnly:
+          type: boolean
+          nullable: true
+          default: false
+          description: If `descriptionHashOnly` is `true` (default is `false`), then the BOLT11 returned contains a hash of the `description`, rather than the `description`, itself. This allows for much longer descriptions, but they must be communicated via some other mechanism.
+        expiry:
+          description: Expiration time in seconds
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+        privateRouteHints:
+          type: boolean
+          nullable: true
+          default: false
+          description: True if the invoice should include private route hints
+    OffchainBalanceData:
+      type: object
+      properties:
+        opening:
+          type: string
+          description: The amount of current channel openings in millisatoshi
+          nullable: true
+        local:
+          type: string
+          description: The amount that is available on the local end of active channels in millisatoshi
+          nullable: true
+        remote:
+          type: string
+          description: The amount that is available on the remote end of active channels in millisatoshi
+          nullable: true
+        closing:
+          type: string
+          description: The amount of current channel closings in millisatoshi
+          nullable: true
+    LightningNodeBalanceData:
+      type: object
+      properties:
+        onchain:
+          type: object
+          description: On-chain balance of the Lightning node
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/OnchainBalanceData'
+        offchain:
+          type: object
+          description: Off-chain balance of the Lightning node
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/OffchainBalanceData'
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    PayLightningInvoiceRequest:
+      type: object
+      properties:
+        BOLT11:
+          type: string
+          description: The BOLT11 of the invoice to pay
+        amount:
+          type: string
+          description: Optional explicit payment amount in millisatoshi (if specified, it overrides the BOLT11 amount)
+          nullable: true
+        maxFeePercent:
+          type: string
+          format: float
+          nullable: true
+          description: The fee limit expressed as a percentage of the payment amount
+          example: '6.15'
+        maxFeeFlat:
+          type: string
+          nullable: true
+          description: The fee limit expressed as a fixed amount in satoshi
+          example: '21'
+        sendTimeout:
+          type: number
+          nullable: true
+          example: 30
+          default: 30
+          description: The number of seconds after which the payment times out
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          nullable: false
+          description: An error code describing the error
+        message:
+          type: string
+          nullable: false
+          description: User friendly error message about the error
+    TimeSpan:
+      type: number
+      format: int32
+      example: 90
+    OpenLightningChannelRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        nodeURI:
+          type: string
+          description: Node URI in the form `pubkey@endpoint[:port]`
+        channelAmount:
+          type: string
+          description: The amount to fund (in satoshi)
+        feeRate:
+          type: number
+          description: The amount to fund (in satoshi per byte)
+    OnchainBalanceData:
+      type: object
+      properties:
+        confirmed:
+          type: string
+          description: The confirmed amount in satoshi
+          nullable: true
+        unconfirmed:
+          type: string
+          description: The unconfirmed amount in satoshi
+          nullable: true
+        reserved:
+          type: string
+          description: The reserved amount in satoshi
+          nullable: true
+    HistogramData:
+      type: object
+      description: Histogram data for wallet balances over time
+      properties:
+        type:
+          type: string
+          description: The timespan of the histogram data
+          x-enumNames:
+          - Week
+          - Month
+          - Year
+          enum:
+          - Week
+          - Month
+          - Year
+          default: Week
+        balance:
+          type: string
+          format: decimal
+          description: The current wallet balance
+        series:
+          type: array
+          description: An array of historic balances of the wallet
+          items:
+            type: string
+            format: decimal
+            description: The balance of the wallet at a specific time
+        labels:
+          type: array
+          description: An array of timestamps associated with the series data
+          items:
+            type: integer
+            description: UNIX timestamp of the balance snapshot
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            nullable: false
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            nullable: false
+            description: User friendly error message about the validation
+  parameters:
+    CryptoCode:
+      name: cryptoCode
+      in: path
+      required: true
+      description: The cryptoCode of the lightning-node to query
+      schema:
+        type: string
+      example: BTC
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/
