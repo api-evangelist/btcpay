@@ -5,6 +5,19 @@ description: >-
   stores, invoices, wallets, Lightning Network nodes, payment requests, pull
   payments, webhooks, users, and server configuration. It operates with zero
   fees, no third-party dependency, and is released under the MIT license.
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://btcpayserver.org/images/btcpay-logo.svg
 tags:
   - Bitcoin
@@ -18,59 +31,905 @@ modified: "2026-06-13"
 url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/apis.yml
 specificationVersion: "0.19"
 apis:
-  - name: BTCPay Server Greenfield API
-    description: >-
-      The Greenfield API is BTCPay Server's primary REST API, providing
-      programmatic access to stores, invoices, wallets, Lightning Network nodes,
-      payment requests, pull payments, payouts, webhooks, notifications, users,
-      API keys, apps, files, reports, server health, and server configuration.
-      Authentication is via API keys or HTTP Basic Auth. The OpenAPI 3.0
-      specification is served at /swagger/v1/swagger.json on any BTCPay Server
-      instance.
-    image: https://btcpayserver.org/images/btcpay-logo.svg
-    humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
-    baseURL: https://{btcpay-host}/api/v1
-    tags:
-      - Bitcoin
-      - Cryptocurrency
-      - Payments
-      - Lightning Network
-      - Invoices
-      - Wallets
-    properties:
-      - type: Documentation
-        url: https://docs.btcpayserver.org/API/Greenfield/v1/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/openapi/openapi.json
-      - type: OpenAPI
-        url: https://{btcpay-host}/swagger/v1/swagger.json
-      - type: JSONLD
-        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
-      - type: Vocabulary
-        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
-      - type: GitHubRepository
-        url: https://github.com/btcpayserver/btcpayserver
-      - type: Authentication
-        url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
-      - type: Plans
-        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
-      - type: RateLimits
-        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
-      - type: FinOps
-        url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
-    contact:
-      - FN: BTCPay Server Community
-        url: https://chat.btcpayserver.org/
-        email: ""
-    meta:
-      - key: license
-        value: MIT
-      - key: openSource
-        value: "true"
-      - key: selfHosted
-        value: "true"
-      - key: specFormat
-        value: OpenAPI 3.0
+- aid: btcpay:btcpay-api-keys-api
+  name: BTCPay Server API Keys API
+  description: API Key operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - API Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-apps-api
+  name: BTCPay Server Apps API
+  description: App operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-apps-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-authorization-api
+  name: BTCPay Server Authorization API
+  description: Authorization operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-authorization-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-crowdfund-api
+  name: BTCPay Server Crowdfund API
+  description: Crowdfund operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Crowdfund
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-crowdfund-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-files-api
+  name: BTCPay Server Files API
+  description: File operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-files-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-health-api
+  name: BTCPay Server Health API
+  description: Health operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-health-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-invoices-api
+  name: BTCPay Server Invoices API
+  description: Invoice operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-invoices-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-lightning-address-api
+  name: BTCPay Server Lightning address API
+  description: Lightning address configuration
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Lightning address
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-lightning-address-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-lightning-internal-node-api
+  name: BTCPay Server Lightning (Internal Node) API
+  description: Lightning (Internal Node) operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Lightning (Internal Node)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-lightning-internal-node-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-lightning-store-api
+  name: BTCPay Server Lightning (Store) API
+  description: Lightning (Store) operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Lightning (Store)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-lightning-store-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-miscelleneous-api
+  name: BTCPay Server Miscelleneous API
+  description: Miscelleneous operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Miscelleneous
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-miscelleneous-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-notifications-current-user-api
+  name: BTCPay Server Notifications (Current User) API
+  description: Notifications operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Notifications (Current User)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-notifications-current-user-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-payment-requests-api
+  name: BTCPay Server Payment Requests API
+  description: Payment Requests operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Payment Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-payment-requests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-payout-processors-api
+  name: BTCPay Server Payout Processors API
+  description: Payout Processors operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Payout Processors
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-payout-processors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-point-of-sale-api
+  name: BTCPay Server Point of Sale API
+  description: Point of Sale operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Point of Sale
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-point-of-sale-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-pull-payments-management-api
+  name: BTCPay Server Pull payments (Management) API
+  description: Pull payments (Management) operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Pull payments (Management)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-pull-payments-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-pull-payments-payout-public-api
+  name: BTCPay Server Pull payments payout (Public) API
+  description: Pull payments payout (Public) operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Pull payments payout (Public)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-pull-payments-payout-public-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-pull-payments-public-api
+  name: BTCPay Server Pull payments (Public) API
+  description: Pull payments (Public) operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Pull payments (Public)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-pull-payments-public-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-serveremail-api
+  name: BTCPay Server ServerEmail API
+  description: Server Email Settings operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - ServerEmail
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-serveremail-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-serverinfo-api
+  name: BTCPay Server ServerInfo API
+  description: Server Info operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - ServerInfo
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-serverinfo-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-store-payment-methods-api
+  name: BTCPay Server Store (Payment Methods) API
+  description: Store Payment Methods operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Store (Payment Methods)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-store-payment-methods-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-store-wallet-on-chain-api
+  name: BTCPay Server Store Wallet (On Chain) API
+  description: Store Wallet (On Chain) operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Store Wallet (On Chain)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-store-wallet-on-chain-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-stores-api
+  name: BTCPay Server Stores API
+  description: Store operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Stores
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-stores-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-stores-email-api
+  name: BTCPay Server Stores (Email) API
+  description: Store Emails operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Stores (Email)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-stores-email-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-stores-payout-processors-api
+  name: BTCPay Server Stores (Payout Processors) API
+  description: Stores (Payout Processors) operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Stores (Payout Processors)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-stores-payout-processors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-stores-payouts-api
+  name: BTCPay Server Stores (Payouts) API
+  description: Store pull payment payout operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Stores (Payouts)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-stores-payouts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-stores-rates-api
+  name: BTCPay Server Stores (Rates) API
+  description: Stores rate information and configuration
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Stores (Rates)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-stores-rates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-stores-users-api
+  name: BTCPay Server Stores (Users) API
+  description: Store Users operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Stores (Users)
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-stores-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-subscriptions-api
+  name: BTCPay Server Subscriptions API
+  description: Subscription operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-users-api
+  name: BTCPay Server Users API
+  description: User operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
+- aid: btcpay:btcpay-webhooks-api
+  name: BTCPay Server Webhooks API
+  description: Webhook operations
+  humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
+  baseURL: https://{btcpay-host}/api/v1
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/btcpay-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.btcpayserver.org/API/Greenfield/v1/
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/json-ld/api.json
+  - type: Vocabulary
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/vocabulary/vocabulary.json
+  - type: GitHubRepository
+    url: https://github.com/btcpayserver/btcpayserver
+  - type: Authentication
+    url: https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
 common:
   - type: AgenticAccess
     url: agentic-access/btcpay-agentic-access.yml
