@@ -931,6 +931,10 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
 common:
+  - type: IssueTracker
+    url: https://github.com/btcpayserver/btcpayserver/issues
+  - type: SecurityPolicy
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/SECURITY.md
   - type: AgenticAccess
     url: agentic-access/btcpay-agentic-access.yml
   - type: DomainSecurity
