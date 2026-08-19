@@ -1,0 +1,2000 @@
+{
+  "item": [
+    {
+      "id": "38d614ac-913f-408c-b4df-944d74671add",
+      "name": "Stores",
+      "description": {
+        "content": "Store operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d079076f-193f-4f87-bddc-f9e4718770e0",
+          "name": "Get stores",
+          "request": {
+            "name": "Get stores",
+            "description": {
+              "content": "View information about the available stores",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cccf8ef7-efcd-4438-b918-4a060300b010",
+              "name": "list of stores",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"website\": \"string\",\n    \"supportUrl\": \"http://eyXWdNLQHiAzpXThSZcXpGIZ.qca14\",\n    \"logoUrl\": \"https://aCNXtiQI.lqcnNL3tShdW85jhr0s+bQi2M4Cv8oI7NmVkgK9UqtAZQAFUwM4dJD\",\n    \"cssUrl\": \"http://knmekrRwJEgMfxCZjYfZlHH.aokDMKSIAlmkWcnp9TbN\",\n    \"paymentSoundUrl\": \"https://UClheCZkwVBPHuLGGttmhi.xeshdATBGoXn\",\n    \"brandColor\": \"#F7931A\",\n    \"applyBrandColorToBackend\": false,\n    \"defaultCurrency\": \"USD\",\n    \"additionalTrackedRates\": [\n      \"JPY\",\n      \"EUR\"\n    ],\n    \"invoiceExpiration\": 90,\n    \"refundBOLT11Expiration\": 90,\n    \"displayExpirationTimer\": 90,\n    \"monitoringExpiration\": 86400,\n    \"speedPolicy\": \"MediumSpeed\",\n    \"lightningDescriptionTemplate\": \"string\",\n    \"paymentTolerance\": 0,\n    \"archived\": false,\n    \"anyoneCanCreateInvoice\": false,\n    \"receipt\": {\n      \"enabled\": false,\n      \"showQR\": null,\n      \"showPayments\": null\n    },\n    \"lightningAmountInSatoshi\": false,\n    \"lightningPrivateRouteHints\": false,\n    \"onChainWithLnInvoiceFallback\": false,\n    \"redirectAutomatically\": false,\n    \"showRecommendedFee\": true,\n    \"recommendedFeeBlockTarget\": 1,\n    \"defaultLang\": \"en\",\n    \"htmlTitle\": \"string\",\n    \"networkFeeMode\": \"Never\",\n    \"payJoinEnabled\": false,\n    \"autoDetectLanguage\": false,\n    \"showPayInWalletButton\": true,\n    \"showStoreHeader\": true,\n    \"celebratePayment\": true,\n    \"playSoundOnPayment\": false,\n    \"lazyPaymentMethods\": false,\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"paymentMethodCriteria\": {},\n    \"id\": \"string\"\n  },\n  {\n    \"name\": \"string\",\n    \"website\": \"string\",\n    \"supportUrl\": \"https://pZBCtSaIaEYSipAtjALdimpGdijTXssL.gwjiVdlexWuI-\",\n    \"logoUrl\": \"https://pQRjbPoUHbMEnaJpuF.whkvfrq3ieLNNIRWsnVmbMgkPw\",\n    \"cssUrl\": \"https://MJMnAeFjGtJpYrDqYeTdkxDCCzOpRX.dclkT1O6ZvPSqCnZJvDwJewAn4ew-FTi2brn,D\",\n    \"paymentSoundUrl\": \"http://wbhUuCVFjhMSrNMyRfhoOrPzqSzYw.wazaUPG8OjoPpOh7uBhFOOm2qU\",\n    \"brandColor\": \"#F7931A\",\n    \"applyBrandColorToBackend\": false,\n    \"defaultCurrency\": \"USD\",\n    \"additionalTrackedRates\": [\n      \"JPY\",\n      \"EUR\"\n    ],\n    \"invoiceExpiration\": 90,\n    \"refundBOLT11Expiration\": 90,\n    \"displayExpirationTimer\": 90,\n    \"monitoringExpiration\": 86400,\n    \"speedPolicy\": \"LowMediumSpeed\",\n    \"lightningDescriptionTemplate\": \"string\",\n    \"paymentTolerance\": 0,\n    \"archived\": false,\n    \"anyoneCanCreateInvoice\": false,\n    \"receipt\": {\n      \"enabled\": true,\n      \"showQR\": null,\n      \"showPayments\": null\n    },\n    \"lightningAmountInSatoshi\": false,\n    \"lightningPrivateRouteHints\": false,\n    \"onChainWithLnInvoiceFallback\": false,\n    \"redirectAutomatically\": false,\n    \"showRecommendedFee\": true,\n    \"recommendedFeeBlockTarget\": 1,\n    \"defaultLang\": \"en\",\n    \"htmlTitle\": \"string\",\n    \"networkFeeMode\": \"Always\",\n    \"payJoinEnabled\": false,\n    \"autoDetectLanguage\": false,\n    \"showPayInWalletButton\": true,\n    \"showStoreHeader\": true,\n    \"celebratePayment\": true,\n    \"playSoundOnPayment\": false,\n    \"lazyPaymentMethods\": false,\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"paymentMethodCriteria\": {},\n    \"id\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d22f6a1-8802-4f8e-b513-5fe242dd36a9",
+              "name": "Missing authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6451b544-51d7-4063-a66f-41773aed2dc6",
+          "name": "Create a new store",
+          "request": {
+            "name": "Create a new store",
+            "description": {
+              "content": "Create a new store (default values can be different if the server settings use a default store template)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"<string>\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"invoiceExpiration\": 900,\n  \"refundBOLT11Expiration\": 30,\n  \"displayExpirationTimer\": 300,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": \"<object>\",\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"<string>\",\n  \"paymentMethodCriteria\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "de6a878c-b6c4-40a4-8130-fb2ec5ac0322",
+              "name": "Information about the new store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\",\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33dabdf0-89e3-43cf-a058-2f2991f1d9d3",
+              "name": "A list of errors that occurred when creating the store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4e33cc8-bacd-445e-a57d-75f41eeecc46",
+              "name": "If you are authenticated but forbidden to add new stores",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b67b6b8d-8d0c-4324-9a85-f70348bc3684",
+          "name": "Get store",
+          "request": {
+            "name": "Get store",
+            "description": {
+              "content": "View information about the specified store",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "632e3b6f-6d51-4b95-a6d6-e6f4a3b1dcf2",
+              "name": "specified store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\",\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "235ae80c-a173-45ca-8a79-2d0817df872c",
+              "name": "If you are authenticated but forbidden to view the specified store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1a981f26-5408-4f9d-9dc0-9d78d749491c",
+              "name": "The key is not found for this store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a266139-90ca-4090-9321-08731713043b",
+          "name": "Update store",
+          "request": {
+            "name": "Update store",
+            "description": {
+              "content": "Update the specified store (default values can be different if the server settings use a default store template)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"<string>\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"invoiceExpiration\": 900,\n  \"refundBOLT11Expiration\": 30,\n  \"displayExpirationTimer\": 300,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": \"<object>\",\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"<string>\",\n  \"paymentMethodCriteria\": \"<object>\",\n  \"id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa751f3d-be90-42be-8045-72dcb3fab5bb",
+              "name": "updated specified store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\",\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\",\n  \"id\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a871f12a-0ac8-48cc-b2e3-4e2999add3ee",
+              "name": "A list of errors that occurred when updating the store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\",\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72bde9be-35a0-48ad-b642-a0d23313ea44",
+              "name": "If you are authenticated but forbidden to update the specified store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\",\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "96ec7860-1133-45f3-ab95-a79da8b1b9bd",
+              "name": "The key is not found for this store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"website\": \"<url>\",\n  \"supportUrl\": \"<uri>\",\n  \"logoUrl\": \"<uri>\",\n  \"cssUrl\": \"<uri>\",\n  \"paymentSoundUrl\": \"<uri>\",\n  \"brandColor\": \"#F7931A\",\n  \"applyBrandColorToBackend\": false,\n  \"defaultCurrency\": \"USD\",\n  \"additionalTrackedRates\": [\n    \"JPY\",\n    \"EUR\"\n  ],\n  \"invoiceExpiration\": 90,\n  \"refundBOLT11Expiration\": 90,\n  \"displayExpirationTimer\": 90,\n  \"monitoringExpiration\": 86400,\n  \"speedPolicy\": \"<string>\",\n  \"lightningDescriptionTemplate\": \"<string>\",\n  \"paymentTolerance\": 0,\n  \"archived\": false,\n  \"anyoneCanCreateInvoice\": false,\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"lightningAmountInSatoshi\": false,\n  \"lightningPrivateRouteHints\": false,\n  \"onChainWithLnInvoiceFallback\": false,\n  \"redirectAutomatically\": false,\n  \"showRecommendedFee\": true,\n  \"recommendedFeeBlockTarget\": 1,\n  \"defaultLang\": \"en\",\n  \"htmlTitle\": \"<string>\",\n  \"networkFeeMode\": \"<string>\",\n  \"payJoinEnabled\": false,\n  \"autoDetectLanguage\": false,\n  \"showPayInWalletButton\": true,\n  \"showStoreHeader\": true,\n  \"celebratePayment\": true,\n  \"playSoundOnPayment\": false,\n  \"lazyPaymentMethods\": false,\n  \"defaultPaymentMethod\": \"BTC-CHAIN\",\n  \"paymentMethodCriteria\": \"<object>\",\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ead48c50-92a9-4f09-98e3-60b69836643f",
+          "name": "Remove Store",
+          "request": {
+            "name": "Remove Store",
+            "description": {
+              "content": "Removes the specified store. If there is another user with access, only your access will be removed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4f03bd72-a876-49e7-83b6-d834fc932cb9",
+              "name": "The store has been removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d8f9e45d-e977-4494-9d78-52ffe7cdcac2",
+              "name": "A list of errors that occurred when removing the store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91d8c6cd-b70c-40ed-8c09-058b5d18d329",
+              "name": "If you are authenticated but forbidden to remove the specified store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "65dd53da-54cc-48e6-8653-bf5e1c71788b",
+              "name": "The key is not found for this store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "efc7fae5-3f13-4d57-b6de-f4fb5a9e54bc",
+          "name": "Uploads a logo for the store",
+          "request": {
+            "name": "Uploads a logo for the store",
+            "description": {
+              "content": "Uploads a logo for the store",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "logo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "The logo"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "35c472f4-c0e8-46c7-a7e1-42e01ffc8c5c",
+              "name": "Uploads a logo for the store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The logo",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"email\": \"string\",\n  \"name\": \"string\",\n  \"imageUrl\": \"string\",\n  \"invitationUrl\": \"string\",\n  \"emailConfirmed\": false,\n  \"requiresEmailConfirmation\": false,\n  \"approved\": false,\n  \"requiresApproval\": false,\n  \"storeQuota\": 278.99720081329906,\n  \"created\": 1592312018,\n  \"disabled\": true,\n  \"roles\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3afd7c8b-e7b4-4a98-b2d1-dfbec3e71a6a",
+              "name": "The store could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The logo",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "772f94a2-b976-4669-945f-b31d129d613a",
+          "name": "Deletes the store logo",
+          "request": {
+            "name": "Deletes the store logo",
+            "description": {
+              "content": "Delete the store's logo",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "logo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "17f42e4d-e430-4e29-abdc-1636c00d57ce",
+              "name": "Store logo deleted successfuly",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a8eb699-cb20-4250-b9f5-572e93ecbe8e",
+              "name": "The store could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7df3f5b-450f-40c5-9b36-77db26afeb1e",
+          "name": "Get store's roles",
+          "request": {
+            "name": "Get store's roles",
+            "description": {
+              "content": "View information about the specified store's roles",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "948e7cb3-1b25-4fa1-a460-ed431104cb9e",
+              "name": "The user roles available for this store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"Owner\",\n  \"role\": \"Owner\",\n  \"permissions\": [\n    \"btcpay.store.canmodifystoresettings\"\n  ],\n  \"isServerRole\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7465b026-c05e-41da-b6f8-27278f3978b0",
+              "name": "If you are authenticated but forbidden to get the store's roles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e73fcc43-445c-401b-92a2-556c0d0be70b",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your BTCPay Server instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mainnet.demo.btcpayserver.org",
+      "key": "btcpay-host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{btcpay-host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "550facca-bb58-471d-87a5-5c99fbf1ab2a",
+    "name": "BTCPay Greenfield API Keys Stores API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n\n\nContact Support:\n Name: BTCPay Server",
+      "type": "text/plain"
+    }
+  }
+}

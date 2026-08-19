@@ -1,0 +1,229 @@
+{
+  "item": [
+    {
+      "id": "ad5cb90b-09dd-499a-8d99-ca77487cd64a",
+      "name": "Point of Sale",
+      "description": {
+        "content": "Point of Sale operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0621004a-141f-4657-bdbb-b411314706c8",
+          "name": "Get Point of Sale app data",
+          "request": {
+            "name": "Get Point of Sale app data",
+            "description": {
+              "content": "Returns POS app data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                "pos",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6f8b01d-6f96-4dc9-94d8-377f876313e1",
+              "name": "POS app data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "pos",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My PoS app\",\n  \"description\": \"This is my amazing PoS app\",\n  \"defaultView\": \"Cart\",\n  \"showItems\": true,\n  \"showCustomAmount\": true,\n  \"showDiscount\": false,\n  \"showSearch\": false,\n  \"showCategories\": false,\n  \"enableTips\": true,\n  \"currency\": \"BTC\",\n  \"fixedAmountPayButtonText\": \"Buy for {0}\",\n  \"customAmountPayButtonText\": \"Pay\",\n  \"tipText\": \"Do you want to leave a tip?\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"string\",\n  \"redirectUrl\": \"string\",\n  \"redirectAutomatically\": true,\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"string\",\n  \"items\": [\n    {\n      \"id\": \"green-tea\",\n      \"title\": \"Green Tea\",\n      \"description\": \"Lovely, fresh and tender.\",\n      \"image\": \"http://teashop.com/img/green-tea.jpg\",\n      \"price\": \"21.0\",\n      \"priceType\": \"Fixed\",\n      \"buyButtonText\": \"Buy me!\",\n      \"inventory\": 21,\n      \"disabled\": false\n    },\n    {\n      \"id\": \"green-tea\",\n      \"title\": \"Green Tea\",\n      \"description\": \"Lovely, fresh and tender.\",\n      \"image\": \"http://teashop.com/img/green-tea.jpg\",\n      \"price\": \"21.0\",\n      \"priceType\": \"Minimum\",\n      \"buyButtonText\": \"Buy me!\",\n      \"inventory\": 21,\n      \"disabled\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abb5e31d-72f2-41b5-b970-dec3dd5669c6",
+              "name": "POS app with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "pos",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your BTCPay Server instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mainnet.demo.btcpayserver.org",
+      "key": "btcpay-host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{btcpay-host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "60b50162-74e0-4641-bd55-59c24465b2d2",
+    "name": "BTCPay Greenfield API Keys Point of Sale API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n\n\nContact Support:\n Name: BTCPay Server",
+      "type": "text/plain"
+    }
+  }
+}

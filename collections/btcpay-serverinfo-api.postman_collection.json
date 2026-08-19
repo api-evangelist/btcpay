@@ -1,0 +1,490 @@
+{
+  "item": [
+    {
+      "id": "88872cec-5b8b-4ecd-9a6f-ec666828608c",
+      "name": "ServerInfo",
+      "description": {
+        "content": "Server Info operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f36214e0-f2f7-4acf-af6f-2ca9fc8ad81b",
+          "name": "Get server info",
+          "request": {
+            "name": "Get server info",
+            "description": {
+              "content": "Information about the server, chains and sync states",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "server",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "292c4371-b1fa-42e1-a988-8570a9f0d0e6",
+              "name": "Server information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "server",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": \"string\",\n  \"onion\": \"string\",\n  \"supportedPaymentMethods\": [\n    \"string\",\n    \"string\"\n  ],\n  \"fullySynched\": true,\n  \"syncStatus\": [\n    {\n      \"paymentMethodId\": \"BTC-CHAIN\",\n      \"nodeInformation\": {\n        \"headers\": 5412,\n        \"blocks\": 8669,\n        \"verificationProgress\": 0.8476938621682314\n      },\n      \"chainHeight\": 3646,\n      \"syncHeight\": 9093.477354002223,\n      \"available\": false\n    },\n    {\n      \"paymentMethodId\": \"BTC-CHAIN\",\n      \"nodeInformation\": {\n        \"headers\": 4690,\n        \"blocks\": 8960,\n        \"verificationProgress\": 0.7655595118409336\n      },\n      \"chainHeight\": 894,\n      \"syncHeight\": 9646.80937011635,\n      \"available\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bac40675-f0f8-4ad2-a631-d7f80920bb17",
+              "name": "Missing authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "server",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b87897c2-6f63-4f6a-a768-abc022f7457c",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "server",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54249387-2c0f-4b8e-a197-6b8d3d0a6f72",
+          "name": "Get store's roles",
+          "request": {
+            "name": "Get store's roles",
+            "description": {
+              "content": "View information about the store's roles at the server's scope",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "server",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "72c2afc5-fc27-4b36-ad67-a5818a7145fd",
+              "name": "The user roles available at the server's scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "server",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"Owner\",\n  \"role\": \"Owner\",\n  \"permissions\": [\n    \"btcpay.store.canmodifystoresettings\"\n  ],\n  \"isServerRole\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d879bbd3-779f-4182-9536-8f52d91b32d3",
+              "name": "If you are authenticated but forbidden to get the store's roles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "server",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7beda55a-4bbc-4bec-a7a4-10a519e6a953",
+              "name": "Store not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "server",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your BTCPay Server instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mainnet.demo.btcpayserver.org",
+      "key": "btcpay-host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{btcpay-host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "77aaa10f-ca82-4497-a1d6-97581d4ae884",
+    "name": "BTCPay Greenfield API Keys ServerInfo API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n\n\nContact Support:\n Name: BTCPay Server",
+      "type": "text/plain"
+    }
+  }
+}

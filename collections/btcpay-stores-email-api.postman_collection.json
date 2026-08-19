@@ -1,0 +1,930 @@
+{
+  "item": [
+    {
+      "id": "210f9529-445e-4274-abec-a08f5721487a",
+      "name": "Stores (Email)",
+      "description": {
+        "content": "Store Emails operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5f66d44d-fa39-45d9-9401-4cc1644f6322",
+          "name": "Get store email settings",
+          "request": {
+            "name": "Get store email settings",
+            "description": {
+              "content": "Retrieve the email settings configured for specific store. The password field will be masked if present.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "email"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "187f8013-5002-4033-9c92-c0846a7d3ab4",
+              "name": "specified store email settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"from\": \"sender@gmail.com\",\n  \"server\": \"smtp.gmail.com\",\n  \"port\": 587,\n  \"login\": \"John.Smith\",\n  \"disableCertificateCheck\": false,\n  \"passwordSet\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e51112d-2283-4050-a5d2-a6fe4cb21ea5",
+              "name": "If you are authenticated but forbidden to view the specified store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d323434d-be77-49f1-bef2-c70fe50a1573",
+              "name": "The key is not found for this store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0969d10f-1321-4516-92b8-fc5bf5b7327d",
+          "name": "Update store email settings",
+          "request": {
+            "name": "Update store email settings",
+            "description": {
+              "content": "Update a store's email settings",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "email"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": \"<string>\",\n  \"server\": \"<string>\",\n  \"port\": \"<integer>\",\n  \"login\": \"<string>\",\n  \"disableCertificateCheck\": \"<boolean>\",\n  \"password\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dfbbc991-1fe1-4eaa-a1e1-7629467b404b",
+              "name": "The settings were updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": \"sender@gmail.com\",\n  \"server\": \"smtp.gmail.com\",\n  \"port\": 587,\n  \"login\": \"John.Smith\",\n  \"disableCertificateCheck\": false,\n  \"password\": \"MyS3cr3t\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"from\": \"sender@gmail.com\",\n  \"server\": \"smtp.gmail.com\",\n  \"port\": 587,\n  \"login\": \"John.Smith\",\n  \"disableCertificateCheck\": false,\n  \"passwordSet\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48404ba4-a328-4829-922c-d43e4da47fe5",
+              "name": "A list of errors that occurred when updating the settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": \"sender@gmail.com\",\n  \"server\": \"smtp.gmail.com\",\n  \"port\": 587,\n  \"login\": \"John.Smith\",\n  \"disableCertificateCheck\": false,\n  \"password\": \"MyS3cr3t\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8d22ae5-55ca-4ef4-adbf-25783493489d",
+              "name": "If you are authenticated but forbidden to modify the store",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": \"sender@gmail.com\",\n  \"server\": \"smtp.gmail.com\",\n  \"port\": 587,\n  \"login\": \"John.Smith\",\n  \"disableCertificateCheck\": false,\n  \"password\": \"MyS3cr3t\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5980f4fb-fe1e-4db4-a50e-a4042e2525cd",
+          "name": "Send an email for a store",
+          "request": {
+            "name": "Send an email for a store",
+            "description": {
+              "content": "Send an email using the store's SMTP server",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "email",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0e6bef07-3d76-47c3-9ce2-20da777d1cb2",
+              "name": "The email was sent (scheduled) successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0073cbe9-8984-41d0-a023-39ef0a54fd86",
+              "name": "The store's SMTP is not configured",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "20a6bd2c-a316-4efe-bfee-6acadbca0997",
+              "name": "If you are authenticated but forbidden to add new stores",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e695fe1d-f307-48e5-8d04-d6d51b70eb2a",
+              "name": "The store was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your BTCPay Server instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mainnet.demo.btcpayserver.org",
+      "key": "btcpay-host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{btcpay-host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d9de3d9f-d24c-43b3-9e97-afc3216e94f5",
+    "name": "BTCPay Greenfield API Keys Stores (Email) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n\n\nContact Support:\n Name: BTCPay Server",
+      "type": "text/plain"
+    }
+  }
+}

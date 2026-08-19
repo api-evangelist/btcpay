@@ -1,0 +1,389 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Invoices API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/invoices",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "orderId",
+                "value": "1000&orderId=1001&orderId=1002",
+                "type": "query",
+                "description": "Array of OrderIds to fetch the invoices for"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Array of statuses of invoices to be fetched"
+              },
+              {
+                "name": "textSearch",
+                "value": "",
+                "type": "query",
+                "description": "A term that can help locating specific invoices."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date of the period to retrieve invoices"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date of the period to retrieve invoices"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip"
+              },
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "Number of records returned in response"
+              },
+              {
+                "name": "includePaymentMethods",
+                "value": "",
+                "type": "query",
+                "description": "Includes payment methods available to the response"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the existing invoices"
+        },
+        {
+          "info": {
+            "name": "Create a new invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/invoices",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new invoice"
+        },
+        {
+          "info": {
+            "name": "Get invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the specified invoice. The store is resolved automatically from the invoice."
+        },
+        {
+          "info": {
+            "name": "Update invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the specified invoice. The store is resolved automatically from the invoice."
+        },
+        {
+          "info": {
+            "name": "Archive invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Archives the specified invoice. The store is resolved automatically from the invoice."
+        },
+        {
+          "info": {
+            "name": "Get invoice payment methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId/payment-methods",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              },
+              {
+                "name": "onlyAccountedPayments",
+                "value": "",
+                "type": "query",
+                "description": "If default or true, only returns payments which are accounted (in Bitcoin, this mean not returning RBF'd or double spent payments)"
+              },
+              {
+                "name": "includeSensitive",
+                "value": "",
+                "type": "query",
+                "description": "If `true`, `additionalData` might include sensitive data (such as xpub). Requires the permission `btcpay.store.canmodifystoresettings`."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the specified invoice's payment methods. The store is resolved automatically from the invoice."
+        },
+        {
+          "info": {
+            "name": "Mark invoice status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId/status",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Mark an invoice as invalid or settled. The store is resolved automatically from the invoice."
+        },
+        {
+          "info": {
+            "name": "Unarchive invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId/unarchive",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Unarchive an invoice. The store is resolved automatically from the invoice."
+        },
+        {
+          "info": {
+            "name": "Activate Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId/payment-methods/:paymentMethodId/activate",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Activate an invoice payment method (if lazy payments mode is enabled). The store is resolved automatically from the invoice."
+        },
+        {
+          "info": {
+            "name": "Refund invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId/refund",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Refund invoice. The store is resolved automatically from the invoice."
+        },
+        {
+          "info": {
+            "name": "Get invoice refund trigger data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/invoices/:invoiceId/refund/:paymentMethodId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View calculated refund amounts for the specified invoice/payment-method. The store is resolved automatically from the invoice."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

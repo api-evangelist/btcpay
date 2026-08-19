@@ -1,0 +1,166 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Store (Payment Methods) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Store (Payment Methods)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get store payment methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "onlyEnabled",
+                "value": "",
+                "type": "query",
+                "description": "Fetch payment methods that are enabled/disabled only"
+              },
+              {
+                "name": "includeConfig",
+                "value": "",
+                "type": "query",
+                "description": "Fetch the config of the payment methods, if `true`, the permission `btcpay.store.canmodifystoresettings` is required."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the stores' configured payment methods"
+        },
+        {
+          "info": {
+            "name": "Get store payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "includeConfig",
+                "value": "",
+                "type": "query",
+                "description": "Fetch the config of the payment methods, if `true`, the permission `btcpay.store.canmodifystoresettings` is required."
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the stores' configured payment method"
+        },
+        {
+          "info": {
+            "name": "Update store's payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update information about the stores' configured payment method"
+        },
+        {
+          "info": {
+            "name": "Delete store's payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete information about the stores' configured payment method"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

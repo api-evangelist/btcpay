@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys ServerEmail API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ServerEmail",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get server email settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/server/email",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve the email settings configured for the server. The password field will be masked if present."
+        },
+        {
+          "info": {
+            "name": "Update server email settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/server/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update server's email settings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

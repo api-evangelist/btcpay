@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Pull payments payout (Public) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pull payments payout (Public)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/pull-payments/:pullPaymentId/payouts/:payoutId",
+            "params": [
+              {
+                "name": "pullPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment"
+              },
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment payout"
+              }
+            ]
+          },
+          "docs": "Get payout"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,635 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Subscriptions API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an offering",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a specific offering for a store."
+        },
+        {
+          "info": {
+            "name": "Update an offering",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates an existing offering for the specified store."
+        },
+        {
+          "info": {
+            "name": "List offerings for a store",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all offerings associated with the specified store."
+        },
+        {
+          "info": {
+            "name": "Create an offering",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new offering for the specified store."
+        },
+        {
+          "info": {
+            "name": "Create an offering plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/plans",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new plan for a specific offering."
+        },
+        {
+          "info": {
+            "name": "Get an offering plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/plans/:planId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "planId",
+                "value": "plan_KZMVyuQp3v2vFWnEUM",
+                "type": "path",
+                "description": "Plan's ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a specific plan for a given offering."
+        },
+        {
+          "info": {
+            "name": "Update an offering plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/plans/:planId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "planId",
+                "value": "plan_KZMVyuQp3v2vFWnEUM",
+                "type": "path",
+                "description": "Plan's ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates an existing plan for a specific offering."
+        },
+        {
+          "info": {
+            "name": "Get a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/subscribers/:customerSelector",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "customerSelector",
+                "value": "",
+                "type": "path",
+                "description": "Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a subscriber for a specific offering by customer selector."
+        },
+        {
+          "info": {
+            "name": "Delete a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/subscribers/:customerSelector",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "customerSelector",
+                "value": "",
+                "type": "path",
+                "description": "Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a subscriber for a specific offering by customer selector."
+        },
+        {
+          "info": {
+            "name": "Get subscriber credit balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/subscribers/:customerSelector/credits/:currency",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "customerSelector",
+                "value": "",
+                "type": "path",
+                "description": "Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the credit balance for a subscriber in the specified currency."
+        },
+        {
+          "info": {
+            "name": "Update subscriber credit balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/subscribers/:customerSelector/credits/:currency",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "customerSelector",
+                "value": "",
+                "type": "path",
+                "description": "Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Adds credit or charges credit for a subscriber in a given currency."
+        },
+        {
+          "info": {
+            "name": "Suspend a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/subscribers/:customerSelector/suspend",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "customerSelector",
+                "value": "",
+                "type": "path",
+                "description": "Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Suspends a subscriber for the specified offering."
+        },
+        {
+          "info": {
+            "name": "Unsuspend a subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/subscribers/:customerSelector/unsuspend",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "customerSelector",
+                "value": "",
+                "type": "path",
+                "description": "Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removes suspension from a subscriber for the specified offering."
+        },
+        {
+          "info": {
+            "name": "Update subscriber dates",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/offerings/:offeringId/subscribers/:customerSelector/dates",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "offeringId",
+                "value": "offering_DKWhZGB6PZsgTcPwpf",
+                "type": "path",
+                "description": "Offering's ID"
+              },
+              {
+                "name": "customerSelector",
+                "value": "",
+                "type": "path",
+                "description": "Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Manually overrides the subscription start date and/or expiration date for a subscriber.\n\nOmitting a field leaves the corresponding date unchanged. An empty body `{}` is a no-op and returns the subscriber unchanged.\n\nWhen `expirationDate` is provided, the grace period end and reminder date are recalculated automatically from the plan settings."
+        },
+        {
+          "info": {
+            "name": "Get a plan checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/plan-checkout/:checkoutId",
+            "params": [
+              {
+                "name": "checkoutId",
+                "value": "plancheckout_Hpm59L1NPCMUj477Q5",
+                "type": "path",
+                "description": "Unique identifier of the plan checkout session."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a plan checkout session."
+        },
+        {
+          "info": {
+            "name": "Proceed with a plan checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/plan-checkout/:checkoutId",
+            "params": [
+              {
+                "name": "checkoutId",
+                "value": "plancheckout_Hpm59L1NPCMUj477Q5",
+                "type": "path",
+                "description": "Unique identifier of the plan checkout session."
+              },
+              {
+                "name": "email",
+                "value": "user@example.com",
+                "type": "query",
+                "description": "Optional customer email used when proceeding with the checkout."
+              }
+            ]
+          },
+          "docs": "Continues a plan checkout session.\n\n**Behavior:**\n- If payment is required, the checkout assigns a BTCPay Server invoice and `invoiceId` will be set.\n- If no payment is required (for example, the subscriber already has enough credit or no credit purchase is needed), the plan will start immediately and `planStarted` will be `true`."
+        },
+        {
+          "info": {
+            "name": "Create a plan checkout session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/plan-checkout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a checkout session for purchasing or activating a plan."
+        },
+        {
+          "info": {
+            "name": "Create a subscriber portal session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/subscriber-portal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a portal session that allows a subscriber to manage their subscriptions, view billing details, or update account information."
+        },
+        {
+          "info": {
+            "name": "Get a subscriber portal session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/subscriber-portal/:portalSessionId",
+            "params": [
+              {
+                "name": "portalSessionId",
+                "value": "ps_665afQ23ExGouiY4EZ",
+                "type": "path",
+                "description": "Identifier of the portal session."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing subscriber portal session."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

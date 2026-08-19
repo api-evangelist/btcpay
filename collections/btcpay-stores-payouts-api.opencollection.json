@@ -1,0 +1,243 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Stores (Payouts) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stores (Payouts)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Store Payouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payouts",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "includeCancelled",
+                "value": "",
+                "type": "query",
+                "description": "Whether this should list cancelled payouts"
+              }
+            ]
+          },
+          "docs": "Get payouts"
+        },
+        {
+          "info": {
+            "name": "Create Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payouts",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new payout"
+        },
+        {
+          "info": {
+            "name": "Get Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payouts/:payoutId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payout"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get payout"
+        },
+        {
+          "info": {
+            "name": "Approve Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payouts/:payoutId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payout"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Approve a payout"
+        },
+        {
+          "info": {
+            "name": "Cancel Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payouts/:payoutId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payout"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancel the payout"
+        },
+        {
+          "info": {
+            "name": "Mark Payout as Paid",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payouts/:payoutId/mark-paid",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payout"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Mark a payout as paid"
+        },
+        {
+          "info": {
+            "name": "Mark Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payouts/:payoutId/mark",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payout"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Mark a payout with a state"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

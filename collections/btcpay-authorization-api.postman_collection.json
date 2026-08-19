@@ -1,0 +1,380 @@
+{
+  "item": [
+    {
+      "id": "92922283-b2f5-4cdf-8dc5-12e04c536c11",
+      "name": "Authorization",
+      "description": {
+        "content": "Authorization operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "03e97a07-232b-4718-9d95-474a216fb8e0",
+          "name": "Authorize User",
+          "request": {
+            "name": "Authorize User",
+            "description": {
+              "content": "Redirect the browser to this endpoint to request the user to generate an api-key with specific permissions",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api-keys",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "permissions",
+                  "value": "<string>",
+                  "description": "The permissions to request. (See API Key authentication)"
+                },
+                {
+                  "disabled": false,
+                  "key": "permissions",
+                  "value": "<string>",
+                  "description": "The permissions to request. (See API Key authentication)"
+                },
+                {
+                  "disabled": false,
+                  "key": "applicationName",
+                  "value": "<string>",
+                  "description": "The name of your application"
+                },
+                {
+                  "disabled": false,
+                  "key": "strict",
+                  "value": "true",
+                  "description": "If permissions are specified, and strict is set to false, it will allow the user to reject some of permissions the application is requesting."
+                },
+                {
+                  "disabled": false,
+                  "key": "selectiveStores",
+                  "value": "false",
+                  "description": "If the application is requesting the CanModifyStoreSettings permission and selectiveStores is set to true, this allows the user to only grant permissions to selected stores under the user's control."
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect",
+                  "value": "<url>",
+                  "description": "The url to redirect to after the user consents, with the query parameters appended to it: permissions, user-id, api-key. If not specified, user is redirected to their API Key list."
+                },
+                {
+                  "disabled": false,
+                  "key": "applicationIdentifier",
+                  "value": "<string>",
+                  "description": "If specified, BTCPay Server will check if there is an existing API key associated with the user that also has this application identifier, redirect host AND the permissions required match(takes selectiveStores and strict into account). `applicationIdentifier` is ignored if redirect is not specified."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ec3a92a-d343-4ccf-bb1e-52b8f826cf5a",
+              "name": "A HTML form that a user can use to confirm permissions to grant",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api-keys",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "permissions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "applicationName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "strict",
+                      "value": "true"
+                    },
+                    {
+                      "key": "selectiveStores",
+                      "value": "false"
+                    },
+                    {
+                      "key": "redirect",
+                      "value": "<url>"
+                    },
+                    {
+                      "key": "applicationIdentifier",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "91db8d6d-760f-44fe-a181-f1bcd79c3ae3",
+              "name": "Makes browser do an HTTP POST request to the specified url in `redirect` with a JSON body consisting of `apiKey` (the api key created or matched), `permissions` (the permissions the user consented to), and `userId` (the id of the user that consented) upon consent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api-keys",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "permissions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "applicationName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "strict",
+                      "value": "true"
+                    },
+                    {
+                      "key": "selectiveStores",
+                      "value": "false"
+                    },
+                    {
+                      "key": "redirect",
+                      "value": "<url>"
+                    },
+                    {
+                      "key": "applicationIdentifier",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Temporary Redirect (since HTTP/1.1)",
+              "code": 307,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d76606e2-9301-452c-9e79-0c4ab535258c",
+              "name": "Missing authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api-keys",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "permissions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "permissions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "applicationName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "strict",
+                      "value": "true"
+                    },
+                    {
+                      "key": "selectiveStores",
+                      "value": "false"
+                    },
+                    {
+                      "key": "redirect",
+                      "value": "<url>"
+                    },
+                    {
+                      "key": "applicationIdentifier",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your BTCPay Server instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mainnet.demo.btcpayserver.org",
+      "key": "btcpay-host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{btcpay-host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1dca3180-af1b-460e-b2cd-452a298e8e7a",
+    "name": "BTCPay Greenfield API Keys Authorization API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n\n\nContact Support:\n Name: BTCPay Server",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Miscelleneous API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Miscelleneous",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get available rate sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/misc/rate-sources"
+          },
+          "docs": "View available rate providers that you can use in stores"
+        },
+        {
+          "info": {
+            "name": "Permissions metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/misc/permissions"
+          },
+          "docs": "The metadata of available permissions"
+        },
+        {
+          "info": {
+            "name": "Language codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/misc/lang"
+          },
+          "docs": "The supported language codes"
+        },
+        {
+          "info": {
+            "name": "Invoice checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/i/:invoiceId",
+            "params": [
+              {
+                "name": "invoiceId",
+                "value": "",
+                "type": "path",
+                "description": "The invoice ID"
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query",
+                "description": "The preferred language of the checkout page. You can use \"auto\" to use the language of the customer's browser or see the list of language codes with [this operation](#operation/langCodes)."
+              }
+            ]
+          },
+          "docs": "View the checkout page of an invoice"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

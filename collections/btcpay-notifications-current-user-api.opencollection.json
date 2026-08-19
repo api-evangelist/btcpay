@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Notifications (Current User) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Notifications (Current User)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/users/me/notifications",
+            "params": [
+              {
+                "name": "seen",
+                "value": "",
+                "type": "query",
+                "description": "filter by seen notifications"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip"
+              },
+              {
+                "name": "take",
+                "value": "",
+                "type": "query",
+                "description": "Number of records returned in response"
+              },
+              {
+                "name": "storeId",
+                "value": "&storeId=ABCDE&storeId=FGHIJ",
+                "type": "query",
+                "description": "Array of store ids to fetch the notifications for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View current user's notifications"
+        },
+        {
+          "info": {
+            "name": "Get notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/users/me/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The notification to fetch"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the specified notification"
+        },
+        {
+          "info": {
+            "name": "Update notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/users/me/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The notification to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the notification"
+        },
+        {
+          "info": {
+            "name": "Remove Notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/users/me/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The notification to remove"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removes the specified notification."
+        },
+        {
+          "info": {
+            "name": "Get notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/users/me/notification-settings",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about your notification settings"
+        },
+        {
+          "info": {
+            "name": "Update notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/users/me/notification-settings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the current user's notification settings"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

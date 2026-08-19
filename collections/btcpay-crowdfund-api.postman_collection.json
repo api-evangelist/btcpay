@@ -1,0 +1,734 @@
+{
+  "item": [
+    {
+      "id": "6747ee79-4e0f-4abb-8398-f7f56f6260ae",
+      "name": "Crowdfund",
+      "description": {
+        "content": "Crowdfund operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "990f3842-69c7-4cf4-93f8-9d818f6808c1",
+          "name": "Update a Crowdfund app",
+          "request": {
+            "name": "Update a Crowdfund app",
+            "description": {
+              "content": "Full update. GET the app first, modify the data, then PUT the complete payload.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                "crowdfund",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"appName\": \"<string>\",\n  \"storeId\": \"<string>\",\n  \"created\": \"<integer>\",\n  \"appType\": \"<string>\",\n  \"archived\": false,\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"enforceTargetAmount\": \"<boolean>\",\n  \"startDate\": \"<number>\",\n  \"endDate\": \"<number>\",\n  \"targetCurrency\": \"<string>\",\n  \"targetAmount\": \"<number>\",\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"<string>\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": \"<boolean>\",\n  \"animationsEnabled\": \"<boolean>\",\n  \"resetEveryAmount\": \"<number>\",\n  \"resetEvery\": \"<string>\",\n  \"displayPerksValue\": \"<boolean>\",\n  \"displayPerksRanking\": \"<boolean>\",\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"animationColors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"htmlLang\": \"<string>\",\n  \"htmlMetaTags\": \"<string>\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8ad4a3c4-18dc-45f8-b687-020b8c4d0b34",
+              "name": "App details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perks\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b1e89a4-18b9-4ede-b726-c3167b1d6073",
+              "name": "Crowdfund app with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "571d0228-c678-475d-bcf3-3b471a755dd0",
+              "name": "Unable to validate the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df5ccbde-bb06-4229-a322-b50fb83b0bf5",
+          "name": "Get crowdfund app data",
+          "request": {
+            "name": "Get crowdfund app data",
+            "description": {
+              "content": "Returns crowdfund app data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                "crowdfund",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "44c13e1b-ff26-4fa4-864f-943d41c75e36",
+              "name": "Crowdfund app data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perks\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7204d6d3-f59c-40ff-9c8a-091b6dab4c30",
+              "name": "Crowdfund app with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a7b5a0a-6540-4ae0-a0f2-7fb31795bca1",
+          "name": "Create a new Crowdfund app",
+          "request": {
+            "name": "Create a new Crowdfund app",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "apps",
+                "crowdfund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"appName\": \"<string>\",\n  \"storeId\": \"<string>\",\n  \"created\": \"<integer>\",\n  \"appType\": \"<string>\",\n  \"archived\": false,\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"enforceTargetAmount\": \"<boolean>\",\n  \"startDate\": \"<number>\",\n  \"endDate\": \"<number>\",\n  \"targetCurrency\": \"<string>\",\n  \"targetAmount\": \"<number>\",\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"<string>\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": \"<boolean>\",\n  \"animationsEnabled\": \"<boolean>\",\n  \"resetEveryAmount\": \"<number>\",\n  \"resetEvery\": \"<string>\",\n  \"displayPerksValue\": \"<boolean>\",\n  \"displayPerksRanking\": \"<boolean>\",\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"animationColors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"htmlLang\": \"<string>\",\n  \"htmlMetaTags\": \"<string>\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "106e74f2-dd9c-4850-9a21-3650b0360ce4",
+              "name": "Created app details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "apps",
+                    "crowdfund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perks\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "233c33b7-8203-4b04-9272-2f69ecf75435",
+              "name": "Unable to validate the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "apps",
+                    "crowdfund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your BTCPay Server instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mainnet.demo.btcpayserver.org",
+      "key": "btcpay-host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{btcpay-host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "da6ca24c-254c-4127-988c-00cf8d5e9059",
+    "name": "BTCPay Greenfield API Keys Crowdfund API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n\n\nContact Support:\n Name: BTCPay Server",
+      "type": "text/plain"
+    }
+  }
+}

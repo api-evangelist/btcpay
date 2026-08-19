@@ -1,0 +1,481 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Lightning (Store) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Lightning (Store)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get node information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/info",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the lightning node"
+        },
+        {
+          "info": {
+            "name": "Get node balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/balance",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View balance of the lightning node"
+        },
+        {
+          "info": {
+            "name": "Get node balance histogram",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/histogram",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View balance histogram of the lightning node"
+        },
+        {
+          "info": {
+            "name": "Connect to lightning node",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/connect",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Connect to another lightning node."
+        },
+        {
+          "info": {
+            "name": "Get channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/channels",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the current channels of the lightning node"
+        },
+        {
+          "info": {
+            "name": "Open channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/channels",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Open a channel with another lightning node. You should connect to that node first."
+        },
+        {
+          "info": {
+            "name": "Get deposit address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/address",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get an on-chain deposit address for the lightning node "
+        },
+        {
+          "info": {
+            "name": "Get payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/payments/:paymentHash",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentHash",
+                "value": "",
+                "type": "path",
+                "description": "The payment hash of the lightning payment."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the requested lightning payment"
+        },
+        {
+          "info": {
+            "name": "Get invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/invoices/:id",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the lightning invoice."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the requested lightning invoice"
+        },
+        {
+          "info": {
+            "name": "Pay Lightning Invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/invoices/pay",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Pay a lightning invoice. In case the payment response times out, the status will be reported as pending and the final status can be resolved using the [Get payment](#operation/StoreLightningNodeApi_GetPayment) endpoint. The default wait time for payment responses is 30 seconds — it might take longer if multiple routes are tried or a hold invoice is getting paid."
+        },
+        {
+          "info": {
+            "name": "Get invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/invoices",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "pendingOnly",
+                "value": "",
+                "type": "query",
+                "description": "Limit to pending invoices only"
+              },
+              {
+                "name": "offsetIndex",
+                "value": "",
+                "type": "query",
+                "description": "The index of an invoice that will be used as the start of the list"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the lightning invoices"
+        },
+        {
+          "info": {
+            "name": "Create lightning invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/invoices",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a lightning invoice."
+        },
+        {
+          "info": {
+            "name": "Get payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/lightning/:cryptoCode/payments",
+            "params": [
+              {
+                "name": "cryptoCode",
+                "value": "BTC",
+                "type": "path",
+                "description": "The cryptoCode of the lightning-node to query"
+              },
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "includePending",
+                "value": "",
+                "type": "query",
+                "description": "Also include pending payments"
+              },
+              {
+                "name": "offsetIndex",
+                "value": "",
+                "type": "query",
+                "description": "The index of an invoice that will be used as the start of the list"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the lightning payments"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

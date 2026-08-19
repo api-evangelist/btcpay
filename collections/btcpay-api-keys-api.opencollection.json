@@ -1,0 +1,166 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Revoke an API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/api-keys/:apikey",
+            "params": [
+              {
+                "name": "apikey",
+                "value": "",
+                "type": "path",
+                "description": "The API Key to revoke"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Revoke the current API key so that it cannot be used anymore"
+        },
+        {
+          "info": {
+            "name": "Revoke an API Key of target user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/users/:idOrEmail/api-keys/:apikey",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "",
+                "type": "path",
+                "description": "The user's id or email"
+              },
+              {
+                "name": "apikey",
+                "value": "",
+                "type": "path",
+                "description": "The API Key to revoke"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Revoke the API key of a target user so that it cannot be used anymore"
+        },
+        {
+          "info": {
+            "name": "Get the current API Key information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/api-keys/current",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the current API key"
+        },
+        {
+          "info": {
+            "name": "Revoke the current API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/api-keys/current",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Revoke the current API key so that it cannot be used anymore"
+        },
+        {
+          "info": {
+            "name": "Create a new API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/api-keys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new API Key"
+        },
+        {
+          "info": {
+            "name": "Create a new API Key for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/users/:idOrEmail/api-keys",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "",
+                "type": "path",
+                "description": "The user's id or email"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new API Key for a user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

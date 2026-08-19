@@ -1,0 +1,160 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Pull payments (Public) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pull payments (Public)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Link a boltcard to a pull payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/pull-payments/:pullPaymentId/boltcards",
+            "params": [
+              {
+                "name": "pullPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Linking a boltcard to a pull payment will allow you to pay via NFC with it, the money will be sent from the pull payment. The boltcard keys are generated using [Deterministic Boltcard Key Generation](https://github.com/boltcard/boltcard/blob/main/docs/DETERMINISTIC.md)."
+        },
+        {
+          "info": {
+            "name": "Get Pull Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/pull-payments/:pullPaymentId",
+            "params": [
+              {
+                "name": "pullPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment"
+              }
+            ]
+          },
+          "docs": "Get a pull payment"
+        },
+        {
+          "info": {
+            "name": "Get Payouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/pull-payments/:pullPaymentId/payouts",
+            "params": [
+              {
+                "name": "pullPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment"
+              },
+              {
+                "name": "includeCancelled",
+                "value": "",
+                "type": "query",
+                "description": "Whether this should list cancelled payouts"
+              }
+            ]
+          },
+          "docs": "Get payouts"
+        },
+        {
+          "info": {
+            "name": "Create Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/pull-payments/:pullPaymentId/payouts",
+            "params": [
+              {
+                "name": "pullPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new payout"
+        },
+        {
+          "info": {
+            "name": "Get Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/pull-payments/:pullPaymentId/payouts/:payoutId",
+            "params": [
+              {
+                "name": "pullPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment"
+              },
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment payout"
+              }
+            ]
+          },
+          "docs": "Get payout"
+        },
+        {
+          "info": {
+            "name": "Get Pull Payment LNURL details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/pull-payments/:pullPaymentId/lnurl",
+            "params": [
+              {
+                "name": "pullPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the pull payment"
+              }
+            ]
+          },
+          "docs": "Get Pull Payment LNURL details"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

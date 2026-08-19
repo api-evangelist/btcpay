@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Payment Requests API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payment requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-requests",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the existing payment requests"
+        },
+        {
+          "info": {
+            "name": "Create a new payment request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-requests",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new payment request"
+        },
+        {
+          "info": {
+            "name": "Get payment request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/payment-requests/:paymentRequestId",
+            "params": [
+              {
+                "name": "paymentRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The payment request to fetch"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the specified payment request. The store is resolved automatically from the payment request."
+        },
+        {
+          "info": {
+            "name": "Update payment request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/payment-requests/:paymentRequestId",
+            "params": [
+              {
+                "name": "paymentRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The payment request to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a payment request. The store is resolved automatically from the payment request."
+        },
+        {
+          "info": {
+            "name": "Archive payment request",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/payment-requests/:paymentRequestId",
+            "params": [
+              {
+                "name": "paymentRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The payment request to remove"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Archives the specified payment request. The store is resolved automatically from the payment request."
+        },
+        {
+          "info": {
+            "name": "Create a new invoice for the payment request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/payment-requests/:paymentRequestId/pay",
+            "params": [
+              {
+                "name": "paymentRequestId",
+                "value": "",
+                "type": "path",
+                "description": "The payment request to create"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new invoice for the payment request, or reuse an existing one. The store is resolved automatically from the payment request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

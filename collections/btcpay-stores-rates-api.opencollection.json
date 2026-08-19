@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Stores (Rates) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stores (Rates)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/rates",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "currencyPair",
+                "value": "BTC_USD,BTC_EUR",
+                "type": "query",
+                "description": "The currency pairs to fetch rates for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get rates on the store"
+        },
+        {
+          "info": {
+            "name": "Get store rate settings for the specified rate source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/rates/configuration/:rateSource",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "rateSource",
+                "value": "",
+                "type": "path",
+                "description": "The rate source to configure (`primary` or `fallback`)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View rate settings for the specified store and rate source (`primary` or `fallback`)."
+        },
+        {
+          "info": {
+            "name": "Get store rate settings for the specified rate source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/rates/configuration/:rateSource",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "rateSource",
+                "value": "",
+                "type": "path",
+                "description": "The rate source to configure (`primary` or `fallback`)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update rate settings for the specified store and rate source (`primary` or `fallback`)."
+        },
+        {
+          "info": {
+            "name": "Preview rate configuration results",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/rates/configuration/preview",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "currencyPair",
+                "value": "",
+                "type": "query",
+                "description": "The currency pairs to preview"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Preview rate configuration results before you set it on the store"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

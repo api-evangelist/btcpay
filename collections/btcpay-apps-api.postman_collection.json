@@ -1,0 +1,2903 @@
+{
+  "item": [
+    {
+      "id": "4fbef938-3077-4007-ab1d-3f7b13b11823",
+      "name": "Apps",
+      "description": {
+        "content": "App operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0566d8ff-cb0e-4d55-a2c4-c2b09b07d154",
+          "name": "Create a new Point of Sale app",
+          "request": {
+            "name": "Create a new Point of Sale app",
+            "description": {
+              "content": "Point of Sale app allows accepting payments for items in a virtual store",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "apps",
+                "pos"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"appName\": \"<string>\",\n  \"storeId\": \"<string>\",\n  \"created\": \"<integer>\",\n  \"appType\": \"<string>\",\n  \"archived\": false,\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"defaultView\": \"<string>\",\n  \"showItems\": false,\n  \"showCustomAmount\": \"<boolean>\",\n  \"showDiscount\": false,\n  \"showSearch\": true,\n  \"showCategories\": true,\n  \"enableTips\": false,\n  \"currency\": \"<string>\",\n  \"fixedAmountPayButtonText\": \"<string>\",\n  \"customAmountPayButtonText\": \"<string>\",\n  \"tipText\": \"<string>\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": \"<boolean>\",\n  \"htmlLang\": \"<string>\",\n  \"htmlMetaTags\": \"<string>\",\n  \"formId\": \"<string>\",\n  \"template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "15e732df-1859-4c90-95f9-e711336893cb",
+              "name": "Created app details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "apps",
+                    "pos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My PoS app\",\n  \"description\": \"This is my amazing PoS app\",\n  \"defaultView\": \"Cart\",\n  \"showItems\": true,\n  \"showCustomAmount\": true,\n  \"showDiscount\": false,\n  \"showSearch\": false,\n  \"showCategories\": false,\n  \"enableTips\": true,\n  \"currency\": \"BTC\",\n  \"fixedAmountPayButtonText\": \"Buy for {0}\",\n  \"customAmountPayButtonText\": \"Pay\",\n  \"tipText\": \"Do you want to leave a tip?\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": true,\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"template\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My PoS app\",\n  \"description\": \"This is my amazing PoS app\",\n  \"defaultView\": \"Cart\",\n  \"showItems\": true,\n  \"showCustomAmount\": true,\n  \"showDiscount\": false,\n  \"showSearch\": false,\n  \"showCategories\": false,\n  \"enableTips\": true,\n  \"currency\": \"BTC\",\n  \"fixedAmountPayButtonText\": \"Buy for {0}\",\n  \"customAmountPayButtonText\": \"Pay\",\n  \"tipText\": \"Do you want to leave a tip?\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": true,\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"items\": [\n    {\n      \"id\": \"green-tea\",\n      \"title\": \"Green Tea\",\n      \"description\": \"Lovely, fresh and tender.\",\n      \"image\": \"http://teashop.com/img/green-tea.jpg\",\n      \"price\": \"21.0\",\n      \"priceType\": \"Fixed\",\n      \"buyButtonText\": \"Buy me!\",\n      \"inventory\": 21,\n      \"disabled\": false\n    },\n    {\n      \"id\": \"green-tea\",\n      \"title\": \"Green Tea\",\n      \"description\": \"Lovely, fresh and tender.\",\n      \"image\": \"http://teashop.com/img/green-tea.jpg\",\n      \"price\": \"21.0\",\n      \"priceType\": \"Minimum\",\n      \"buyButtonText\": \"Buy me!\",\n      \"inventory\": 21,\n      \"disabled\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11bdaf10-3070-4364-bca7-05d82e4f84ec",
+              "name": "Unable to validate the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "apps",
+                    "pos"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My PoS app\",\n  \"description\": \"This is my amazing PoS app\",\n  \"defaultView\": \"Cart\",\n  \"showItems\": true,\n  \"showCustomAmount\": true,\n  \"showDiscount\": false,\n  \"showSearch\": false,\n  \"showCategories\": false,\n  \"enableTips\": true,\n  \"currency\": \"BTC\",\n  \"fixedAmountPayButtonText\": \"Buy for {0}\",\n  \"customAmountPayButtonText\": \"Pay\",\n  \"tipText\": \"Do you want to leave a tip?\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": true,\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"template\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "424fe686-4d17-49cd-aa44-f6c9a76923e4",
+          "name": "Update a Point of Sale app",
+          "request": {
+            "name": "Update a Point of Sale app",
+            "description": {
+              "content": "Use this endpoint for updating the properties of a POS app",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                "pos",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"appName\": \"<string>\",\n  \"storeId\": \"<string>\",\n  \"created\": \"<integer>\",\n  \"appType\": \"<string>\",\n  \"archived\": false,\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"defaultView\": \"<string>\",\n  \"showItems\": false,\n  \"showCustomAmount\": \"<boolean>\",\n  \"showDiscount\": false,\n  \"showSearch\": true,\n  \"showCategories\": true,\n  \"enableTips\": false,\n  \"currency\": \"<string>\",\n  \"fixedAmountPayButtonText\": \"<string>\",\n  \"customAmountPayButtonText\": \"<string>\",\n  \"tipText\": \"<string>\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": \"<boolean>\",\n  \"htmlLang\": \"<string>\",\n  \"htmlMetaTags\": \"<string>\",\n  \"formId\": \"<string>\",\n  \"template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "42a7dc97-9f93-451b-a99c-4638e9152bb2",
+              "name": "App details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "pos",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My PoS app\",\n  \"description\": \"This is my amazing PoS app\",\n  \"defaultView\": \"Cart\",\n  \"showItems\": true,\n  \"showCustomAmount\": true,\n  \"showDiscount\": false,\n  \"showSearch\": false,\n  \"showCategories\": false,\n  \"enableTips\": true,\n  \"currency\": \"BTC\",\n  \"fixedAmountPayButtonText\": \"Buy for {0}\",\n  \"customAmountPayButtonText\": \"Pay\",\n  \"tipText\": \"Do you want to leave a tip?\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": true,\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"template\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My PoS app\",\n  \"description\": \"This is my amazing PoS app\",\n  \"defaultView\": \"Cart\",\n  \"showItems\": true,\n  \"showCustomAmount\": true,\n  \"showDiscount\": false,\n  \"showSearch\": false,\n  \"showCategories\": false,\n  \"enableTips\": true,\n  \"currency\": \"BTC\",\n  \"fixedAmountPayButtonText\": \"Buy for {0}\",\n  \"customAmountPayButtonText\": \"Pay\",\n  \"tipText\": \"Do you want to leave a tip?\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": true,\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"items\": [\n    {\n      \"id\": \"green-tea\",\n      \"title\": \"Green Tea\",\n      \"description\": \"Lovely, fresh and tender.\",\n      \"image\": \"http://teashop.com/img/green-tea.jpg\",\n      \"price\": \"21.0\",\n      \"priceType\": \"Minimum\",\n      \"buyButtonText\": \"Buy me!\",\n      \"inventory\": 21,\n      \"disabled\": false\n    },\n    {\n      \"id\": \"green-tea\",\n      \"title\": \"Green Tea\",\n      \"description\": \"Lovely, fresh and tender.\",\n      \"image\": \"http://teashop.com/img/green-tea.jpg\",\n      \"price\": \"21.0\",\n      \"priceType\": \"Fixed\",\n      \"buyButtonText\": \"Buy me!\",\n      \"inventory\": 21,\n      \"disabled\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89cae535-39b7-439b-a6ad-0db09f1ea1b8",
+              "name": "Unable to validate the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "pos",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My PoS app\",\n  \"description\": \"This is my amazing PoS app\",\n  \"defaultView\": \"Cart\",\n  \"showItems\": true,\n  \"showCustomAmount\": true,\n  \"showDiscount\": false,\n  \"showSearch\": false,\n  \"showCategories\": false,\n  \"enableTips\": true,\n  \"currency\": \"BTC\",\n  \"fixedAmountPayButtonText\": \"Buy for {0}\",\n  \"customAmountPayButtonText\": \"Pay\",\n  \"tipText\": \"Do you want to leave a tip?\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": true,\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"template\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "008a3c07-92b1-4d3d-9ec8-2baccf414ee1",
+          "name": "Get Point of Sale app data",
+          "request": {
+            "name": "Get Point of Sale app data",
+            "description": {
+              "content": "Returns POS app data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                "pos",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0fa37424-4c87-44db-8cfc-3ffd709e6de8",
+              "name": "POS app data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "pos",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My PoS app\",\n  \"description\": \"This is my amazing PoS app\",\n  \"defaultView\": \"Cart\",\n  \"showItems\": true,\n  \"showCustomAmount\": true,\n  \"showDiscount\": false,\n  \"showSearch\": false,\n  \"showCategories\": false,\n  \"enableTips\": true,\n  \"currency\": \"BTC\",\n  \"fixedAmountPayButtonText\": \"Buy for {0}\",\n  \"customAmountPayButtonText\": \"Pay\",\n  \"tipText\": \"Do you want to leave a tip?\",\n  \"customTipPercentages\": [\n    15,\n    18,\n    20\n  ],\n  \"notificationUrl\": \"<string>\",\n  \"redirectUrl\": \"<string>\",\n  \"redirectAutomatically\": true,\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"items\": [\n    {\n      \"id\": \"green-tea\",\n      \"title\": \"Green Tea\",\n      \"description\": \"Lovely, fresh and tender.\",\n      \"image\": \"http://teashop.com/img/green-tea.jpg\",\n      \"price\": \"21.0\",\n      \"priceType\": \"Minimum\",\n      \"buyButtonText\": \"Buy me!\",\n      \"inventory\": 21,\n      \"disabled\": false\n    },\n    {\n      \"id\": \"green-tea\",\n      \"title\": \"Green Tea\",\n      \"description\": \"Lovely, fresh and tender.\",\n      \"image\": \"http://teashop.com/img/green-tea.jpg\",\n      \"price\": \"21.0\",\n      \"priceType\": \"Fixed\",\n      \"buyButtonText\": \"Buy me!\",\n      \"inventory\": 21,\n      \"disabled\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4127e52-fcce-4858-98c5-ab7949c66d3c",
+              "name": "POS app with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "pos",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73e14a9e-21b9-4fa1-a7e8-6654dbe2b61f",
+          "name": "Update a Crowdfund app",
+          "request": {
+            "name": "Update a Crowdfund app",
+            "description": {
+              "content": "Full update. GET the app first, modify the data, then PUT the complete payload.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                "crowdfund",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"appName\": \"<string>\",\n  \"storeId\": \"<string>\",\n  \"created\": \"<integer>\",\n  \"appType\": \"<string>\",\n  \"archived\": false,\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"enforceTargetAmount\": \"<boolean>\",\n  \"startDate\": \"<number>\",\n  \"endDate\": \"<number>\",\n  \"targetCurrency\": \"<string>\",\n  \"targetAmount\": \"<number>\",\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"<string>\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": \"<boolean>\",\n  \"animationsEnabled\": \"<boolean>\",\n  \"resetEveryAmount\": \"<number>\",\n  \"resetEvery\": \"<string>\",\n  \"displayPerksValue\": \"<boolean>\",\n  \"displayPerksRanking\": \"<boolean>\",\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"animationColors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"htmlLang\": \"<string>\",\n  \"htmlMetaTags\": \"<string>\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b5b9c501-d12e-4533-805a-a045a83da21b",
+              "name": "App details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perks\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8a1dc25-b87c-4e7d-b478-e13607ad5220",
+              "name": "Crowdfund app with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c4f7f9e-7a3a-406a-bcf9-11b0d14ed1c1",
+              "name": "Unable to validate the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc35cd4c-ff7e-4971-b9fe-ca4db24e3148",
+          "name": "Get crowdfund app data",
+          "request": {
+            "name": "Get crowdfund app data",
+            "description": {
+              "content": "Returns crowdfund app data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                "crowdfund",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e327795e-c05d-4a2c-9845-93ebb8be9d60",
+              "name": "Crowdfund app data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perks\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5284949f-9fae-4d51-b696-c25778c83e07",
+              "name": "Crowdfund app with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    "crowdfund",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f13bc044-c511-4582-b576-72f06634b7a1",
+          "name": "Create a new Crowdfund app",
+          "request": {
+            "name": "Create a new Crowdfund app",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "apps",
+                "crowdfund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"appName\": \"<string>\",\n  \"storeId\": \"<string>\",\n  \"created\": \"<integer>\",\n  \"appType\": \"<string>\",\n  \"archived\": false,\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"enabled\": \"<boolean>\",\n  \"enforceTargetAmount\": \"<boolean>\",\n  \"startDate\": \"<number>\",\n  \"endDate\": \"<number>\",\n  \"targetCurrency\": \"<string>\",\n  \"targetAmount\": \"<number>\",\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"<string>\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": \"<boolean>\",\n  \"animationsEnabled\": \"<boolean>\",\n  \"resetEveryAmount\": \"<number>\",\n  \"resetEvery\": \"<string>\",\n  \"displayPerksValue\": \"<boolean>\",\n  \"displayPerksRanking\": \"<boolean>\",\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"animationColors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"htmlLang\": \"<string>\",\n  \"htmlMetaTags\": \"<string>\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74990a7f-b7eb-40b3-8c87-7d3084b841c8",
+              "name": "Created app details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "apps",
+                    "crowdfund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perks\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2796d13a-63ba-458f-b0bd-dea3c3088fb6",
+              "name": "Unable to validate the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "apps",
+                    "crowdfund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false,\n  \"title\": \"My crowdfund app\",\n  \"description\": \"My crowdfund description\",\n  \"enabled\": true,\n  \"enforceTargetAmount\": false,\n  \"startDate\": 768658369,\n  \"endDate\": 771336769,\n  \"targetCurrency\": \"BTC\",\n  \"targetAmount\": 420.69,\n  \"mainImageUrl\": \"<string>\",\n  \"notificationUrl\": \"<string>\",\n  \"tagline\": \"I can't believe it's not butter\",\n  \"disqusEnabled\": \"<boolean>\",\n  \"disqusShortname\": \"<string>\",\n  \"soundsEnabled\": false,\n  \"animationsEnabled\": true,\n  \"resetEveryAmount\": 1,\n  \"resetEvery\": \"Day\",\n  \"displayPerksValue\": false,\n  \"displayPerksRanking\": false,\n  \"sortPerksByPopularity\": true,\n  \"sounds\": [\n    \"https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav\"\n  ],\n  \"animationColors\": [\n    \"#FF0000\",\n    \"#00FF00\",\n    \"#0000FF\"\n  ],\n  \"htmlLang\": \"en\",\n  \"htmlMetaTags\": \"<meta name=\\\"description\\\" content=\\\"Your description\\\">\",\n  \"formId\": \"<string>\",\n  \"perksTemplate\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06cb9867-a46d-4d69-95a1-d66c5e4c2240",
+          "name": "Get basic app data",
+          "request": {
+            "name": "Get basic app data",
+            "description": {
+              "content": "Returns basic app data shared between all types of apps",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2d8ea0b1-b748-4a52-b26a-d188331a29ab",
+              "name": "Basic app data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n  \"appName\": \"my test app\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"created\": 1651554744,\n  \"appType\": \"PointOfSale\",\n  \"archived\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2999f64-bfa2-4348-9d63-2a27ed623fdb",
+              "name": "App with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55c11149-2303-400d-9cce-418dd32de70e",
+          "name": "Delete app",
+          "request": {
+            "name": "Delete app",
+            "description": {
+              "content": "Deletes app with specified ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "39a91ed0-d6cb-40d9-81e1-d9eec694c65b",
+              "name": "App was deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3313ed33-6d3d-439d-afe8-c01902940009",
+              "name": "App with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2713c003-af7c-4c08-abd5-a43d52d71cbc",
+          "name": "Uploads an image for an app item",
+          "request": {
+            "name": "Uploads an image for an app item",
+            "description": {
+              "content": "Uploads an image for an app item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                ":appId",
+                "image"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "The image"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "46bf528d-6637-4d34-a2e4-9fb0739c62da",
+              "name": "Uploads an image for an app item",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId",
+                    "image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The image",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"userId\": \"string\",\n  \"uri\": \"string\",\n  \"url\": \"string\",\n  \"originalName\": \"string\",\n  \"storageName\": \"string\",\n  \"created\": 1592312018\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfbdbdf5-183f-4f07-84ed-e8dd77258d81",
+              "name": "The app could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId",
+                    "image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "The image",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a10087b7-8035-44c7-9dc7-626f26d0a3ad",
+          "name": "Deletes the app item image",
+          "request": {
+            "name": "Deletes the app item image",
+            "description": {
+              "content": "Deletes the app item image",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                ":appId",
+                "image",
+                ":fileId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "fileId",
+                  "description": "(Required) The file ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f2ab6663-3dc5-4086-81f2-9650672d757b",
+              "name": "App item image deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId",
+                    "image",
+                    ":fileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fileId",
+                      "description": "(Required) The file ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b0d24d42-89d6-4ec3-a087-627b87425fef",
+              "name": "The app could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId",
+                    "image",
+                    ":fileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "fileId",
+                      "description": "(Required) The file ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ccecb69-8b43-4de2-9f9e-0a0ee95ffec7",
+          "name": "Get app sales statistics",
+          "request": {
+            "name": "Get app sales statistics",
+            "description": {
+              "content": "Returns sales statistics for the app",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                ":appId",
+                "sales"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "numberOfDays",
+                  "value": "7",
+                  "description": "How many of the last days"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9ecfeb58-8bff-4658-b5b5-dbe4a11101d4",
+              "name": "App sales statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId",
+                    "sales"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "numberOfDays",
+                      "value": "7"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"salesCount\": 615,\n  \"series\": [\n    {\n      \"date\": 8625,\n      \"label\": \"Jul 21\",\n      \"salesCount\": 21\n    },\n    {\n      \"date\": 1544,\n      \"label\": \"Jul 21\",\n      \"salesCount\": 21\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c83cfa81-7ae5-4ca6-9939-58c84d122131",
+              "name": "App with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId",
+                    "sales"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "numberOfDays",
+                      "value": "7"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ff4c6c4-3ebe-4f39-aa25-bfb15f7b99df",
+          "name": "Get app top items statistics",
+          "request": {
+            "name": "Get app top items statistics",
+            "description": {
+              "content": "Returns top items statistics for the app",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                ":appId",
+                "top-items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "5",
+                  "description": "How many of the items"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset for paging"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) App ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "400d8cf7-f1ed-4c23-bca4-cfd7da538a52",
+              "name": "App top items statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId",
+                    "top-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "count",
+                      "value": "5"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"itemCode\": \"string\",\n    \"title\": \"string\",\n    \"salesCount\": 21,\n    \"total\": \"string\",\n    \"totalFormatted\": \"615.21 USD\"\n  },\n  {\n    \"itemCode\": \"string\",\n    \"title\": \"string\",\n    \"salesCount\": 21,\n    \"total\": \"string\",\n    \"totalFormatted\": \"615.21 USD\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eafd0968-912d-456e-b773-ee0e5a4b864e",
+              "name": "App with specified ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps",
+                    ":appId",
+                    "top-items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "count",
+                      "value": "5"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) App ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0dcf4578-466d-4381-94ab-fa184c2b109a",
+          "name": "Get basic app data for all apps for a store",
+          "request": {
+            "name": "Get basic app data for all apps for a store",
+            "description": {
+              "content": "Returns basic app data for all apps for a store",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f8327518-914d-4bfa-b643-4d78af9e3c7a",
+              "name": "Array of basic app data object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n    \"appName\": \"my test app\",\n    \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n    \"created\": 1651554744,\n    \"appType\": \"PointOfSale\",\n    \"archived\": false\n  },\n  {\n    \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n    \"appName\": \"my test app\",\n    \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n    \"created\": 1651554744,\n    \"appType\": \"PointOfSale\",\n    \"archived\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dec8268c-9b42-45a5-b6af-200f84c9c562",
+              "name": "If you are authenticated but forbidden to get the data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96e36edf-f032-4bfc-a74b-381b991c95a3",
+          "name": "Get basic app data for all apps for all stores for a user",
+          "request": {
+            "name": "Get basic app data for all apps for all stores for a user",
+            "description": {
+              "content": "Returns basic app data for all apps for all stores",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d822eb49-0997-4539-ae92-5e1d60677c20",
+              "name": "Array of basic app data object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n    \"appName\": \"my test app\",\n    \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n    \"created\": 1651554744,\n    \"appType\": \"PointOfSale\",\n    \"archived\": false\n  },\n  {\n    \"id\": \"3ki4jsAkN4u9rv1PUzj1odX4Nx7s\",\n    \"appName\": \"my test app\",\n    \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n    \"created\": 1651554744,\n    \"appType\": \"PointOfSale\",\n    \"archived\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82bc2bda-8a37-4802-b556-ed5cf527af56",
+              "name": "If you are authenticated but forbidden to get the data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your BTCPay Server instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mainnet.demo.btcpayserver.org",
+      "key": "btcpay-host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{btcpay-host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9cf8deca-dbeb-4cf4-aea5-fc13b6aba0b9",
+    "name": "BTCPay Greenfield API Keys Apps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n\n\nContact Support:\n Name: BTCPay Server",
+      "type": "text/plain"
+    }
+  }
+}

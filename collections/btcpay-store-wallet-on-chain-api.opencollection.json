@@ -1,0 +1,836 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Store Wallet (On Chain) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Store Wallet (On Chain)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get store on-chain wallet overview",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View information about the specified wallet"
+        },
+        {
+          "info": {
+            "name": "Get store on-chain wallet balance histogram",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/histogram",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View the balance histogram of the specified wallet"
+        },
+        {
+          "info": {
+            "name": "Get store on-chain wallet fee rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/feerate",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "blockTarget",
+                "value": "",
+                "type": "query",
+                "description": "The number of blocks away you are willing to target for confirmation. Defaults to the wallet's configured `RecommendedFeeBlockTarget`"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get wallet onchain fee rate"
+        },
+        {
+          "info": {
+            "name": "Get store on-chain wallet address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/address",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "forceGenerate",
+                "value": "",
+                "type": "query",
+                "description": "Whether to generate a new address for this request even if the previous one was not used"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get or generate address for wallet"
+        },
+        {
+          "info": {
+            "name": "UnReserve last store on-chain wallet address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/address",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "UnReserve address"
+        },
+        {
+          "info": {
+            "name": "Get store on-chain wallet transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/transactions",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "statusFilter",
+                "value": "",
+                "type": "query",
+                "description": "Statuses to filter the transactions with"
+              },
+              {
+                "name": "labelFilter",
+                "value": "invoice",
+                "type": "query",
+                "description": "Transaction label to filter by"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of transactions to skip from the start"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of transactions to return"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get store on-chain wallet transactions"
+        },
+        {
+          "info": {
+            "name": "Create store on-chain wallet transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/transactions",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create store on-chain wallet transaction. Requires `btcpay.store.cancreatetransactions` and `btcpay.store.cansigntransactions`. Also requires `btcpay.store.canbroadcasttransactions` when `proceedWithBroadcast` is true, including Payjoin."
+        },
+        {
+          "info": {
+            "name": "Broadcast an on-chain transaction or finalized PSBT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/transactions/broadcast",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Broadcast a raw transaction hex string or a finalized PSBT for the specified wallet."
+        },
+        {
+          "info": {
+            "name": "Get store on-chain wallet transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/transactions/:transactionId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id to fetch"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get store on-chain wallet transaction"
+        },
+        {
+          "info": {
+            "name": "Patch store on-chain wallet transaction info",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/transactions/:transactionId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id to fetch"
+              },
+              {
+                "name": "force",
+                "value": "",
+                "type": "query",
+                "description": "Whether to update the label/comments even if the transaction does not yet exist"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Patch store on-chain wallet transaction info"
+        },
+        {
+          "info": {
+            "name": "Get store on-chain wallet UTXOS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/utxos",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get store on-chain wallet utxos"
+        },
+        {
+          "info": {
+            "name": "Generate store on-chain wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/generate",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generate a wallet and update the specified store's payment method to it"
+        },
+        {
+          "info": {
+            "name": "Preview store on-chain payment method addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/preview",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "From which index to fetch the addresses"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Number of addresses to preview"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View addresses of the current payment method of the store"
+        },
+        {
+          "info": {
+            "name": "Preview proposed store on-chain payment method addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/preview",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "From which index to fetch the addresses"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Number of addresses to preview"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View addresses of a proposed payment method of the store"
+        },
+        {
+          "info": {
+            "name": "Get store on-chain wallet objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/objects",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "type",
+                "value": "tx",
+                "type": "query",
+                "description": "The type of object to fetch"
+              },
+              {
+                "name": "ids",
+                "value": "03abcde...",
+                "type": "query",
+                "description": "The ids of objects to fetch, if used, type should be specified"
+              },
+              {
+                "name": "includeNeighbourData",
+                "value": "",
+                "type": "query",
+                "description": "Whether or not you should include neighbour's node data in the result (ie, `links.objectData`)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View wallet objects"
+        },
+        {
+          "info": {
+            "name": "Add/Update store on-chain wallet objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/objects",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Add/Update wallet objects"
+        },
+        {
+          "info": {
+            "name": "Get store on-chain wallet object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/objects/:objectType/:objectId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "objectType",
+                "value": "tx",
+                "type": "path",
+                "description": "The object type to fetch"
+              },
+              {
+                "name": "objectId",
+                "value": "abc392...",
+                "type": "path",
+                "description": "The object id to fetch"
+              },
+              {
+                "name": "includeNeighbourData",
+                "value": "",
+                "type": "query",
+                "description": "Whether or not you should include neighbour's node data in the result (ie, `links.objectData`)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "View wallet object"
+        },
+        {
+          "info": {
+            "name": "Remove store on-chain wallet objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/objects/:objectType/:objectId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "objectType",
+                "value": "tx",
+                "type": "path",
+                "description": "The object type to fetch"
+              },
+              {
+                "name": "objectId",
+                "value": "abc392...",
+                "type": "path",
+                "description": "The object id to fetch"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Remove wallet object"
+        },
+        {
+          "info": {
+            "name": "Add/Update store on-chain wallet object link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/objects/:objectType/:objectId/links",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "objectType",
+                "value": "tx",
+                "type": "path",
+                "description": "The object type to fetch"
+              },
+              {
+                "name": "objectId",
+                "value": "abc392...",
+                "type": "path",
+                "description": "The object id to fetch"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Add/Update wallet object link"
+        },
+        {
+          "info": {
+            "name": "Remove store on-chain wallet object links",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payment-methods/:paymentMethodId/wallet/objects/:objectType/:objectId/links/:linkType/:linkId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              },
+              {
+                "name": "objectType",
+                "value": "tx",
+                "type": "path",
+                "description": "The object type to fetch"
+              },
+              {
+                "name": "objectId",
+                "value": "abc392...",
+                "type": "path",
+                "description": "The object id to fetch"
+              },
+              {
+                "name": "linkType",
+                "value": "tx",
+                "type": "path",
+                "description": "The object type of the linked neighbour"
+              },
+              {
+                "name": "linkId",
+                "value": "abc392...",
+                "type": "path",
+                "description": "The object id of the linked neighbour"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Remove wallet object link"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

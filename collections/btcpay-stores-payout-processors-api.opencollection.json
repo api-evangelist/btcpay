@@ -1,0 +1,299 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Stores (Payout Processors) API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stores (Payout Processors)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get store configured payout processors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get store configured payout processors"
+        },
+        {
+          "info": {
+            "name": "Remove store configured payout processor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors/:processor/:paymentMethodId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "processor",
+                "value": "",
+                "type": "path",
+                "description": "The processor"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Remove store configured payout processor"
+        },
+        {
+          "info": {
+            "name": "Get configured store onchain automated payout processors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors/OnChainAutomatedPayoutSenderFactory/:paymentMethodId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get configured store onchain automated payout processors"
+        },
+        {
+          "info": {
+            "name": "Update configured store onchain automated payout processors",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors/OnChainAutomatedPayoutSenderFactory/:paymentMethodId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "paymentMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payment method id of the payment method to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update configured store onchain automated payout processors"
+        },
+        {
+          "info": {
+            "name": "Get configured store Lightning automated payout processors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors/LightningAutomatedPayoutSenderFactory/:payoutMethodId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "payoutMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payout method id"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get configured store Lightning automated payout processors"
+        },
+        {
+          "info": {
+            "name": "Update configured store Lightning automated payout processors",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors/LightningAutomatedPayoutSenderFactory/:payoutMethodId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              },
+              {
+                "name": "payoutMethodId",
+                "value": "BTC-CHAIN",
+                "type": "path",
+                "description": "The payout method id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update configured store Lightning automated payout processors"
+        },
+        {
+          "info": {
+            "name": "Get configured store onchain automated payout processors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors/OnChainAutomatedTransferSenderFactory",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get configured store onchain automated payout processors"
+        },
+        {
+          "info": {
+            "name": "Update configured store onchain automated payout processors",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors/OnChainAutomatedTransferSenderFactory",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update configured store onchain automated payout processors"
+        },
+        {
+          "info": {
+            "name": "Get configured store Lightning automated payout processors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/stores/:storeId/payout-processors/LightningAutomatedPayoutSenderFactory",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path",
+                "description": "The store ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get configured store Lightning automated payout processors"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

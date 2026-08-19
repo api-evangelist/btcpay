@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BTCPay Greenfield API Keys Point of Sale API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Point of Sale",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Point of Sale app data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{btcpay-host}/api/v1/apps/pos/:appId",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path",
+                "description": "App ID"
+              }
+            ]
+          },
+          "docs": "Returns POS app data"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

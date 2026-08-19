@@ -1,0 +1,3299 @@
+{
+  "item": [
+    {
+      "id": "d2b5dd02-a6e6-4374-8d32-acf2241ededc",
+      "name": "Invoices",
+      "description": {
+        "content": "Invoice operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5e677fb8-7f8a-4935-8458-3045f0afe0c9",
+          "name": "Get invoices",
+          "request": {
+            "name": "Get invoices",
+            "description": {
+              "content": "View information about the existing invoices",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "orderId",
+                  "value": "<string>",
+                  "description": "Array of OrderIds to fetch the invoices for"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderId",
+                  "value": "<string>",
+                  "description": "Array of OrderIds to fetch the invoices for"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Array of statuses of invoices to be fetched"
+                },
+                {
+                  "disabled": false,
+                  "key": "textSearch",
+                  "value": "<string>",
+                  "description": "A term that can help locating specific invoices."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<int32>",
+                  "description": "Start date of the period to retrieve invoices"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<int32>",
+                  "description": "End date of the period to retrieve invoices"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<number>",
+                  "description": "Number of records to skip"
+                },
+                {
+                  "disabled": false,
+                  "key": "take",
+                  "value": "<number>",
+                  "description": "Number of records returned in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includePaymentMethods",
+                  "value": "false",
+                  "description": "Includes payment methods available to the response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b374755c-46f8-413c-9f93-83d938a50048",
+              "name": "List of invoices",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orderId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "textSearch",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1592312018"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "1592312018"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "take",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "includePaymentMethods",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"paymentMethods\": [\n      {\n        \"paymentMethodId\": \"BTC-CHAIN\",\n        \"currency\": \"BTC\",\n        \"destination\": \"string\",\n        \"paymentLink\": \"string\",\n        \"rate\": \"64392.23\",\n        \"paymentMethodPaid\": \"string\",\n        \"totalPaid\": \"string\",\n        \"due\": \"string\",\n        \"amount\": \"string\",\n        \"paymentMethodFee\": \"string\",\n        \"payments\": [\n          {\n            \"id\": \"string\",\n            \"receivedDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\",\n            \"fee\": \"string\",\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destination\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"receivedDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\",\n            \"fee\": \"string\",\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destination\": \"string\"\n          }\n        ],\n        \"activated\": false,\n        \"additionalData\": {\n          \"providedComment\": \"Thank you!\",\n          \"consumedLightningAddress\": \"customer@example.com\"\n        }\n      },\n      {\n        \"paymentMethodId\": \"BTC-CHAIN\",\n        \"currency\": \"BTC\",\n        \"destination\": \"string\",\n        \"paymentLink\": \"string\",\n        \"rate\": \"64392.23\",\n        \"paymentMethodPaid\": \"string\",\n        \"totalPaid\": \"string\",\n        \"due\": \"string\",\n        \"amount\": \"string\",\n        \"paymentMethodFee\": \"string\",\n        \"payments\": [\n          {\n            \"id\": \"string\",\n            \"receivedDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\",\n            \"fee\": \"string\",\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destination\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"receivedDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\",\n            \"fee\": \"string\",\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destination\": \"string\"\n          }\n        ],\n        \"activated\": false,\n        \"additionalData\": {\n          \"providedComment\": \"Thank you!\",\n          \"consumedLightningAddress\": \"customer@example.com\"\n        }\n      }\n    ],\n    \"metadata\": {\n      \"orderId\": \"string\",\n      \"orderUrl\": \"string\",\n      \"taxIncluded\": 5491.362809891051,\n      \"physical\": \"string\"\n    },\n    \"checkout\": {\n      \"speedPolicy\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paymentMethods\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"defaultPaymentMethod\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"lazyPaymentMethods\": true,\n      \"expirationMinutes\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"monitoringMinutes\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paymentTolerance\": 0,\n      \"redirectURL\": \"string\",\n      \"redirectAutomatically\": false,\n      \"defaultLanguage\": \"string\"\n    },\n    \"receipt\": {\n      \"enabled\": true,\n      \"showQR\": null,\n      \"showPayments\": null\n    },\n    \"id\": \"HMprBnL9BTXWuPvpoKBS6e\",\n    \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n    \"amount\": \"5.00\",\n    \"paidAmount\": \"5.00\",\n    \"currency\": \"USD\",\n    \"type\": \"TopUp\",\n    \"checkoutLink\": \"string\",\n    \"createdTime\": 1592312018,\n    \"expirationTime\": 1592312018,\n    \"monitoringExpiration\": 1592312018,\n    \"status\": \"<string>\",\n    \"additionalStatus\": \"None\",\n    \"availableStatusesForManualMarking\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived\": false\n  },\n  {\n    \"paymentMethods\": [\n      {\n        \"paymentMethodId\": \"BTC-CHAIN\",\n        \"currency\": \"BTC\",\n        \"destination\": \"string\",\n        \"paymentLink\": \"string\",\n        \"rate\": \"64392.23\",\n        \"paymentMethodPaid\": \"string\",\n        \"totalPaid\": \"string\",\n        \"due\": \"string\",\n        \"amount\": \"string\",\n        \"paymentMethodFee\": \"string\",\n        \"payments\": [\n          {\n            \"id\": \"string\",\n            \"receivedDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\",\n            \"fee\": \"string\",\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destination\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"receivedDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\",\n            \"fee\": \"string\",\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destination\": \"string\"\n          }\n        ],\n        \"activated\": true,\n        \"additionalData\": {\n          \"providedComment\": \"Thank you!\",\n          \"consumedLightningAddress\": \"customer@example.com\"\n        }\n      },\n      {\n        \"paymentMethodId\": \"BTC-CHAIN\",\n        \"currency\": \"BTC\",\n        \"destination\": \"string\",\n        \"paymentLink\": \"string\",\n        \"rate\": \"64392.23\",\n        \"paymentMethodPaid\": \"string\",\n        \"totalPaid\": \"string\",\n        \"due\": \"string\",\n        \"amount\": \"string\",\n        \"paymentMethodFee\": \"string\",\n        \"payments\": [\n          {\n            \"id\": \"string\",\n            \"receivedDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\",\n            \"fee\": \"string\",\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destination\": \"string\"\n          },\n          {\n            \"id\": \"string\",\n            \"receivedDate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": \"string\",\n            \"fee\": \"string\",\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"destination\": \"string\"\n          }\n        ],\n        \"activated\": true,\n        \"additionalData\": {\n          \"providedComment\": \"Thank you!\",\n          \"consumedLightningAddress\": \"customer@example.com\"\n        }\n      }\n    ],\n    \"metadata\": {\n      \"orderId\": \"string\",\n      \"orderUrl\": \"string\",\n      \"taxIncluded\": 6895.798630877703,\n      \"physical\": \"string\"\n    },\n    \"checkout\": {\n      \"speedPolicy\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paymentMethods\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"defaultPaymentMethod\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"lazyPaymentMethods\": true,\n      \"expirationMinutes\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"monitoringMinutes\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"paymentTolerance\": 0,\n      \"redirectURL\": \"string\",\n      \"redirectAutomatically\": false,\n      \"defaultLanguage\": \"string\"\n    },\n    \"receipt\": {\n      \"enabled\": false,\n      \"showQR\": null,\n      \"showPayments\": null\n    },\n    \"id\": \"HMprBnL9BTXWuPvpoKBS6e\",\n    \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n    \"amount\": \"5.00\",\n    \"paidAmount\": \"5.00\",\n    \"currency\": \"USD\",\n    \"type\": \"TopUp\",\n    \"checkoutLink\": \"string\",\n    \"createdTime\": 1592312018,\n    \"expirationTime\": 1592312018,\n    \"monitoringExpiration\": 1592312018,\n    \"status\": \"<string>\",\n    \"additionalStatus\": \"None\",\n    \"availableStatusesForManualMarking\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"archived\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e7a1448-d562-4055-82a8-46077601abea",
+              "name": "Missing authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orderId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "textSearch",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1592312018"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "1592312018"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "take",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "includePaymentMethods",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d6ca465-7e7f-43ff-9953-80de6591b6d3",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "orderId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "textSearch",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "1592312018"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "1592312018"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "take",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "includePaymentMethods",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c438957c-d91d-48d1-8caa-3bb571915f1b",
+          "name": "Create a new invoice",
+          "request": {
+            "name": "Create a new invoice",
+            "description": {
+              "content": "Create a new invoice",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "stores",
+                ":storeId",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) The store ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": \"<object>\",\n  \"receipt\": \"<object>\",\n  \"amount\": \"<decimal>\",\n  \"currency\": \"<string>\",\n  \"additionalSearchTerms\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28677557-a679-4624-b69d-76ad77e7f984",
+              "name": "Information about the new invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": {\n    \"speedPolicy\": \"<string>\",\n    \"paymentMethods\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"lazyPaymentMethods\": \"<boolean>\",\n    \"expirationMinutes\": 4543.73314763848,\n    \"monitoringMinutes\": 9254.978831877816,\n    \"paymentTolerance\": 0,\n    \"redirectURL\": \"<string>\",\n    \"redirectAutomatically\": \"<boolean>\",\n    \"defaultLanguage\": \"<string>\"\n  },\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"amount\": \"5.00\",\n  \"currency\": \"USD\",\n  \"additionalSearchTerms\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": {\n    \"speedPolicy\": \"<string>\",\n    \"paymentMethods\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"lazyPaymentMethods\": \"<boolean>\",\n    \"expirationMinutes\": 3757.513393059565,\n    \"monitoringMinutes\": 1003.5798786607863,\n    \"paymentTolerance\": 0,\n    \"redirectURL\": \"<string>\",\n    \"redirectAutomatically\": \"<boolean>\",\n    \"defaultLanguage\": \"<string>\"\n  },\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"id\": \"HMprBnL9BTXWuPvpoKBS6e\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"amount\": \"5.00\",\n  \"paidAmount\": \"5.00\",\n  \"currency\": \"USD\",\n  \"type\": \"TopUp\",\n  \"checkoutLink\": \"string\",\n  \"createdTime\": 1592312018,\n  \"expirationTime\": 1592312018,\n  \"monitoringExpiration\": 1592312018,\n  \"status\": \"<string>\",\n  \"additionalStatus\": \"PaidLate\",\n  \"availableStatusesForManualMarking\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9302cf8b-5a5a-4813-a8f9-f3cb2d94bb78",
+              "name": "A list of errors that occurred when creating the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": {\n    \"speedPolicy\": \"<string>\",\n    \"paymentMethods\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"lazyPaymentMethods\": \"<boolean>\",\n    \"expirationMinutes\": 4543.73314763848,\n    \"monitoringMinutes\": 9254.978831877816,\n    \"paymentTolerance\": 0,\n    \"redirectURL\": \"<string>\",\n    \"redirectAutomatically\": \"<boolean>\",\n    \"defaultLanguage\": \"<string>\"\n  },\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"amount\": \"5.00\",\n  \"currency\": \"USD\",\n  \"additionalSearchTerms\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad1016d3-8fae-4073-b429-2cd0860103d9",
+              "name": "If you are authenticated but forbidden to add new invoices",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "stores",
+                    ":storeId",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) The store ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": {\n    \"speedPolicy\": \"<string>\",\n    \"paymentMethods\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"lazyPaymentMethods\": \"<boolean>\",\n    \"expirationMinutes\": 4543.73314763848,\n    \"monitoringMinutes\": 9254.978831877816,\n    \"paymentTolerance\": 0,\n    \"redirectURL\": \"<string>\",\n    \"redirectAutomatically\": \"<boolean>\",\n    \"defaultLanguage\": \"<string>\"\n  },\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"amount\": \"5.00\",\n  \"currency\": \"USD\",\n  \"additionalSearchTerms\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90fac424-864b-4f13-b052-bda135a37e58",
+          "name": "Get invoice",
+          "request": {
+            "name": "Get invoice",
+            "description": {
+              "content": "View information about the specified invoice. The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b4ffd489-b8d1-48c1-a8d6-d2524be8ca12",
+              "name": "specified invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": {\n    \"speedPolicy\": \"<string>\",\n    \"paymentMethods\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"lazyPaymentMethods\": \"<boolean>\",\n    \"expirationMinutes\": 1522.5242174703424,\n    \"monitoringMinutes\": 592.8453686664681,\n    \"paymentTolerance\": 0,\n    \"redirectURL\": \"<string>\",\n    \"redirectAutomatically\": \"<boolean>\",\n    \"defaultLanguage\": \"<string>\"\n  },\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"id\": \"HMprBnL9BTXWuPvpoKBS6e\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"amount\": \"5.00\",\n  \"paidAmount\": \"5.00\",\n  \"currency\": \"USD\",\n  \"type\": \"Standard\",\n  \"checkoutLink\": \"string\",\n  \"createdTime\": 1592312018,\n  \"expirationTime\": 1592312018,\n  \"monitoringExpiration\": 1592312018,\n  \"status\": \"<string>\",\n  \"additionalStatus\": \"Marked\",\n  \"availableStatusesForManualMarking\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37a5eddb-8bd3-491d-a675-1766828e27c6",
+              "name": "If you are authenticated but forbidden to view the specified invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "424706d6-525b-43d5-9b32-11f80b096cf6",
+              "name": "The key is not found for this invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72b34ad2-6956-4b64-aa22-ac36a4f25852",
+          "name": "Archive invoice",
+          "request": {
+            "name": "Archive invoice",
+            "description": {
+              "content": "Archives the specified invoice. The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6406d3ef-eb6e-4d2e-b473-b0d85841af49",
+              "name": "The invoice has been archived",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7a5546b4-5ac1-4073-8fb8-775318591fa2",
+              "name": "A list of errors that occurred when archiving the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34bb5dce-fcca-4e5e-8376-a971bbdab635",
+              "name": "If you are authenticated but forbidden to archive the specified invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2a2404b3-bdec-41fa-b3bd-02cfbf8b8514",
+              "name": "The key is not found for this invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5d5aca0-2cde-459f-945e-75adfa92c3d6",
+          "name": "Update invoice",
+          "request": {
+            "name": "Update invoice",
+            "description": {
+              "content": "Updates the specified invoice. The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "af245916-f62b-41ec-abc8-8c4931e7dd6a",
+              "name": "The invoice that has been updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": {\n    \"speedPolicy\": \"<string>\",\n    \"paymentMethods\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"lazyPaymentMethods\": \"<boolean>\",\n    \"expirationMinutes\": 1522.5242174703424,\n    \"monitoringMinutes\": 592.8453686664681,\n    \"paymentTolerance\": 0,\n    \"redirectURL\": \"<string>\",\n    \"redirectAutomatically\": \"<boolean>\",\n    \"defaultLanguage\": \"<string>\"\n  },\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"id\": \"HMprBnL9BTXWuPvpoKBS6e\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"amount\": \"5.00\",\n  \"paidAmount\": \"5.00\",\n  \"currency\": \"USD\",\n  \"type\": \"Standard\",\n  \"checkoutLink\": \"string\",\n  \"createdTime\": 1592312018,\n  \"expirationTime\": 1592312018,\n  \"monitoringExpiration\": 1592312018,\n  \"status\": \"<string>\",\n  \"additionalStatus\": \"Marked\",\n  \"availableStatusesForManualMarking\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2936684-a75a-4454-877e-60c9d3c4ffbd",
+              "name": "A list of errors that occurred when updating the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41e8fbf2-c20b-4660-a162-f3f141e655d5",
+              "name": "If you are authenticated but forbidden to update the specified invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0f196e8-0767-401f-b047-d544bec7626d",
+              "name": "The key is not found for this invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9443b207-796a-49e3-bc08-4a57420645da",
+          "name": "Get invoice payment methods",
+          "request": {
+            "name": "Get invoice payment methods",
+            "description": {
+              "content": "View information about the specified invoice's payment methods. The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId",
+                "payment-methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "onlyAccountedPayments",
+                  "value": "true",
+                  "description": "If default or true, only returns payments which are accounted (in Bitcoin, this mean not returning RBF'd or double spent payments)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeSensitive",
+                  "value": "false",
+                  "description": "If `true`, `additionalData` might include sensitive data (such as xpub). Requires the permission `btcpay.store.canmodifystoresettings`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4d497699-7d09-487d-85d0-a80cac5c4ccb",
+              "name": "specified invoice payment methods data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "payment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "onlyAccountedPayments",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeSensitive",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"paymentMethodId\": \"BTC-CHAIN\",\n    \"currency\": \"BTC\",\n    \"destination\": \"string\",\n    \"paymentLink\": \"string\",\n    \"rate\": \"64392.23\",\n    \"paymentMethodPaid\": \"string\",\n    \"totalPaid\": \"string\",\n    \"due\": \"string\",\n    \"amount\": \"string\",\n    \"paymentMethodFee\": \"string\",\n    \"payments\": [\n      {\n        \"id\": \"string\",\n        \"receivedDate\": 1592312018,\n        \"value\": \"string\",\n        \"fee\": \"string\",\n        \"status\": \"Settled\",\n        \"destination\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"receivedDate\": 1592312018,\n        \"value\": \"string\",\n        \"fee\": \"string\",\n        \"status\": \"Invalid\",\n        \"destination\": \"string\"\n      }\n    ],\n    \"activated\": true,\n    \"additionalData\": {\n      \"providedComment\": \"Thank you!\",\n      \"consumedLightningAddress\": \"customer@example.com\"\n    }\n  },\n  {\n    \"paymentMethodId\": \"BTC-CHAIN\",\n    \"currency\": \"BTC\",\n    \"destination\": \"string\",\n    \"paymentLink\": \"string\",\n    \"rate\": \"64392.23\",\n    \"paymentMethodPaid\": \"string\",\n    \"totalPaid\": \"string\",\n    \"due\": \"string\",\n    \"amount\": \"string\",\n    \"paymentMethodFee\": \"string\",\n    \"payments\": [\n      {\n        \"id\": \"string\",\n        \"receivedDate\": 1592312018,\n        \"value\": \"string\",\n        \"fee\": \"string\",\n        \"status\": \"Processing\",\n        \"destination\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"receivedDate\": 1592312018,\n        \"value\": \"string\",\n        \"fee\": \"string\",\n        \"status\": \"Processing\",\n        \"destination\": \"string\"\n      }\n    ],\n    \"activated\": false,\n    \"additionalData\": {\n      \"providedComment\": \"Thank you!\",\n      \"consumedLightningAddress\": \"customer@example.com\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e613c84-8880-4446-b1c0-7608524812af",
+              "name": "If you are authenticated but forbidden to view the specified invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "payment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "onlyAccountedPayments",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeSensitive",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "93a48b44-65b8-4abd-92ae-78b8a71dc192",
+              "name": "The key is not found for this invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "payment-methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "onlyAccountedPayments",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeSensitive",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d89817be-8255-4634-be17-6a50655a8573",
+          "name": "Mark invoice status",
+          "request": {
+            "name": "Mark invoice status",
+            "description": {
+              "content": "Mark an invoice as invalid or settled. The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "10a4379e-726f-43bc-9a7d-58d4b929fa05",
+              "name": "The updated invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": {\n    \"speedPolicy\": \"<string>\",\n    \"paymentMethods\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"lazyPaymentMethods\": \"<boolean>\",\n    \"expirationMinutes\": 1522.5242174703424,\n    \"monitoringMinutes\": 592.8453686664681,\n    \"paymentTolerance\": 0,\n    \"redirectURL\": \"<string>\",\n    \"redirectAutomatically\": \"<boolean>\",\n    \"defaultLanguage\": \"<string>\"\n  },\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"id\": \"HMprBnL9BTXWuPvpoKBS6e\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"amount\": \"5.00\",\n  \"paidAmount\": \"5.00\",\n  \"currency\": \"USD\",\n  \"type\": \"Standard\",\n  \"checkoutLink\": \"string\",\n  \"createdTime\": 1592312018,\n  \"expirationTime\": 1592312018,\n  \"monitoringExpiration\": 1592312018,\n  \"status\": \"<string>\",\n  \"additionalStatus\": \"Marked\",\n  \"availableStatusesForManualMarking\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a5aeaf7-2fa8-4726-9670-0fc31f68f45a",
+              "name": "A list of errors that occurred when updating the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d15e8253-3947-4d5e-aa2e-c13557187e87",
+              "name": "If you are authenticated but forbidden to update the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c64ffc4e-c504-44c3-a422-ead8e7958d3f",
+          "name": "Unarchive invoice",
+          "request": {
+            "name": "Unarchive invoice",
+            "description": {
+              "content": "Unarchive an invoice. The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId",
+                "unarchive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "49c2baf3-8e6e-4a7a-8ac4-dc4fa53735bf",
+              "name": "The unarchived invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "unarchive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"orderId\": \"<string>\",\n    \"orderUrl\": \"<string>\",\n    \"taxIncluded\": \"<number>\",\n    \"physical\": \"<string>\"\n  },\n  \"checkout\": {\n    \"speedPolicy\": \"<string>\",\n    \"paymentMethods\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"defaultPaymentMethod\": \"BTC-CHAIN\",\n    \"lazyPaymentMethods\": \"<boolean>\",\n    \"expirationMinutes\": 1522.5242174703424,\n    \"monitoringMinutes\": 592.8453686664681,\n    \"paymentTolerance\": 0,\n    \"redirectURL\": \"<string>\",\n    \"redirectAutomatically\": \"<boolean>\",\n    \"defaultLanguage\": \"<string>\"\n  },\n  \"receipt\": {\n    \"enabled\": \"<boolean>\",\n    \"showQR\": null,\n    \"showPayments\": null\n  },\n  \"id\": \"HMprBnL9BTXWuPvpoKBS6e\",\n  \"storeId\": \"9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776\",\n  \"amount\": \"5.00\",\n  \"paidAmount\": \"5.00\",\n  \"currency\": \"USD\",\n  \"type\": \"Standard\",\n  \"checkoutLink\": \"string\",\n  \"createdTime\": 1592312018,\n  \"expirationTime\": 1592312018,\n  \"monitoringExpiration\": 1592312018,\n  \"status\": \"<string>\",\n  \"additionalStatus\": \"Marked\",\n  \"availableStatusesForManualMarking\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"archived\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc10f9c2-f619-4e4e-b985-1b9b80e35ac5",
+              "name": "A list of errors that occurred when updating the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "unarchive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a7b951b-2387-4601-918b-d87da6fb025b",
+              "name": "If you are authenticated but forbidden to update the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "unarchive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b7a0fb9-f9ab-4b15-9c20-73bfed4895bc",
+          "name": "Activate Payment Method",
+          "request": {
+            "name": "Activate Payment Method",
+            "description": {
+              "content": "Activate an invoice payment method (if lazy payments mode is enabled). The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId",
+                "payment-methods",
+                ":paymentMethodId",
+                "activate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentMethodId",
+                  "description": "(Required) The payment method id of the payment method to update"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c31f42d9-fb4e-4f1b-b5cd-1d9340f108f5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "payment-methods",
+                    ":paymentMethodId",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodId",
+                      "description": "(Required) The payment method id of the payment method to update"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "284ed236-3b52-4de4-a0a7-45fbefa6749d",
+              "name": "A list of errors that occurred when updating the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "payment-methods",
+                    ":paymentMethodId",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodId",
+                      "description": "(Required) The payment method id of the payment method to update"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6d95381-d1c5-4047-adea-fc8fc2c227b7",
+              "name": "If you are authenticated but forbidden to activate the invoice payment method",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "payment-methods",
+                    ":paymentMethodId",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodId",
+                      "description": "(Required) The payment method id of the payment method to update"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ee13352-4d72-4c92-bccf-ad04747b47dc",
+          "name": "Refund invoice",
+          "request": {
+            "name": "Refund invoice",
+            "description": {
+              "content": "Refund invoice. The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId",
+                "refund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refundVariant\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"payoutMethodId\": \"<string>\",\n  \"subtractPercentage\": \"<decimal>\",\n  \"customAmount\": \"<decimal>\",\n  \"customCurrency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eed91865-838e-43bc-b168-dca2bcb58234",
+              "name": "Pull payment for refunding the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refundVariant\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"payoutMethodId\": \"BTC-LN\",\n  \"subtractPercentage\": \"2.1\",\n  \"customAmount\": \"5.00\",\n  \"customCurrency\": \"USD\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"currency\": \"BTC\",\n  \"amount\": \"1.12000000\",\n  \"BOLT11Expiration\": \"string\",\n  \"autoApproveClaims\": false,\n  \"archived\": false,\n  \"viewLink\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6582c66-b3c7-4d58-b254-0afd2dd1891d",
+              "name": "A list of errors that occurred when refunding the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refundVariant\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"payoutMethodId\": \"BTC-LN\",\n  \"subtractPercentage\": \"2.1\",\n  \"customAmount\": \"5.00\",\n  \"customCurrency\": \"USD\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  },\n  {\n    \"path\": \"string\",\n    \"message\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efab6dca-2d65-4656-9384-bbf6484ef4d1",
+              "name": "If you are authenticated but forbidden to refund the invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refundVariant\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"payoutMethodId\": \"BTC-LN\",\n  \"subtractPercentage\": \"2.1\",\n  \"customAmount\": \"5.00\",\n  \"customCurrency\": \"USD\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08e5c371-6956-4366-afd2-de1b87bfa2b6",
+          "name": "Get invoice refund trigger data",
+          "request": {
+            "name": "Get invoice refund trigger data",
+            "description": {
+              "content": "View calculated refund amounts for the specified invoice/payment-method. The store is resolved automatically from the invoice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "invoices",
+                ":invoiceId",
+                "refund",
+                ":paymentMethodId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "invoiceId",
+                  "description": "(Required) The invoice ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentMethodId",
+                  "description": "(Required) The payment method id of the payment method to update"
+                },
+                {
+                  "description": "The hostname of your BTCPay Server instance",
+                  "type": "any",
+                  "value": "{{btcpay-host}}",
+                  "key": "btcpay-host"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "64d7f3f4-4857-4e3c-80be-718c1c9856fe",
+              "name": "specified invoice refund trigger data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "refund",
+                    ":paymentMethodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodId",
+                      "description": "(Required) The payment method id of the payment method to update"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentAmountThen\": \"5.00\",\n  \"paymentAmountNow\": \"5.00\",\n  \"invoiceAmount\": \"5.00\",\n  \"paymentCurrency\": \"BTC\",\n  \"paymentCurrencyDivisibility\": 1946.3692197913351,\n  \"invoiceCurrencyDivisibility\": 7963.318786462086,\n  \"invoiceCurrency\": \"USD\",\n  \"overpaidPaymentAmount\": \"2.00\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "004c99a0-d253-4cf5-9cc1-e5479bdabcc1",
+              "name": "If you are authenticated but forbidden to view the specified invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "refund",
+                    ":paymentMethodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodId",
+                      "description": "(Required) The payment method id of the payment method to update"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "48bbc08d-dedf-4dba-902d-4edf35e85bfe",
+              "name": "The key is not found for this invoice",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "invoices",
+                    ":invoiceId",
+                    "refund",
+                    ":paymentMethodId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "invoiceId",
+                      "description": "(Required) The invoice ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentMethodId",
+                      "description": "(Required) The payment method id of the payment method to update"
+                    },
+                    {
+                      "description": "The hostname of your BTCPay Server instance",
+                      "type": "any",
+                      "value": "{{btcpay-host}}",
+                      "key": "btcpay-host"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The hostname of your BTCPay Server instance",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "mainnet.demo.btcpayserver.org",
+      "key": "btcpay-host"
+    },
+    {
+      "type": "string",
+      "value": "https://{{btcpay-host}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6ba226c1-d538-479c-81de-de0d1c3e15c8",
+    "name": "BTCPay Greenfield API Keys Invoices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n\n\nContact Support:\n Name: BTCPay Server",
+      "type": "text/plain"
+    }
+  }
+}
