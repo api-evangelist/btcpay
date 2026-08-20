@@ -24,6 +24,13 @@ tags:
   - Cryptocurrency
   - Payments
   - Lightning Network
+  - Open-Source
+  - Self-Hosted
+tags_raw:
+  - Bitcoin
+  - Cryptocurrency
+  - Payments
+  - Lightning Network
   - Open Source
   - Self-Hosted
 created: "2026-06-13"
@@ -37,6 +44,8 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
+  - APIKeys
+  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI
@@ -66,6 +75,8 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
+  - Application
+  tags_raw:
   - Apps
   properties:
   - type: OpenAPI
@@ -153,6 +164,8 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -443,6 +456,8 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
+  - Point-of-Sale
+  tags_raw:
   - Point of Sale
   properties:
   - type: OpenAPI
@@ -588,6 +603,8 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
+  - Server Info
+  tags_raw:
   - ServerInfo
   properties:
   - type: OpenAPI
@@ -849,6 +866,8 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
@@ -878,6 +897,8 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -907,6 +928,8 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
