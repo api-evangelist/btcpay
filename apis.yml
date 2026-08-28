@@ -5,6 +5,19 @@ description: >-
   stores, invoices, wallets, Lightning Network nodes, payment requests, pull
   payments, webhooks, users, and server configuration. It operates with zero
   fees, no third-party dependency, and is released under the MIT license.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: self-serve
