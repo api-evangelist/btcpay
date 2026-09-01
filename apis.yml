@@ -616,7 +616,7 @@ apis:
   humanURL: https://docs.btcpayserver.org/API/Greenfield/v1/
   baseURL: https://{btcpay-host}/api/v1
   tags:
-  - ServerInfo
+  - Server Info
   tags_raw:
   - ServerInfo
   properties:
