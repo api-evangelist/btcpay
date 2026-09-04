@@ -25,11 +25,12 @@ accessModel:
   try_now: true
   public: false
   label: Free · Self-serve signup
-  confidence: high
+  confidence: medium
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  - security
+  generated: '2026-09-03'
   method: derived
 image: https://btcpayserver.org/images/btcpay-logo.svg
 tags:
@@ -967,6 +968,9 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/finops/finops.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/btcpay-capability-edges.yml
+    name: BTCPay Server Business Capability Map
   - type: IssueTracker
     url: https://github.com/btcpayserver/btcpayserver/issues
   - type: SecurityPolicy
