@@ -1,8 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: BTCPay Greenfield API Keys Pull payments (Management) API
+  title: BTCPay Greenfield Pull payments (Management) API
   version: v1
-  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
   contact:
     name: BTCPay Server
     url: https://btcpayserver.org
@@ -64,13 +67,15 @@ paths:
               type: object
               properties:
                 name:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The name of the pull payment
-                  nullable: true
                 description:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The description of the pull payment
-                  nullable: true
                 amount:
                   type: string
                   format: decimal
@@ -81,36 +86,41 @@ paths:
                   example: BTC
                   description: The currency of the amount.
                 BOLT11Expiration:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   example: 30
                   default: 30
-                  nullable: true
                   description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
                 autoApproveClaims:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   example: false
                   default: false
-                  nullable: true
                   description: Any payouts created for this pull payment will skip the approval phase upon creation
                 startsAt:
-                  type: integer
+                  type:
+                  - integer
+                  - 'null'
                   format: unix timestamp in seconds
                   example: 1592312018
-                  nullable: true
                   description: When this pull payment is effective. Already started if null or unspecified.
                 expiresAt:
-                  type: integer
+                  type:
+                  - integer
+                  - 'null'
                   format: unix timestamp in seconds
                   example: 1593129600
-                  nullable: true
                   description: When this pull payment expires. Never expires if null or unspecified.
                 payoutMethods:
-                  type: array
+                  type:
+                  - array
+                  - 'null'
                   description: The list of supported payout methods supported by this pull payment. Available options can be queried from the `StorePaymentMethods_GetStorePaymentMethods` endpoint. If `null`, all available payout methods will be supported.
                   items:
                     type: string
                     example: BTC
-                  nullable: true
       responses:
         '200':
           description: The create pull payment
@@ -155,15 +165,32 @@ paths:
         - btcpay.store.canarchivepullpayments
         Basic: []
 components:
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
   schemas:
     PullPaymentDataList:
       type: array
       items:
         $ref: '#/components/schemas/PullPaymentData'
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
     PullPaymentData:
       type: object
       properties:
@@ -190,10 +217,11 @@ components:
           example: 30
           description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
         autoApproveClaims:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           example: false
           default: false
-          nullable: true
           description: Any payouts created for this pull payment will skip the approval phase upon creation
         archived:
           type: boolean
@@ -201,29 +229,10 @@ components:
         viewLink:
           type: string
           description: The link to a page to claim payouts to this pull payment
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            nullable: false
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            nullable: false
-            description: User friendly error message about the validation
-  parameters:
     StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
   securitySchemes:
     API_Key:
       type: apiKey

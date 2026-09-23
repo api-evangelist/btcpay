@@ -1,8 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: BTCPay Greenfield API Keys Point of Sale API
+  title: BTCPay Greenfield Point of Sale API
   version: v1
-  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
   contact:
     name: BTCPay Server
     url: https://btcpayserver.org
@@ -20,7 +23,7 @@ security:
 - API_Key: []
   Basic: []
 tags:
-- name: Point of Sale
+- name: Point Of Sale
   description: Point of Sale operations
 paths:
   /api/v1/apps/pos/{appId}:
@@ -28,7 +31,7 @@ paths:
     - $ref: '#/components/parameters/AppId'
     get:
       tags:
-      - Point of Sale
+      - Point Of Sale
       operationId: Apps_GetPointOfSaleApp
       summary: Get Point of Sale app data
       description: Returns POS app data
@@ -43,6 +46,148 @@ paths:
           description: POS app with specified ID was not found
 components:
   schemas:
+    PointOfSaleBaseData:
+      allOf:
+      - $ref: '#/components/schemas/AppBaseData'
+      - type: object
+        properties:
+          title:
+            type:
+            - string
+            - 'null'
+            description: Display title of the app
+            example: My PoS app
+          description:
+            type:
+            - string
+            - 'null'
+            description: App description
+            example: This is my amazing PoS app
+          defaultView:
+            type:
+            - string
+            - 'null'
+            description: App view type (e.g., static, cart, etc...)
+            example: Cart
+            x-enumNames:
+            - Static
+            - Cart
+            - Light
+            - Print
+            enum:
+            - Static
+            - Cart
+            - Light
+            - Print
+          showItems:
+            type:
+            - boolean
+            - 'null'
+            default: false
+            description: Display item selection for keypad
+            example: true
+          showCustomAmount:
+            type:
+            - boolean
+            - 'null'
+            description: Whether the option to enter a custom amount is shown
+            example: true
+          showDiscount:
+            default: false
+            type:
+            - boolean
+            - 'null'
+            description: Whether the option to enter a discount is shown
+            example: false
+          showSearch:
+            type:
+            - boolean
+            - 'null'
+            description: Display the search bar
+            example: false
+            default: true
+          showCategories:
+            type:
+            - boolean
+            - 'null'
+            description: Display the list of categories
+            example: false
+            default: true
+          enableTips:
+            default: false
+            type:
+            - boolean
+            - 'null'
+            description: Whether the option to enter a tip is shown
+            example: true
+          currency:
+            type:
+            - string
+            - 'null'
+            description: Currency used for the app
+            example: BTC
+          fixedAmountPayButtonText:
+            type:
+            - string
+            - 'null'
+            description: Payment button text template for items with a set price
+            example: Buy for {0}
+          customAmountPayButtonText:
+            type:
+            - string
+            - 'null'
+            description: Payment button text which appears for items which allow user to input a custom amount
+            example: Pay
+          tipText:
+            type:
+            - string
+            - 'null'
+            description: Prompt which appears next to the tip amount field if tipping is enabled
+            example: Do you want to leave a tip?
+          customTipPercentages:
+            type:
+            - array
+            - 'null'
+            description: Array of predefined tip percentage amounts
+            items:
+              type: number
+            default:
+            - 15
+            - 18
+            - 20
+          notificationUrl:
+            type:
+            - string
+            - 'null'
+            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
+          redirectUrl:
+            type:
+            - string
+            - 'null'
+            description: URL user is redirected to once invoice is paid
+          redirectAutomatically:
+            type:
+            - boolean
+            - 'null'
+            description: Whether user is redirected to specified redirect URL automatically after the invoice is paid
+            example: true
+          htmlLang:
+            type:
+            - string
+            - 'null'
+            description: Used for SEO, the [HTML Lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) of the page
+            example: en
+          htmlMetaTags:
+            type:
+            - string
+            - 'null'
+            description: Used for SEO, the [Meta tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) of the page
+            example: <meta name="description" content="Your description">
+          formId:
+            type:
+            - string
+            - 'null'
+            description: Form ID to request customer data
     AppItem:
       type: object
       properties:
@@ -63,9 +208,10 @@ components:
           example: http://teashop.com/img/green-tea.jpg
           description: An image URL for the item
         price:
-          type: string
+          type:
+          - string
+          - 'null'
           format: decimal
-          nullable: true
           example: '21.0'
         priceType:
           type: string
@@ -82,140 +228,44 @@ components:
           example: Buy me!
           description: A custom text for the buy button for the item
         inventory:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: 21
           description: The remaining stock the item
         disabled:
           type: boolean
           description: If true, the item does not appear in the list by default.
           default: false
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    PointOfSaleBaseData:
-      allOf:
-      - $ref: '#/components/schemas/AppBaseData'
-      - type: object
-        properties:
-          title:
-            type: string
-            description: Display title of the app
-            example: My PoS app
-            nullable: true
-          description:
-            type: string
-            description: App description
-            example: This is my amazing PoS app
-            nullable: true
-          defaultView:
-            type: string
-            description: App view type (e.g., static, cart, etc...)
-            example: Cart
-            x-enumNames:
-            - Static
-            - Cart
-            - Light
-            - Print
-            enum:
-            - Static
-            - Cart
-            - Light
-            - Print
-            nullable: true
-          showItems:
-            type: boolean
-            default: false
-            description: Display item selection for keypad
-            example: true
-            nullable: true
-          showCustomAmount:
-            type: boolean
-            description: Whether the option to enter a custom amount is shown
-            example: true
-            nullable: true
-          showDiscount:
-            default: false
-            type: boolean
-            description: Whether the option to enter a discount is shown
-            example: false
-            nullable: true
-          showSearch:
-            type: boolean
-            description: Display the search bar
-            example: false
-            default: true
-            nullable: true
-          showCategories:
-            type: boolean
-            description: Display the list of categories
-            example: false
-            default: true
-            nullable: true
-          enableTips:
-            default: false
-            type: boolean
-            description: Whether the option to enter a tip is shown
-            example: true
-            nullable: true
-          currency:
-            type: string
-            description: Currency used for the app
-            example: BTC
-            nullable: true
-          fixedAmountPayButtonText:
-            type: string
-            description: Payment button text template for items with a set price
-            example: Buy for {0}
-            nullable: true
-          customAmountPayButtonText:
-            type: string
-            description: Payment button text which appears for items which allow user to input a custom amount
-            example: Pay
-            nullable: true
-          tipText:
-            type: string
-            description: Prompt which appears next to the tip amount field if tipping is enabled
-            example: Do you want to leave a tip?
-            nullable: true
-          customTipPercentages:
-            type: array
-            description: Array of predefined tip percentage amounts
-            items:
-              type: number
-            default:
-            - 15
-            - 18
-            - 20
-            nullable: true
-          notificationUrl:
-            type: string
-            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
-            nullable: true
-          redirectUrl:
-            type: string
-            description: URL user is redirected to once invoice is paid
-            nullable: true
-          redirectAutomatically:
-            type: boolean
-            description: Whether user is redirected to specified redirect URL automatically after the invoice is paid
-            example: true
-            nullable: true
-          htmlLang:
-            type: string
-            description: Used for SEO, the [HTML Lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) of the page
-            nullable: true
-            example: en
-          htmlMetaTags:
-            type: string
-            description: Used for SEO, the [Meta tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) of the page
-            nullable: true
-            example: <meta name="description" content="Your description">
-          formId:
-            type: string
-            description: Form ID to request customer data
-            nullable: true
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the app does not appear in the apps list by default.
+          default: false
     PointOfSaleAppData:
       allOf:
       - $ref: '#/components/schemas/PointOfSaleBaseData'
@@ -247,34 +297,10 @@ components:
               inventory: null
               paymentMethods: null
               disabled: false
-    AppBaseData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the app
-          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
-        appName:
-          type: string
-          description: Name given to the app when it was created
-          example: my test app
-        storeId:
-          description: Id of the store to which the app belongs
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
-        created:
-          type: integer
-          example: 1651554744
-          description: UNIX timestamp for when the app was created
-        appType:
-          type: string
-          example: PointOfSale
-          description: Type of the app which was created
-        archived:
-          type: boolean
-          description: If true, the app does not appear in the apps list by default.
-          default: false
-          nullable: true
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
   parameters:
     AppId:
       name: appId

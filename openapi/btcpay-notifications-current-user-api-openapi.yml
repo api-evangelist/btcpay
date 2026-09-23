@@ -1,8 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: BTCPay Greenfield API Keys Notifications (Current User) API
+  title: BTCPay Greenfield Notifications (Current User) API
   version: v1
-  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
   contact:
     name: BTCPay Server
     url: https://btcpayserver.org
@@ -34,22 +37,25 @@ paths:
         required: false
         description: filter by seen notifications
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: skip
         in: query
         required: false
         description: Number of records to skip
         schema:
-          nullable: true
-          type: number
+          type:
+          - number
+          - 'null'
       - name: take
         in: query
         required: false
         description: Number of records returned in response
         schema:
-          nullable: true
-          type: number
+          type:
+          - number
+          - 'null'
       - name: storeId
         in: query
         required: false
@@ -210,6 +216,81 @@ paths:
               $ref: '#/components/schemas/UpdateNotificationSettingsRequest'
 components:
   schemas:
+    NotificationSettingsItemData:
+      type: object
+      additionalProperties: false
+      properties:
+        identifier:
+          type: string
+          description: The identifier of the notification type
+        name:
+          type: string
+          description: The description of the notification type
+        enabled:
+          type: boolean
+          description: If the notification type is enabled
+      example:
+        identifier: newversion
+        name: New version
+        enabled: false
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    UpdateNotificationSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        disabled:
+          type: array
+          items:
+            type: string
+          description: List of the notification type identifiers, which should be disabled. Can also be a single item 'all'.
+          example:
+          - newversion
+          - pluginupdate
+    NotificationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The id of the notification
+        identifier:
+          type: string
+          description: The identifier of the notification
+        type:
+          type: string
+          description: The type of the notification
+        body:
+          type: string
+          format: html
+          description: The html body of the notifications
+        storeId:
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+          type:
+          - string
+          - 'null'
+          description: If related to a store, the store id of the notification
+        link:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The link of the notification
+        createdTime:
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+          description: The creation time of the notification
+        seen:
+          type: boolean
+          description: If the notification has been seen by the user
     NotificationSettingsData:
       type: object
       additionalProperties: false
@@ -253,91 +334,15 @@ components:
       - identifier: external-payout-transaction
         name: External payout approval
         enabled: true
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
     UpdateNotification:
       type: object
       additionalProperties: false
       properties:
         seen:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           description: Sets the notification as seen/unseen. If left null, sets it to the opposite value
-    NotificationData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          description: The id of the notification
-        identifier:
-          type: string
-          description: The identifier of the notification
-        type:
-          type: string
-          description: The type of the notification
-        body:
-          type: string
-          format: html
-          description: The html body of the notifications
-        storeId:
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
-          type: string
-          nullable: true
-          description: If related to a store, the store id of the notification
-        link:
-          type: string
-          format: uri
-          nullable: true
-          description: The link of the notification
-        createdTime:
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-          description: The creation time of the notification
-        seen:
-          type: boolean
-          description: If the notification has been seen by the user
-    UpdateNotificationSettingsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        disabled:
-          type: array
-          items:
-            type: string
-          description: List of the notification type identifiers, which should be disabled. Can also be a single item 'all'.
-          example:
-          - newversion
-          - pluginupdate
-          nullable: false
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    NotificationSettingsItemData:
-      type: object
-      additionalProperties: false
-      properties:
-        identifier:
-          type: string
-          description: The identifier of the notification type
-          nullable: false
-        name:
-          type: string
-          description: The description of the notification type
-          nullable: false
-        enabled:
-          type: boolean
-          description: If the notification type is enabled
-          nullable: false
-      example:
-        identifier: newversion
-        name: New version
-        enabled: false
   securitySchemes:
     API_Key:
       type: apiKey

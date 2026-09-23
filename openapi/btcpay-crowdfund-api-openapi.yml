@@ -1,8 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: BTCPay Greenfield API Keys Crowdfund API
+  title: BTCPay Greenfield Crowdfund API
   version: v1
-  description: "# Introduction\n\nThe BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.\n\n# Authentication\n\nYou can authenticate either via Basic Auth or an API key. It's recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the 'Unrestricted access' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.\n\nIf you want to simplify the process of creating API keys for your users, you can use the [Authorization endpoint](https://docs.btcpayserver.org/API/Greenfield/v1/#tag/Authorization) to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the [API Authorization Flow docs](https://docs.btcpayserver.org/BTCPayServer/greenfield-authorization/) page.\n\n# Usage examples\n\nUse **Basic Auth** to read store information with cURL:\n```bash\nBTCPAY_INSTANCE=\"https://mainnet.demo.btcpayserver.org\"\nUSER=\"MyTestUser@gmail.com\"\nPASSWORD=\"notverysecurepassword\"\nPERMISSION=\"btcpay.store.canmodifystoresettings\"\nBODY=\"$(echo \"{}\" | jq --arg \"a\" \"$PERMISSION\" '. + {permissions:[$a]}')\"\n\nAPI_KEY=\"$(curl -s \\\n     -H \"Content-Type: application/json\" \\\n     --user \"$USER:$PASSWORD\" \\\n     -X POST \\\n     -d \"$BODY\" \\\n     \"$BTCPAY_INSTANCE/api/v1/api-keys\" | jq -r .apiKey)\"\n```\n\n\nUse an **API key** to read store information with cURL:\n```bash\nSTORE_ID=\"yourStoreId\"\n\ncurl -s \\\n     -H \"Content-Type: application/json\" \\\n     -H \"Authorization: token $API_KEY\" \\\n     -X GET \\\n     \"$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID\"\n```\n\nYou can find more examples on our docs for different programming languages:\n- [cURL](https://docs.btcpayserver.org/Development/GreenFieldExample/)\n- [Javascript/Node.Js](https://docs.btcpayserver.org/Development/GreenFieldExample-NodeJS/)\n- [PHP](https://docs.btcpayserver.org/Development/GreenFieldExample-PHP/)\n\n"
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
   contact:
     name: BTCPay Server
     url: https://btcpayserver.org
@@ -108,24 +111,213 @@ paths:
         - btcpay.store.canmodifystoresettings
         Basic: []
 components:
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    AppId:
+      name: appId
+      in: path
+      required: true
+      description: App ID
+      schema:
+        type: string
   schemas:
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    CrowdfundAppRequest:
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the app does not appear in the apps list by default.
+          default: false
+    CrowdfundBaseData:
       allOf:
-      - $ref: '#/components/schemas/CrowdfundBaseData'
+      - $ref: '#/components/schemas/AppBaseData'
       - type: object
         properties:
-          perksTemplate:
-            type: string
-            description: JSON of perks available in the app
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+          title:
+            type:
+            - string
+            - 'null'
+            description: Display title of the app
+            example: My crowdfund app
+          description:
+            type:
+            - string
+            - 'null'
+            description: App description
+            example: My crowdfund description
+          enabled:
+            type:
+            - boolean
+            - 'null'
+            description: Whether the app is enabled to be viewed by everyone
+            example: true
+          enforceTargetAmount:
+            type:
+            - boolean
+            - 'null'
+            description: Whether contributions over the set target amount are allowed
+            example: false
+          startDate:
+            type:
+            - number
+            - 'null'
+            description: UNIX timestamp for crowdfund start time (https://www.unixtimestamp.com/)
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+            example: 768658369
+          endDate:
+            type:
+            - number
+            - 'null'
+            description: UNIX timestamp for crowdfund end time (https://www.unixtimestamp.com/)
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+            example: 771336769
+          targetCurrency:
+            type:
+            - string
+            - 'null'
+            description: Target currency for the crowdfund
+            example: BTC
+          targetAmount:
+            type:
+            - number
+            - 'null'
+            description: Target amount for the crowdfund
+            example: 420.69
+          mainImageUrl:
+            type:
+            - string
+            - 'null'
+            description: URL for image used as a cover image for the app
+          notificationUrl:
+            type:
+            - string
+            - 'null'
+            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
+          tagline:
+            type:
+            - string
+            - 'null'
+            description: Tagline for the app displayed to user
+            example: I can't believe it's not butter
+          disqusEnabled:
+            type:
+            - boolean
+            - 'null'
+            description: Whether Disqus is enabled for the app
+          disqusShortname:
+            type:
+            - string
+            - 'null'
+            description: Disqus shortname to used for the app
+          soundsEnabled:
+            type:
+            - boolean
+            - 'null'
+            description: Whether sounds on new contributions are enabled
+            example: false
+          animationsEnabled:
+            type:
+            - boolean
+            - 'null'
+            description: Whether background animations on new contributions are enabled
+            example: true
+          resetEveryAmount:
+            type:
+            - number
+            - 'null'
+            description: Contribution goal reset frequency amount
+            example: 1
+          resetEvery:
+            type:
+            - string
+            - 'null'
+            description: Contribution goal reset frequency
+            example: Day
+          displayPerksValue:
+            type:
+            - boolean
+            - 'null'
+            description: Whether perk values are displayed
+            example: false
+          displayPerksRanking:
+            type:
+            - boolean
+            - 'null'
+            description: Whether perk ranking is displayed
+            example: false
+          sortPerksByPopularity:
+            type:
+            - boolean
+            - 'null'
+            description: Whether perks are sorted by popularity
+            default: true
+          sounds:
+            type:
+            - array
+            - 'null'
+            description: Array of custom sounds which can be used on new contributions
+            items:
+              type: string
+            example:
+            - https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav
+          animationColors:
+            type:
+            - array
+            - 'null'
+            description: Array of custom HEX colors which can be used for background animations on new contributions
+            items:
+              type: string
+            example:
+            - '#FF0000'
+            - '#00FF00'
+            - '#0000FF'
+          htmlLang:
+            type:
+            - string
+            - 'null'
+            description: Used for SEO, the [HTML Lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) of the page
+            example: en
+          htmlMetaTags:
+            type:
+            - string
+            - 'null'
+            description: Used for SEO, the [Meta tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) of the page
+            example: <meta name="description" content="Your description">
+          formId:
+            type:
+            - string
+            - 'null'
+            description: Form ID to request customer data
     ValidationProblemDetails:
       type: array
       description: An array of validation errors of the request
@@ -135,11 +327,9 @@ components:
         properties:
           path:
             type: string
-            nullable: false
             description: The json path of the property which failed validation
           message:
             type: string
-            nullable: false
             description: User friendly error message about the validation
     CrowdfundAppData:
       allOf:
@@ -186,186 +376,23 @@ components:
               inventory: null
               paymentMethods: null
               disabled: true
-    CrowdfundBaseData:
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    CrowdfundAppRequest:
       allOf:
-      - $ref: '#/components/schemas/AppBaseData'
+      - $ref: '#/components/schemas/CrowdfundBaseData'
       - type: object
         properties:
-          title:
+          perksTemplate:
             type: string
-            description: Display title of the app
-            example: My crowdfund app
-            nullable: true
-          description:
-            type: string
-            description: App description
-            example: My crowdfund description
-            nullable: true
-          enabled:
-            type: boolean
-            description: Whether the app is enabled to be viewed by everyone
-            example: true
-            nullable: true
-          enforceTargetAmount:
-            type: boolean
-            description: Whether contributions over the set target amount are allowed
-            example: false
-            nullable: true
-          startDate:
-            type: number
-            description: UNIX timestamp for crowdfund start time (https://www.unixtimestamp.com/)
-            allOf:
-            - $ref: '#/components/schemas/UnixTimestamp'
-            example: 768658369
-            nullable: true
-          endDate:
-            type: number
-            description: UNIX timestamp for crowdfund end time (https://www.unixtimestamp.com/)
-            allOf:
-            - $ref: '#/components/schemas/UnixTimestamp'
-            example: 771336769
-            nullable: true
-          targetCurrency:
-            type: string
-            description: Target currency for the crowdfund
-            example: BTC
-            nullable: true
-          targetAmount:
-            type: number
-            description: Target amount for the crowdfund
-            example: 420.69
-            nullable: true
-          mainImageUrl:
-            type: string
-            description: URL for image used as a cover image for the app
-            nullable: true
-          notificationUrl:
-            type: string
-            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
-            nullable: true
-          tagline:
-            type: string
-            description: Tagline for the app displayed to user
-            example: I can't believe it's not butter
-            nullable: true
-          disqusEnabled:
-            type: boolean
-            description: Whether Disqus is enabled for the app
-            nullable: true
-          disqusShortname:
-            type: string
-            description: Disqus shortname to used for the app
-            nullable: true
-          soundsEnabled:
-            type: boolean
-            description: Whether sounds on new contributions are enabled
-            example: false
-            nullable: true
-          animationsEnabled:
-            type: boolean
-            description: Whether background animations on new contributions are enabled
-            example: true
-            nullable: true
-          resetEveryAmount:
-            type: number
-            description: Contribution goal reset frequency amount
-            example: 1
-            nullable: true
-          resetEvery:
-            type: string
-            description: Contribution goal reset frequency
-            example: Day
-            nullable: true
-          displayPerksValue:
-            type: boolean
-            description: Whether perk values are displayed
-            example: false
-            nullable: true
-          displayPerksRanking:
-            type: boolean
-            description: Whether perk ranking is displayed
-            example: false
-            nullable: true
-          sortPerksByPopularity:
-            type: boolean
-            description: Whether perks are sorted by popularity
-            default: true
-            nullable: true
-          sounds:
-            type: array
-            description: Array of custom sounds which can be used on new contributions
-            items:
-              type: string
-            example:
-            - https://github.com/ClaudiuHKS/AdvancedQuakeSounds/raw/master/sound/AQS/doublekill.wav
-            nullable: true
-          animationColors:
-            type: array
-            description: Array of custom HEX colors which can be used for background animations on new contributions
-            items:
-              type: string
-            example:
-            - '#FF0000'
-            - '#00FF00'
-            - '#0000FF'
-            nullable: true
-          htmlLang:
-            type: string
-            description: Used for SEO, the [HTML Lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) of the page
-            nullable: true
-            example: en
-          htmlMetaTags:
-            type: string
-            description: Used for SEO, the [Meta tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) of the page
-            nullable: true
-            example: <meta name="description" content="Your description">
-          formId:
-            type: string
-            description: Form ID to request customer data
-            nullable: true
-    AppBaseData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the app
-          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
-        appName:
-          type: string
-          description: Name given to the app when it was created
-          example: my test app
-        storeId:
-          description: Id of the store to which the app belongs
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
-        created:
-          type: integer
-          example: 1651554744
-          description: UNIX timestamp for when the app was created
-        appType:
-          type: string
-          example: PointOfSale
-          description: Type of the app which was created
-        archived:
-          type: boolean
-          description: If true, the app does not appear in the apps list by default.
-          default: false
-          nullable: true
-  parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
-    AppId:
-      name: appId
-      in: path
-      required: true
-      description: App ID
-      schema:
-        type: string
+            description: JSON of perks available in the app
   securitySchemes:
     API_Key:
       type: apiKey
