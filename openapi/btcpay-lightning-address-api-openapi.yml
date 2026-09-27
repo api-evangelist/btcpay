@@ -142,14 +142,6 @@ paths:
         - btcpay.store.canmodifystoresettings
         Basic: []
 components:
-  parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
   schemas:
     StoreId:
       type: string
@@ -182,6 +174,14 @@ components:
           - object
           - 'null'
           description: The invoice metadata as JSON.
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
   securitySchemes:
     API_Key:
       type: apiKey

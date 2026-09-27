@@ -111,21 +111,6 @@ paths:
         - btcpay.store.canmodifystoresettings
         Basic: []
 components:
-  parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
-    AppId:
-      name: appId
-      in: path
-      required: true
-      description: App ID
-      schema:
-        type: string
   schemas:
     AppBaseData:
       type: object
@@ -156,6 +141,32 @@ components:
           - 'null'
           description: If true, the app does not appear in the apps list by default.
           default: false
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    CrowdfundAppRequest:
+      allOf:
+      - $ref: '#/components/schemas/CrowdfundBaseData'
+      - type: object
+        properties:
+          perksTemplate:
+            type: string
+            description: JSON of perks available in the app
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
     CrowdfundBaseData:
       allOf:
       - $ref: '#/components/schemas/AppBaseData'
@@ -318,19 +329,10 @@ components:
             - string
             - 'null'
             description: Form ID to request customer data
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     CrowdfundAppData:
       allOf:
       - $ref: '#/components/schemas/CrowdfundBaseData'
@@ -376,23 +378,21 @@ components:
               inventory: null
               paymentMethods: null
               disabled: true
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
+  parameters:
     StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    CrowdfundAppRequest:
-      allOf:
-      - $ref: '#/components/schemas/CrowdfundBaseData'
-      - type: object
-        properties:
-          perksTemplate:
-            type: string
-            description: JSON of perks available in the app
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    AppId:
+      name: appId
+      in: path
+      required: true
+      description: App ID
+      schema:
+        type: string
   securitySchemes:
     API_Key:
       type: apiKey

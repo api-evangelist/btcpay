@@ -79,79 +79,10 @@ paths:
         Basic: []
 components:
   schemas:
-    ApplicationServerInfoData:
-      type: object
-      properties:
-        version:
-          type: string
-          description: BTCPay Server version
-        onion:
-          type: string
-          description: The Tor hostname
-        supportedPaymentMethods:
-          type: array
-          description: The payment methods this server supports
-          items:
-            type: string
-        fullySynched:
-          type: boolean
-          description: True if the instance is fully synchronized, according to NBXplorer
-        syncStatus:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationServerInfoSyncStatusData'
     PaymentMethodId:
       type: string
       description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
       example: BTC-CHAIN
-    ApplicationServerInfoSyncStatusData:
-      type: object
-      description: Detailed sync status
-      properties:
-        paymentMethodId:
-          $ref: '#/components/schemas/PaymentMethodId'
-        nodeInformation:
-          $ref: '#/components/schemas/ApplicationServerInfoNodeStatusData'
-        chainHeight:
-          type: integer
-          description: The height of the chain of header of the internal indexer
-        syncHeight:
-          type:
-          - number
-          - 'null'
-          format: integer
-          description: The height of the latest indexed block of the internal indexer
-        available:
-          type: boolean
-          description: True if the full node and the indexer are fully synchronized
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
-    ApplicationServerInfoNodeStatusData:
-      type:
-      - object
-      - 'null'
-      description: Detailed sync status of the internal full node
-      properties:
-        headers:
-          type: integer
-          description: The height of the chain of header of the internal full node
-        blocks:
-          type: integer
-          description: The height of the latest validated block of the internal full node
-        verificationProgress:
-          type: number
-          format: double
-          minimum: 0.0
-          maximum: 1.0
-          description: The current synchronization progress
     RoleData:
       type: object
       properties:
@@ -174,6 +105,75 @@ components:
           description: Whether this role is at the scope of the store or scope of the server
           type: boolean
           example: true
+    ApplicationServerInfoSyncStatusData:
+      type: object
+      description: Detailed sync status
+      properties:
+        paymentMethodId:
+          $ref: '#/components/schemas/PaymentMethodId'
+        nodeInformation:
+          $ref: '#/components/schemas/ApplicationServerInfoNodeStatusData'
+        chainHeight:
+          type: integer
+          description: The height of the chain of header of the internal indexer
+        syncHeight:
+          type:
+          - number
+          - 'null'
+          format: integer
+          description: The height of the latest indexed block of the internal indexer
+        available:
+          type: boolean
+          description: True if the full node and the indexer are fully synchronized
+    ApplicationServerInfoNodeStatusData:
+      type:
+      - object
+      - 'null'
+      description: Detailed sync status of the internal full node
+      properties:
+        headers:
+          type: integer
+          description: The height of the chain of header of the internal full node
+        blocks:
+          type: integer
+          description: The height of the latest validated block of the internal full node
+        verificationProgress:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          description: The current synchronization progress
+    ApplicationServerInfoData:
+      type: object
+      properties:
+        version:
+          type: string
+          description: BTCPay Server version
+        onion:
+          type: string
+          description: The Tor hostname
+        supportedPaymentMethods:
+          type: array
+          description: The payment methods this server supports
+          items:
+            type: string
+        fullySynched:
+          type: boolean
+          description: True if the instance is fully synchronized, according to NBXplorer
+        syncStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationServerInfoSyncStatusData'
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
   securitySchemes:
     API_Key:
       type: apiKey

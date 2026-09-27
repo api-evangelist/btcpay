@@ -247,6 +247,73 @@ paths:
         Basic: []
 components:
   schemas:
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    WebhookDeliveryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebhookDeliveryData'
+    WebhookDeliveryData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the delivery
+        timestamp:
+          type: number
+          description: Timestamp of when the delivery should have been broadcasted
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        deliveryTime:
+          type: number
+          description: Timestamp of when the delivery has actually been broadcasted. A delay with `timestamp` means your service either failed to process earlier deliveries or is taking too long to respond.
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        httpCode:
+          type:
+          - number
+          - 'null'
+          description: HTTP code received by the remote service, if any.
+        errorMessage:
+          type: string
+          description: User friendly error message, if any.
+        status:
+          type: string
+          description: 'Whether the delivery failed or not (possible values are: `Failed`, `HttpError`, `HttpSuccess`)'
+    WebhookDataUpdate:
+      allOf:
+      - $ref: '#/components/schemas/WebhookDataBase'
+      - type: object
+        properties:
+          secret:
+            type:
+            - string
+            - 'null'
+            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will not be changed.
+    WebhookData:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The id of the webhook
+      - $ref: '#/components/schemas/WebhookDataBase'
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
     WebhookDataBase:
       type: object
       additionalProperties: false
@@ -285,81 +352,14 @@ components:
             - string
             - 'null'
             description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will be auto-generated.
-    WebhookDataUpdate:
-      allOf:
-      - $ref: '#/components/schemas/WebhookDataBase'
-      - type: object
-        properties:
-          secret:
-            type:
-            - string
-            - 'null'
-            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will not be changed.
-    WebhookDeliveryData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The id of the delivery
-        timestamp:
-          type: number
-          description: Timestamp of when the delivery should have been broadcasted
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        deliveryTime:
-          type: number
-          description: Timestamp of when the delivery has actually been broadcasted. A delay with `timestamp` means your service either failed to process earlier deliveries or is taking too long to respond.
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        httpCode:
-          type:
-          - number
-          - 'null'
-          description: HTTP code received by the remote service, if any.
-        errorMessage:
-          type: string
-          description: User friendly error message, if any.
-        status:
-          type: string
-          description: 'Whether the delivery failed or not (possible values are: `Failed`, `HttpError`, `HttpSuccess`)'
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    WebhookDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/WebhookData'
     StoreId:
       type: string
       description: Store ID of the item
       example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    WebhookDeliveryList:
+    WebhookDataList:
       type: array
       items:
-        $ref: '#/components/schemas/WebhookDeliveryData'
-    WebhookData:
-      allOf:
-      - type: object
-        properties:
-          id:
-            type: string
-            description: The id of the webhook
-      - $ref: '#/components/schemas/WebhookDataBase'
+        $ref: '#/components/schemas/WebhookData'
     WebhookDataCreateResult:
       allOf:
       - $ref: '#/components/schemas/WebhookData'
@@ -371,13 +371,6 @@ components:
             - 'null'
             description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). Value of the auto-generated or custom secret.
   parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
     WebhookId:
       name: webhookId
       in: path
@@ -385,6 +378,13 @@ components:
       description: The webhook id
       schema:
         type: string
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
     DeliveryId:
       name: deliveryId
       in: path

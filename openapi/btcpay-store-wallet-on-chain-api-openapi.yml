@@ -773,332 +773,7 @@ paths:
         - btcpay.store.canmanagewallettransactions
         Basic: []
 components:
-  parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
-    PaymentMethodId:
-      name: paymentMethodId
-      in: path
-      required: true
-      description: The payment method id of the payment method to update
-      schema:
-        $ref: '#/components/schemas/PaymentMethodId'
-      example: BTC-CHAIN
   schemas:
-    OnChainPaymentMethodBaseData:
-      type: object
-      additionalProperties: false
-      properties:
-        derivationScheme:
-          type: string
-          description: The derivation scheme
-          example: xpub...
-        label:
-          type: string
-          description: A label that will be shown in the UI
-        accountKeyPath:
-          type: string
-          description: The wallet fingerprint followed by the keypath to derive the account key used for signing operation or creating PSBTs
-          example: abcd82a1/84'/0'/0'
-    OnChainWalletFeeRateData:
-      type: object
-      additionalProperties: false
-      properties:
-        feeRate:
-          type: number
-          format: decimal
-          description: The fee rate (sats per byte) based on the wallet's configured recommended block confirmation target
-    OnChainWalletUTXOData:
-      type: object
-      additionalProperties: false
-      properties:
-        comment:
-          type: string
-          description: A comment linked to this utxo
-        amount:
-          type: string
-          description: the value of this utxo
-        link:
-          type: string
-          format: url
-          description: a link to the configured blockchain explorer to view the utxo
-        outpoint:
-          type: string
-          format: '{txid}:{outputIndex}'
-          description: outpoint of this utxo
-        timestamp:
-          description: The time of the utxo
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        keyPath:
-          type: string
-          format: keypath
-          description: the derivation path in relation to the HD account
-        address:
-          type: string
-          description: The wallet address of this utxo
-        confirmations:
-          type: number
-          description: The number of confirmations of this utxo
-        labels:
-          description: Labels linked to this transaction
-          deprecated: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LabelData'
-    CreateOnChainTransactionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        destinations:
-          description: What and where to send money
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateOnChainTransactionRequestDestination'
-        feerate:
-          type: number
-          format: decimal or long (sats/byte)
-          description: Transaction fee.
-        proceedWithPayjoin:
-          type:
-          - boolean
-          - 'null'
-          default: true
-          description: Whether to attempt to do a BIP78 payjoin if one of the destinations is a BIP21 with payjoin enabled
-        proceedWithBroadcast:
-          type:
-          - boolean
-          - 'null'
-          default: true
-          description: Whether to broadcast the transaction after creating it or to simply return the transaction in hex format.
-        signWithSeed:
-          type:
-          - boolean
-          - 'null'
-          default: true
-          description: If false, build an unsigned PSBT and skip server-side signing (use the CreateOnChainTransactionPSBT client helper).
-        noChange:
-          type:
-          - boolean
-          - 'null'
-          default: false
-          description: Whether to send all the spent coins to the destinations (THIS CAN COST YOU SIGNIFICANT AMOUNTS OF MONEY, LEAVE FALSE UNLESS YOU KNOW WHAT YOU ARE DOING).
-        rbf:
-          type:
-          - boolean
-          - 'null'
-          description: Whether to enable RBF for the transaction. Leave blank to have it random (beneficial to privacy)
-        excludeUnconfirmed:
-          type:
-          - boolean
-          - 'null'
-          default: false
-          description: Whether to exclude unconfirmed UTXOs from the transaction.
-        selectedInputs:
-          description: Restrict the creation of the transactions from the outpoints provided ONLY (coin selection)
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    TransactionStatus:
-      type: string
-      x-enumNames:
-      - Unconfirmed
-      - Confirmed
-      enum:
-      - Unconfirmed
-      - Confirmed
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    LabelData:
-      type: object
-      additionalProperties: true
-      deprecated: true
-      properties:
-        type:
-          type: string
-          description: The type of label
-        text:
-          type: string
-          description: Information about this label
-    HistogramData:
-      type: object
-      description: Histogram data for wallet balances over time
-      properties:
-        type:
-          type: string
-          description: The timespan of the histogram data
-          x-enumNames:
-          - Week
-          - Month
-          - Year
-          enum:
-          - Week
-          - Month
-          - Year
-          default: Week
-        balance:
-          type: string
-          format: decimal
-          description: The current wallet balance
-        series:
-          type: array
-          description: An array of historic balances of the wallet
-          items:
-            type: string
-            format: decimal
-            description: The balance of the wallet at a specific time
-        labels:
-          type: array
-          description: An array of timestamps associated with the series data
-          items:
-            type: integer
-            description: UNIX timestamp of the balance snapshot
-    OnChainWalletObjectLink:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-          description: The type of wallet object
-        id:
-          type: string
-          description: The identifier of the wallet object (unique per type, per wallet)
-        linkData:
-          type: object
-          additionalProperties: true
-          description: The data of the link
-        objectData:
-          type: object
-          additionalProperties: true
-          description: The data of the neighbour's node (`null` if there isn't any data or `includeNeighbourData` is `false`)
-    OnChainPaymentMethodPreviewResultAddressItem:
-      type: object
-      additionalProperties: false
-      properties:
-        keyPath:
-          type: string
-          description: The key path relative to the account key path.
-        address:
-          type: string
-          description: The address generated at the key path
-    AddOnChainWalletObjectLinkRequest:
-      type: object
-      additionalProperties: false
-      allOf:
-      - $ref: '#/components/schemas/OnChainWalletObjectId'
-      properties:
-        data:
-          type: object
-          additionalProperties: true
-          description: The data of the link
-    BroadcastOnChainTransactionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        transaction:
-          type: string
-          description: A finalized PSBT (base64) or raw transaction hex string
-      required:
-      - transaction
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    PatchOnChainTransactionRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        comment:
-          type:
-          - string
-          - 'null'
-          description: Transaction comment
-        labels:
-          deprecated: true
-          description: Transaction labels
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    GenericPaymentMethodData:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the payment method is enabled
-        paymentMethodId:
-          $ref: '#/components/schemas/PaymentMethodId'
-        config:
-          type: object
-          additionalProperties: false
-          description: Associated dynamic data based on payment method type.
-          oneOf:
-          - $ref: '#/components/schemas/OnChainPaymentMethodBaseData'
-          - $ref: '#/components/schemas/LightningNetworkPaymentMethodBaseData'
-          - $ref: '#/components/schemas/LNURLPayPaymentMethodBaseData'
-          - description: Any other unofficial payment method data
-            type: object
-            additionalProperties: true
-    CreateOnChainTransactionResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        psbt:
-          type: string
-          description: Unsigned PSBT in base64 format
-    LightningNetworkPaymentMethodBaseData:
-      type: object
-      additionalProperties: false
-      properties:
-        connectionString:
-          type: string
-          description: The lightning connection string. Set to 'Internal Node' to use the internal node. (See [this doc](https://github.com/btcpayserver/BTCPayServer.Lightning/blob/master/README.md#examples) for some example)
-          example: type=clightning;server=...
-    OnChainPaymentMethodPreviewResultData:
-      type: object
-      additionalProperties: false
-      properties:
-        addresses:
-          type: array
-          description: a list of addresses generated by the derivation scheme
-          items:
-            $ref: '#/components/schemas/OnChainPaymentMethodPreviewResultAddressItem'
-    CreateOnChainTransactionRequestDestination:
-      type: object
-      additionalProperties: false
-      properties:
-        destination:
-          type: string
-          description: A wallet address or a BIP21 payment link
-        amount:
-          type:
-          - string
-          - 'null'
-          format: decimal
-          description: The amount to send. If `destination` is a BIP21 link, the amount must be the same or null.
-        subtractFromAmount:
-          type: boolean
-          description: 'Whether to subtract the transaction fee from the provided amount. This makes the receiver receive less, or in other words: he or she pays the transaction fee. Also useful if you want to clear out your wallet. Must be false if `destination` is a BIP21 link'
     OnChainWalletAddressData:
       type: object
       additionalProperties: false
@@ -1114,78 +789,30 @@ components:
           type: string
           format: BIP21
           description: a bip21 payment link
-    LNURLPayPaymentMethodBaseData:
-      type: object
-      additionalProperties: false
-      properties:
-        useBech32Scheme:
-          type: boolean
-          description: 'Whether to use [LUD-01](https://github.com/fiatjaf/lnurl-rfc/blob/luds/01.md)''s bech32 format or to use [LUD-17](https://github.com/fiatjaf/lnurl-rfc/blob/luds/17.md) url formatting. '
-        lud12Enabled:
-          type: boolean
-          description: Allow comments to be passed on via lnurl.
-        lud21Enabled:
-          type: boolean
-          description: Whether to include a [LUD-21](https://github.com/lnurl/luds/blob/luds/21.md) verify URL in LNURL-pay callback responses, enabling external services to verify payment settlement without authentication.
-    PaymentMethodId:
+    Mnemonic:
       type: string
-      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
-      example: BTC-CHAIN
-    OnChainWalletTransactionData:
+      description: A BIP39 mnemonic
+      example: quality warfare scatter zone report forest potato local swing solve upon candy garment boost lab
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    OnChainWalletOverviewData:
       type: object
       additionalProperties: false
       properties:
-        transactionHash:
-          type:
-          - string
-          - 'null'
-          description: The transaction id
-        comment:
-          type: string
-          description: A comment linked to the transaction
-        amount:
+        balance:
           type: string
           format: decimal
-          description: The amount the wallet balance changed with this transaction
-        blockHash:
-          type:
-          - string
-          - 'null'
-          description: The hash of the block that confirmed this transaction. Null if still unconfirmed.
-        blockHeight:
-          type:
-          - string
-          - 'null'
-          description: The height of the block that confirmed this transaction. Null if still unconfirmed.
-        confirmations:
-          type:
-          - string
-          - 'null'
-          description: The number of confirmations for this transaction
-        timestamp:
-          description: The time of the transaction
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        status:
-          allOf:
-          - $ref: '#/components/schemas/TransactionStatus'
-          description: The status of this transaction
-        labels:
-          description: Labels linked to this transaction
-          deprecated: true
-          type: array
-          items:
-            $ref: '#/components/schemas/LabelData'
-    OnChainWalletObjectId:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
+          description: The total current balance of the wallet
+        unconfirmedBalance:
           type: string
-          description: The type of wallet object
-        id:
+          format: decimal
+          description: The current unconfirmed balance of the wallet
+        confirmedBalance:
           type: string
-          description: The identifier of the wallet object (unique per type, per wallet)
+          format: decimal
+          description: The current confirmed balance of the wallet
     GenerateOnChainWalletRequest:
       type: object
       additionalProperties: false
@@ -1258,31 +885,133 @@ components:
           - Segwit
           - SegwitP2SH
           - TaprootBIP86
+    LNURLPayPaymentMethodBaseData:
+      type: object
+      additionalProperties: false
+      properties:
+        useBech32Scheme:
+          type: boolean
+          description: 'Whether to use [LUD-01](https://github.com/fiatjaf/lnurl-rfc/blob/luds/01.md)''s bech32 format or to use [LUD-17](https://github.com/fiatjaf/lnurl-rfc/blob/luds/17.md) url formatting. '
+        lud12Enabled:
+          type: boolean
+          description: Allow comments to be passed on via lnurl.
+        lud21Enabled:
+          type: boolean
+          description: Whether to include a [LUD-21](https://github.com/lnurl/luds/blob/luds/21.md) verify URL in LNURL-pay callback responses, enabling external services to verify payment settlement without authentication.
+    TransactionStatus:
+      type: string
+      x-enumNames:
+      - Unconfirmed
+      - Confirmed
+      enum:
+      - Unconfirmed
+      - Confirmed
+    CreateOnChainTransactionRequestDestination:
+      type: object
+      additionalProperties: false
+      properties:
+        destination:
+          type: string
+          description: A wallet address or a BIP21 payment link
+        amount:
+          type:
+          - string
+          - 'null'
+          format: decimal
+          description: The amount to send. If `destination` is a BIP21 link, the amount must be the same or null.
+        subtractFromAmount:
+          type: boolean
+          description: 'Whether to subtract the transaction fee from the provided amount. This makes the receiver receive less, or in other words: he or she pays the transaction fee. Also useful if you want to clear out your wallet. Must be false if `destination` is a BIP21 link'
+    OnChainWalletObjectLink:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          description: The type of wallet object
+        id:
+          type: string
+          description: The identifier of the wallet object (unique per type, per wallet)
+        linkData:
+          type: object
+          additionalProperties: true
+          description: The data of the link
+        objectData:
+          type: object
+          additionalProperties: true
+          description: The data of the neighbour's node (`null` if there isn't any data or `includeNeighbourData` is `false`)
+    AddOnChainWalletObjectLinkRequest:
+      type: object
+      additionalProperties: false
+      allOf:
+      - $ref: '#/components/schemas/OnChainWalletObjectId'
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+          description: The data of the link
     UnixTimestamp:
       type: number
       format: int32
       example: 1592312018
       description: A unix timestamp in seconds
-    OnChainWalletOverviewData:
+    OnChainPaymentMethodPreviewResultData:
       type: object
       additionalProperties: false
       properties:
-        balance:
+        addresses:
+          type: array
+          description: a list of addresses generated by the derivation scheme
+          items:
+            $ref: '#/components/schemas/OnChainPaymentMethodPreviewResultAddressItem'
+    OnChainPaymentMethodPreviewResultAddressItem:
+      type: object
+      additionalProperties: false
+      properties:
+        keyPath:
           type: string
-          format: decimal
-          description: The total current balance of the wallet
-        unconfirmedBalance:
+          description: The key path relative to the account key path.
+        address:
           type: string
-          format: decimal
-          description: The current unconfirmed balance of the wallet
-        confirmedBalance:
+          description: The address generated at the key path
+    OnChainWalletUTXOData:
+      type: object
+      additionalProperties: false
+      properties:
+        comment:
           type: string
-          format: decimal
-          description: The current confirmed balance of the wallet
-    Mnemonic:
-      type: string
-      description: A BIP39 mnemonic
-      example: quality warfare scatter zone report forest potato local swing solve upon candy garment boost lab
+          description: A comment linked to this utxo
+        amount:
+          type: string
+          description: the value of this utxo
+        link:
+          type: string
+          format: url
+          description: a link to the configured blockchain explorer to view the utxo
+        outpoint:
+          type: string
+          format: '{txid}:{outputIndex}'
+          description: outpoint of this utxo
+        timestamp:
+          description: The time of the utxo
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        keyPath:
+          type: string
+          format: keypath
+          description: the derivation path in relation to the HD account
+        address:
+          type: string
+          description: The wallet address of this utxo
+        confirmations:
+          type: number
+          description: The number of confirmations of this utxo
+        labels:
+          description: Labels linked to this transaction
+          deprecated: true
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelData'
     OnChainWalletObjectData:
       type: object
       additionalProperties: false
@@ -1299,6 +1028,277 @@ components:
           items:
             $ref: '#/components/schemas/OnChainWalletObjectLink'
           description: Links of this object
+    HistogramData:
+      type: object
+      description: Histogram data for wallet balances over time
+      properties:
+        type:
+          type: string
+          description: The timespan of the histogram data
+          x-enumNames:
+          - Week
+          - Month
+          - Year
+          enum:
+          - Week
+          - Month
+          - Year
+          default: Week
+        balance:
+          type: string
+          format: decimal
+          description: The current wallet balance
+        series:
+          type: array
+          description: An array of historic balances of the wallet
+          items:
+            type: string
+            format: decimal
+            description: The balance of the wallet at a specific time
+        labels:
+          type: array
+          description: An array of timestamps associated with the series data
+          items:
+            type: integer
+            description: UNIX timestamp of the balance snapshot
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    PatchOnChainTransactionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        comment:
+          type:
+          - string
+          - 'null'
+          description: Transaction comment
+        labels:
+          deprecated: true
+          description: Transaction labels
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    BroadcastOnChainTransactionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        transaction:
+          type: string
+          description: A finalized PSBT (base64) or raw transaction hex string
+      required:
+      - transaction
+    OnChainWalletTransactionData:
+      type: object
+      additionalProperties: false
+      properties:
+        transactionHash:
+          type:
+          - string
+          - 'null'
+          description: The transaction id
+        comment:
+          type: string
+          description: A comment linked to the transaction
+        amount:
+          type: string
+          format: decimal
+          description: The amount the wallet balance changed with this transaction
+        blockHash:
+          type:
+          - string
+          - 'null'
+          description: The hash of the block that confirmed this transaction. Null if still unconfirmed.
+        blockHeight:
+          type:
+          - string
+          - 'null'
+          description: The height of the block that confirmed this transaction. Null if still unconfirmed.
+        confirmations:
+          type:
+          - string
+          - 'null'
+          description: The number of confirmations for this transaction
+        timestamp:
+          description: The time of the transaction
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/TransactionStatus'
+          description: The status of this transaction
+        labels:
+          description: Labels linked to this transaction
+          deprecated: true
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelData'
+    CreateOnChainTransactionResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        psbt:
+          type: string
+          description: Unsigned PSBT in base64 format
+    LabelData:
+      type: object
+      additionalProperties: true
+      deprecated: true
+      properties:
+        type:
+          type: string
+          description: The type of label
+        text:
+          type: string
+          description: Information about this label
+    OnChainWalletObjectId:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          description: The type of wallet object
+        id:
+          type: string
+          description: The identifier of the wallet object (unique per type, per wallet)
+    LightningNetworkPaymentMethodBaseData:
+      type: object
+      additionalProperties: false
+      properties:
+        connectionString:
+          type: string
+          description: The lightning connection string. Set to 'Internal Node' to use the internal node. (See [this doc](https://github.com/btcpayserver/BTCPayServer.Lightning/blob/master/README.md#examples) for some example)
+          example: type=clightning;server=...
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    CreateOnChainTransactionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        destinations:
+          description: What and where to send money
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateOnChainTransactionRequestDestination'
+        feerate:
+          type: number
+          format: decimal or long (sats/byte)
+          description: Transaction fee.
+        proceedWithPayjoin:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: Whether to attempt to do a BIP78 payjoin if one of the destinations is a BIP21 with payjoin enabled
+        proceedWithBroadcast:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: Whether to broadcast the transaction after creating it or to simply return the transaction in hex format.
+        signWithSeed:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          description: If false, build an unsigned PSBT and skip server-side signing (use the CreateOnChainTransactionPSBT client helper).
+        noChange:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: Whether to send all the spent coins to the destinations (THIS CAN COST YOU SIGNIFICANT AMOUNTS OF MONEY, LEAVE FALSE UNLESS YOU KNOW WHAT YOU ARE DOING).
+        rbf:
+          type:
+          - boolean
+          - 'null'
+          description: Whether to enable RBF for the transaction. Leave blank to have it random (beneficial to privacy)
+        excludeUnconfirmed:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: Whether to exclude unconfirmed UTXOs from the transaction.
+        selectedInputs:
+          description: Restrict the creation of the transactions from the outpoints provided ONLY (coin selection)
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    OnChainWalletFeeRateData:
+      type: object
+      additionalProperties: false
+      properties:
+        feeRate:
+          type: number
+          format: decimal
+          description: The fee rate (sats per byte) based on the wallet's configured recommended block confirmation target
+    GenericPaymentMethodData:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the payment method is enabled
+        paymentMethodId:
+          $ref: '#/components/schemas/PaymentMethodId'
+        config:
+          type: object
+          additionalProperties: false
+          description: Associated dynamic data based on payment method type.
+          oneOf:
+          - $ref: '#/components/schemas/OnChainPaymentMethodBaseData'
+          - $ref: '#/components/schemas/LightningNetworkPaymentMethodBaseData'
+          - $ref: '#/components/schemas/LNURLPayPaymentMethodBaseData'
+          - description: Any other unofficial payment method data
+            type: object
+            additionalProperties: true
+    OnChainPaymentMethodBaseData:
+      type: object
+      additionalProperties: false
+      properties:
+        derivationScheme:
+          type: string
+          description: The derivation scheme
+          example: xpub...
+        label:
+          type: string
+          description: A label that will be shown in the UI
+        accountKeyPath:
+          type: string
+          description: The wallet fingerprint followed by the keypath to derive the account key used for signing operation or creating PSBTs
+          example: abcd82a1/84'/0'/0'
+  parameters:
+    PaymentMethodId:
+      name: paymentMethodId
+      in: path
+      required: true
+      description: The payment method id of the payment method to update
+      schema:
+        $ref: '#/components/schemas/PaymentMethodId'
+      example: BTC-CHAIN
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
   securitySchemes:
     API_Key:
       type: apiKey

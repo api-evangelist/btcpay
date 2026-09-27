@@ -219,14 +219,6 @@ paths:
         - btcpay.server.canmanageusers
         Basic: []
 components:
-  parameters:
-    UserIdOrEmail:
-      name: idOrEmail
-      in: path
-      required: true
-      description: The user's id or email
-      schema:
-        type: string
   schemas:
     ProblemDetails:
       type: object
@@ -256,6 +248,14 @@ components:
           example:
           - btcpay.server.canmanageusers
           - btcpay.server.canmanageusers:2KxSpc9V5zDWfUbvgYiZuAfka4wUhGF96F75Ao8y4zHP
+  parameters:
+    UserIdOrEmail:
+      name: idOrEmail
+      in: path
+      required: true
+      description: The user's id or email
+      schema:
+        type: string
   securitySchemes:
     API_Key:
       type: apiKey

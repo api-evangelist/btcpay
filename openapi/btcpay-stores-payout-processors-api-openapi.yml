@@ -273,6 +273,23 @@ paths:
         Basic: []
 components:
   schemas:
+    PayoutProcessorData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: unique identifier of the payout processor
+          type: string
+        friendlyName:
+          description: Human name of the payout processor
+          type: string
+        payoutMethods:
+          description: Supported, payment methods by this processor
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
     LightningAutomatedTransferSettings:
       type: object
       additionalProperties: false
@@ -292,53 +309,10 @@ components:
           description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
           type: boolean
           default: false
-    UpdateLightningAutomatedTransferSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        intervalSeconds:
-          description: How often should the processor run
-          allOf:
-          - $ref: '#/components/schemas/TimeSpanSeconds'
-        cancelPayoutAfterFailures:
-          description: How many failures should the processor tolerate before cancelling the payout
-          type:
-          - number
-          - 'null'
-        processNewPayoutsInstantly:
-          description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
-          type: boolean
-          default: false
-    TimeSpanSeconds:
-      allOf:
-      - $ref: '#/components/schemas/TimeSpan'
-      format: seconds
-      description: A span of times in seconds
-    PayoutMethodId:
-      type: string
-      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
-      example: BTC-LN
-    PaymentMethodId:
-      type: string
-      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
-      example: BTC-CHAIN
-    PayoutProcessorData:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          description: unique identifier of the payout processor
-          type: string
-        friendlyName:
-          description: Human name of the payout processor
-          type: string
-        payoutMethods:
-          description: Supported, payment methods by this processor
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
+    TimeSpan:
+      type: number
+      format: int32
+      example: 90
     OnChainAutomatedTransferSettings:
       type: object
       additionalProperties: false
@@ -362,14 +336,6 @@ components:
           description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
           type: boolean
           default: false
-    TimeSpan:
-      type: number
-      format: int32
-      example: 90
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     UpdateOnChainAutomatedTransferSettings:
       type: object
       additionalProperties: false
@@ -393,6 +359,40 @@ components:
           description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
           type: boolean
           default: false
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    TimeSpanSeconds:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: seconds
+      description: A span of times in seconds
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    UpdateLightningAutomatedTransferSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        intervalSeconds:
+          description: How often should the processor run
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+        cancelPayoutAfterFailures:
+          description: How many failures should the processor tolerate before cancelling the payout
+          type:
+          - number
+          - 'null'
+        processNewPayoutsInstantly:
+          description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
+          type: boolean
+          default: false
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
   parameters:
     StoreId:
       name: storeId

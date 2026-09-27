@@ -407,22 +407,80 @@ paths:
         - btcpay.store.canmodifystoresettings
         Basic: []
 components:
-  parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
-    AppId:
-      name: appId
-      in: path
-      required: true
-      description: App ID
-      schema:
-        type: string
   schemas:
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the app does not appear in the apps list by default.
+          default: false
+    PointOfSaleAppData:
+      allOf:
+      - $ref: '#/components/schemas/PointOfSaleBaseData'
+      - type: object
+        properties:
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/AppItem'
+            description: JSON object of app items
+            example:
+            - id: green tea
+              title: Green Tea
+              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
+              image: ~/img/pos-sample/green-tea.jpg
+              price: '1.0'
+              priceType: Fixed
+              buyButtonText: null
+              inventory: 5
+              paymentMethods: null
+              disabled: false
+            - id: black tea
+              title: Black Tea
+              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
+              image: ~/img/pos-sample/black-tea.jpg
+              price: '2.0'
+              priceType: Fixed
+              buyButtonText: Test Buy Button Text
+              inventory: null
+              paymentMethods: null
+              disabled: false
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
     PointOfSaleBaseData:
       allOf:
       - $ref: '#/components/schemas/AppBaseData'
@@ -565,84 +623,25 @@ components:
             - string
             - 'null'
             description: Form ID to request customer data
-    AppItem:
+    CrowdfundAppRequest:
+      allOf:
+      - $ref: '#/components/schemas/CrowdfundBaseData'
+      - type: object
+        properties:
+          perksTemplate:
+            type: string
+            description: JSON of perks available in the app
+    AppSalesStats:
       type: object
       properties:
-        id:
-          type: string
-          example: green-tea
-          description: Unique ID of the item
-        title:
-          type: string
-          example: Green Tea
-          description: The display name of the item
-        description:
-          type: string
-          example: Lovely, fresh and tender.
-          description: A description text for the item
-        image:
-          type: string
-          example: http://teashop.com/img/green-tea.jpg
-          description: An image URL for the item
-        price:
-          type:
-          - string
-          - 'null'
-          format: decimal
-          example: '21.0'
-        priceType:
-          type: string
-          x-enumNames:
-          - Fixed
-          - Topup
-          - Minimum
-          enum:
-          - Fixed
-          - Topup
-          - Minimum
-        buyButtonText:
-          type: string
-          example: Buy me!
-          description: A custom text for the buy button for the item
-        inventory:
-          type:
-          - integer
-          - 'null'
-          example: 21
-          description: The remaining stock the item
-        disabled:
-          type: boolean
-          description: If true, the item does not appear in the list by default.
-          default: false
-    AppBaseData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the app
-          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
-        appName:
-          type: string
-          description: Name given to the app when it was created
-          example: my test app
-        storeId:
-          description: Id of the store to which the app belongs
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
-        created:
+        salesCount:
           type: integer
-          example: 1651554744
-          description: UNIX timestamp for when the app was created
-        appType:
-          type: string
-          example: PointOfSale
-          description: Type of the app which was created
-        archived:
-          type:
-          - boolean
-          - 'null'
-          description: If true, the app does not appear in the apps list by default.
-          default: false
+          example: 615
+          description: Total sales in that period
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppSalesStatsItem'
     AppItemStats:
       type: object
       properties:
@@ -664,6 +663,11 @@ components:
           type: string
           description: The formatted total amount of sales of that item
           example: 615.21 USD
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
     FileData:
       type: object
       additionalProperties: false
@@ -699,17 +703,6 @@ components:
           description: The creation date of the file as a unix timestamp
           allOf:
           - $ref: '#/components/schemas/UnixTimestamp'
-    AppSalesStats:
-      type: object
-      properties:
-        salesCount:
-          type: integer
-          example: 615
-          description: Total sales in that period
-        series:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppSalesStatsItem'
     CrowdfundBaseData:
       allOf:
       - $ref: '#/components/schemas/AppBaseData'
@@ -872,50 +865,73 @@ components:
             - string
             - 'null'
             description: Form ID to request customer data
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    PointOfSaleAppData:
-      allOf:
-      - $ref: '#/components/schemas/PointOfSaleBaseData'
-      - type: object
-        properties:
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/AppItem'
-            description: JSON object of app items
-            example:
-            - id: green tea
-              title: Green Tea
-              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
-              image: ~/img/pos-sample/green-tea.jpg
-              price: '1.0'
-              priceType: Fixed
-              buyButtonText: null
-              inventory: 5
-              paymentMethods: null
-              disabled: false
-            - id: black tea
-              title: Black Tea
-              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
-              image: ~/img/pos-sample/black-tea.jpg
-              price: '2.0'
-              priceType: Fixed
-              buyButtonText: Test Buy Button Text
-              inventory: null
-              paymentMethods: null
-              disabled: false
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    AppSalesStatsItem:
+      type: object
+      properties:
+        date:
+          type: integer
+          description: UNIX timestamp of the beginning of that day
+        label:
+          type: string
+          description: Short date as label
+          example: Jul 21
+        salesCount:
+          type: integer
+          example: 21
+          description: Total sales on that day
+    AppItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: green-tea
+          description: Unique ID of the item
+        title:
+          type: string
+          example: Green Tea
+          description: The display name of the item
+        description:
+          type: string
+          example: Lovely, fresh and tender.
+          description: A description text for the item
+        image:
+          type: string
+          example: http://teashop.com/img/green-tea.jpg
+          description: An image URL for the item
+        price:
+          type:
+          - string
+          - 'null'
+          format: decimal
+          example: '21.0'
+        priceType:
+          type: string
+          x-enumNames:
+          - Fixed
+          - Topup
+          - Minimum
+          enum:
+          - Fixed
+          - Topup
+          - Minimum
+        buyButtonText:
+          type: string
+          example: Buy me!
+          description: A custom text for the buy button for the item
+        inventory:
+          type:
+          - integer
+          - 'null'
+          example: 21
+          description: The remaining stock the item
+        disabled:
+          type: boolean
+          description: If true, the item does not appear in the list by default.
+          default: false
     CrowdfundAppData:
       allOf:
       - $ref: '#/components/schemas/CrowdfundBaseData'
@@ -961,15 +977,6 @@ components:
               inventory: null
               paymentMethods: null
               disabled: true
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     PointOfSaleAppRequest:
       allOf:
       - $ref: '#/components/schemas/PointOfSaleBaseData'
@@ -978,28 +985,21 @@ components:
           template:
             type: string
             description: JSON of item available in the app
-    AppSalesStatsItem:
-      type: object
-      properties:
-        date:
-          type: integer
-          description: UNIX timestamp of the beginning of that day
-        label:
-          type: string
-          description: Short date as label
-          example: Jul 21
-        salesCount:
-          type: integer
-          example: 21
-          description: Total sales on that day
-    CrowdfundAppRequest:
-      allOf:
-      - $ref: '#/components/schemas/CrowdfundBaseData'
-      - type: object
-        properties:
-          perksTemplate:
-            type: string
-            description: JSON of perks available in the app
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    AppId:
+      name: appId
+      in: path
+      required: true
+      description: App ID
+      schema:
+        type: string
   securitySchemes:
     API_Key:
       type: apiKey

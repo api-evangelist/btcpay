@@ -233,64 +233,6 @@ components:
         identifier: newversion
         name: New version
         enabled: false
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    UpdateNotificationSettingsRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        disabled:
-          type: array
-          items:
-            type: string
-          description: List of the notification type identifiers, which should be disabled. Can also be a single item 'all'.
-          example:
-          - newversion
-          - pluginupdate
-    NotificationData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          description: The id of the notification
-        identifier:
-          type: string
-          description: The identifier of the notification
-        type:
-          type: string
-          description: The type of the notification
-        body:
-          type: string
-          format: html
-          description: The html body of the notifications
-        storeId:
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
-          type:
-          - string
-          - 'null'
-          description: If related to a store, the store id of the notification
-        link:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The link of the notification
-        createdTime:
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-          description: The creation time of the notification
-        seen:
-          type: boolean
-          description: If the notification has been seen by the user
     NotificationSettingsData:
       type: object
       additionalProperties: false
@@ -343,6 +285,64 @@ components:
           - boolean
           - 'null'
           description: Sets the notification as seen/unseen. If left null, sets it to the opposite value
+    UpdateNotificationSettingsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        disabled:
+          type: array
+          items:
+            type: string
+          description: List of the notification type identifiers, which should be disabled. Can also be a single item 'all'.
+          example:
+          - newversion
+          - pluginupdate
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    NotificationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The id of the notification
+        identifier:
+          type: string
+          description: The identifier of the notification
+        type:
+          type: string
+          description: The type of the notification
+        body:
+          type: string
+          format: html
+          description: The html body of the notifications
+        storeId:
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+          type:
+          - string
+          - 'null'
+          description: If related to a store, the store id of the notification
+        link:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The link of the notification
+        createdTime:
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+          description: The creation time of the notification
+        seen:
+          type: boolean
+          description: If the notification has been seen by the user
   securitySchemes:
     API_Key:
       type: apiKey

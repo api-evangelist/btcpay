@@ -384,6 +384,33 @@ paths:
         Basic: []
 components:
   schemas:
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    ApproveUserRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        approved:
+          type: boolean
+          description: Whether to approve or unapprove the user
+    LockUserRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        locked:
+          type: boolean
+          description: Whether to lock or unlock the user
     ApplicationUserData:
       type: object
       additionalProperties: false
@@ -441,38 +468,11 @@ components:
           items:
             type: string
           description: The roles of the user
-    LockUserRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        locked:
-          type: boolean
-          description: Whether to lock or unlock the user
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
     UnixTimestamp:
       type: number
       format: int32
       example: 1592312018
       description: A unix timestamp in seconds
-    ApproveUserRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        approved:
-          type: boolean
-          description: Whether to approve or unapprove the user
   parameters:
     UserIdOrEmail:
       name: idOrEmail

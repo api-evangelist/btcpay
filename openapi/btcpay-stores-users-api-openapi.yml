@@ -155,22 +155,20 @@ paths:
         - btcpay.store.canmodifystoresettings
         Basic: []
 components:
-  parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
-    UserIdOrEmail:
-      name: idOrEmail
-      in: path
-      required: true
-      description: The user's id or email
-      schema:
-        type: string
   schemas:
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
     ApplicationUserData:
       type: object
       additionalProperties: false
@@ -228,6 +226,19 @@ components:
           items:
             type: string
           description: The roles of the user
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    StoreUserDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/StoreUserData'
     StoreUserData:
       allOf:
       - type: object
@@ -244,23 +255,6 @@ components:
             type: string
             description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest`
       - $ref: '#/components/schemas/ApplicationUserData'
-    StoreUserDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/StoreUserData'
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request
@@ -271,15 +265,21 @@ components:
         message:
           type: string
           description: User friendly error message about the error
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
+  parameters:
     StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    UserIdOrEmail:
+      name: idOrEmail
+      in: path
+      required: true
+      description: The user's id or email
+      schema:
+        type: string
   securitySchemes:
     API_Key:
       type: apiKey

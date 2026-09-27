@@ -165,19 +165,7 @@ paths:
         - btcpay.store.canarchivepullpayments
         Basic: []
 components:
-  parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
   schemas:
-    PullPaymentDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PullPaymentData'
     ValidationProblemDetails:
       type: array
       description: An array of validation errors of the request
@@ -191,6 +179,14 @@ components:
           message:
             type: string
             description: User friendly error message about the validation
+    PullPaymentDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PullPaymentData'
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     PullPaymentData:
       type: object
       properties:
@@ -229,10 +225,14 @@ components:
         viewLink:
           type: string
           description: The link to a page to claim payouts to this pull payment
+  parameters:
     StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
   securitySchemes:
     API_Key:
       type: apiKey

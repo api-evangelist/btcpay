@@ -6,17 +6,22 @@ description: >-
   payments, webhooks, users, and server configuration. It operates with zero
   fees, no third-party dependency, and is released under the MIT license.
 deliveryModel:
-  model: unknown
-  open_source: unknown
+  model: open-core
+  license: MIT
+  license_evidence:
+    repo: btcpayserver/btcpayserver
+    spdx: MIT
+    stars: 7778
+  open_source: true
   commercial: true
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: medium
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: free
@@ -38,7 +43,7 @@ tags:
   - Cryptocurrency
   - Payments
   - Lightning Network
-  - Open-Source
+  - Open Source
   - Self-Hosted
 tags_raw:
   - Bitcoin
@@ -47,6 +52,7 @@ tags_raw:
   - Lightning Network
   - Open Source
   - Self-Hosted
+  - Open-Source
 created: "2026-06-13"
 modified: "2026-06-13"
 url: https://raw.githubusercontent.com/api-evangelist/btcpay/refs/heads/main/apis.yml

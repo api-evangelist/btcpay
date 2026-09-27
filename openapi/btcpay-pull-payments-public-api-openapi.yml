@@ -253,6 +253,112 @@ paths:
       security: []
 components:
   schemas:
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    LNURLData:
+      type: object
+      properties:
+        lnurlBech32:
+          type: string
+          description: Bech32 representation of LNURL
+          example: lightning:lnurl1dp68gup69uhnzv3h9cczuvpwxyarzdp3xsez7sj5gvh42j2vfe24ynp0wa5hg6rywfshwtmswqhngvntdd6x6uzvx4jrvu2kvvur23n8v46rwjpexcc45563fn53w7
+        lnurlUri:
+          type: string
+          description: URI representation of LNURL
+          example: lnurlw://example.com/BTC/UILNURL/withdraw/pp/42kktmpL5d6qVc85Fget7H961ZSQ
+    PayoutPaymentProof:
+      type: object
+      additionalProperties: true
+      description: Additional information around how the payout is being or has been paid out. The mentioned properties are all optional (except `proofType`) and you can introduce any json format you wish.
+      properties:
+        proofType:
+          type: string
+          description: The type of payment proof it is.
+      anyOf:
+      - properties:
+          link:
+            type:
+            - string
+            - 'null'
+            format: url
+            description: A link to the proof of payout payment.
+      - properties:
+          id:
+            type:
+            - string
+            - 'null'
+            description: A unique identifier to the proof of payout payment.
+    CreatePayoutRequest:
+      type: object
+      properties:
+        destination:
+          type: string
+          example: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+          description: The destination of the payout (can be an address or a BIP21 url)
+        amount:
+          type: string
+          format: decimal
+          example: '10399.18'
+          description: The amount of the payout in the currency of the pull payment (eg. USD).
+        payoutMethodId:
+          $ref: '#/components/schemas/PayoutMethodId'
+    PayoutDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PayoutData'
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
+    PullPaymentData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the pull payment
+        name:
+          type: string
+          description: Name given to pull payment when it was created
+        description:
+          type: string
+          description: Description given to pull payment when it was created
+        currency:
+          type: string
+          example: BTC
+          description: The currency of the pull payment's amount
+        amount:
+          type: string
+          format: decimal
+          example: '1.12000000'
+          description: The amount in the currency of this pull payment as a decimal string
+        BOLT11Expiration:
+          type: string
+          example: 30
+          description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
+        autoApproveClaims:
+          type:
+          - boolean
+          - 'null'
+          example: false
+          default: false
+          description: Any payouts created for this pull payment will skip the approval phase upon creation
+        archived:
+          type: boolean
+          description: Whether this pull payment is archived
+        viewLink:
+          type: string
+          description: The link to a page to claim payouts to this pull payment
     PayoutData:
       type: object
       properties:
@@ -318,14 +424,6 @@ components:
                 - 'null'
                 format: url
                 description: A link to the source of the payout creation. Shown on the payout list page.
-    PayoutMethodId:
-      type: string
-      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
-      example: BTC-LN
-    PayoutDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PayoutData'
     PayoutState:
       type: string
       example: AwaitingPayment
@@ -342,90 +440,6 @@ components:
       - InProgress
       - Completed
       - Cancelled
-    PayoutPaymentProof:
-      type: object
-      additionalProperties: true
-      description: Additional information around how the payout is being or has been paid out. The mentioned properties are all optional (except `proofType`) and you can introduce any json format you wish.
-      properties:
-        proofType:
-          type: string
-          description: The type of payment proof it is.
-      anyOf:
-      - properties:
-          link:
-            type:
-            - string
-            - 'null'
-            format: url
-            description: A link to the proof of payout payment.
-      - properties:
-          id:
-            type:
-            - string
-            - 'null'
-            description: A unique identifier to the proof of payout payment.
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    PullPaymentData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the pull payment
-        name:
-          type: string
-          description: Name given to pull payment when it was created
-        description:
-          type: string
-          description: Description given to pull payment when it was created
-        currency:
-          type: string
-          example: BTC
-          description: The currency of the pull payment's amount
-        amount:
-          type: string
-          format: decimal
-          example: '1.12000000'
-          description: The amount in the currency of this pull payment as a decimal string
-        BOLT11Expiration:
-          type: string
-          example: 30
-          description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
-        autoApproveClaims:
-          type:
-          - boolean
-          - 'null'
-          example: false
-          default: false
-          description: Any payouts created for this pull payment will skip the approval phase upon creation
-        archived:
-          type: boolean
-          description: Whether this pull payment is archived
-        viewLink:
-          type: string
-          description: The link to a page to claim payouts to this pull payment
-    LNURLData:
-      type: object
-      properties:
-        lnurlBech32:
-          type: string
-          description: Bech32 representation of LNURL
-          example: lightning:lnurl1dp68gup69uhnzv3h9cczuvpwxyarzdp3xsez7sj5gvh42j2vfe24ynp0wa5hg6rywfshwtmswqhngvntdd6x6uzvx4jrvu2kvvur23n8v46rwjpexcc45563fn53w7
-        lnurlUri:
-          type: string
-          description: URI representation of LNURL
-          example: lnurlw://example.com/BTC/UILNURL/withdraw/pp/42kktmpL5d6qVc85Fget7H961ZSQ
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request
@@ -436,20 +450,6 @@ components:
         message:
           type: string
           description: User friendly error message about the error
-    CreatePayoutRequest:
-      type: object
-      properties:
-        destination:
-          type: string
-          example: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
-          description: The destination of the payout (can be an address or a BIP21 url)
-        amount:
-          type: string
-          format: decimal
-          example: '10399.18'
-          description: The amount of the payout in the currency of the pull payment (eg. USD).
-        payoutMethodId:
-          $ref: '#/components/schemas/PayoutMethodId'
   securitySchemes:
     API_Key:
       type: apiKey
