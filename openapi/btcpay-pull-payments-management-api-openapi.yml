@@ -166,23 +166,6 @@ paths:
         Basic: []
 components:
   schemas:
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    PullPaymentDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PullPaymentData'
     StoreId:
       type: string
       description: Store ID of the item
@@ -225,6 +208,23 @@ components:
         viewLink:
           type: string
           description: The link to a page to claim payouts to this pull payment
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    PullPaymentDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PullPaymentData'
   parameters:
     StoreId:
       name: storeId

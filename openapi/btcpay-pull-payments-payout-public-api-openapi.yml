@@ -58,10 +58,6 @@ paths:
       security: []
 components:
   schemas:
-    PayoutMethodId:
-      type: string
-      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
-      example: BTC-LN
     PayoutPaymentProof:
       type: object
       additionalProperties: true
@@ -165,6 +161,10 @@ components:
       - InProgress
       - Completed
       - Cancelled
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
   securitySchemes:
     API_Key:
       type: apiKey

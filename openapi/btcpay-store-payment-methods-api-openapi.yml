@@ -191,52 +191,14 @@ components:
         lud21Enabled:
           type: boolean
           description: Whether to include a [LUD-21](https://github.com/lnurl/luds/blob/luds/21.md) verify URL in LNURL-pay callback responses, enabling external services to verify payment settlement without authentication.
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     PaymentMethodId:
       type: string
       description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
       example: BTC-CHAIN
-    UpdatePaymentMethodConfig:
-      type: object
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-          description: Whether the payment method is enabled, leave null or unspecified to not change current setting
-          default: null
-          example: true
-        config:
-          type:
-          - object
-          - 'null'
-          description: The new payment method config, leave null or unspecified to not change current setting
-          default: null
-          oneOf:
-          - $ref: '#/components/schemas/OnChainPaymentMethodBaseData'
-          - $ref: '#/components/schemas/LightningNetworkPaymentMethodBaseData'
-          - $ref: '#/components/schemas/LNURLPayPaymentMethodBaseData'
-          - type: string
-            title: Lightning connection string
-            description: A lightning connection string or `Internal Node` (See [this documentation](https://github.com/btcpayserver/btcpayserver.lightning) for the format)
-          - type: string
-            title: Derivation scheme
-            description: A derivation scheme in NBXplorer's format (See [this documentation](https://github.com/dgarage/NBXplorer/blob/master/docs/API.md#derivation-scheme) for the format)
-          - type: string
-            title: Output descriptor
-            description: An output descriptor. Only a subset of them are supported. (See [this documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/descriptors.md) for the format)
-          - description: Any other unofficial payment method data
-            type: object
-            additionalProperties: true
     GenericPaymentMethodData:
       type: object
       additionalProperties: false
@@ -272,10 +234,6 @@ components:
           type: string
           description: The wallet fingerprint followed by the keypath to derive the account key used for signing operation or creating PSBTs
           example: abcd82a1/84'/0'/0'
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     LightningNetworkPaymentMethodBaseData:
       type: object
       additionalProperties: false
@@ -284,6 +242,48 @@ components:
           type: string
           description: The lightning connection string. Set to 'Internal Node' to use the internal node. (See [this doc](https://github.com/btcpayserver/BTCPayServer.Lightning/blob/master/README.md#examples) for some example)
           example: type=clightning;server=...
+    UpdatePaymentMethodConfig:
+      type: object
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+          description: Whether the payment method is enabled, leave null or unspecified to not change current setting
+          default: null
+          example: true
+        config:
+          type:
+          - object
+          - 'null'
+          description: The new payment method config, leave null or unspecified to not change current setting
+          default: null
+          oneOf:
+          - $ref: '#/components/schemas/OnChainPaymentMethodBaseData'
+          - $ref: '#/components/schemas/LightningNetworkPaymentMethodBaseData'
+          - $ref: '#/components/schemas/LNURLPayPaymentMethodBaseData'
+          - type: string
+            title: Lightning connection string
+            description: A lightning connection string or `Internal Node` (See [this documentation](https://github.com/btcpayserver/btcpayserver.lightning) for the format)
+          - type: string
+            title: Derivation scheme
+            description: A derivation scheme in NBXplorer's format (See [this documentation](https://github.com/dgarage/NBXplorer/blob/master/docs/API.md#derivation-scheme) for the format)
+          - type: string
+            title: Output descriptor
+            description: An output descriptor. Only a subset of them are supported. (See [this documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/descriptors.md) for the format)
+          - description: Any other unofficial payment method data
+            type: object
+            additionalProperties: true
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
   parameters:
     StoreId:
       name: storeId

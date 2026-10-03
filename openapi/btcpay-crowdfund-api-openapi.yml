@@ -112,48 +112,10 @@ paths:
         Basic: []
 components:
   schemas:
-    AppBaseData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the app
-          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
-        appName:
-          type: string
-          description: Name given to the app when it was created
-          example: my test app
-        storeId:
-          description: Id of the store to which the app belongs
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
-        created:
-          type: integer
-          example: 1651554744
-          description: UNIX timestamp for when the app was created
-        appType:
-          type: string
-          example: PointOfSale
-          description: Type of the app which was created
-        archived:
-          type:
-          - boolean
-          - 'null'
-          description: If true, the app does not appear in the apps list by default.
-          default: false
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     CrowdfundAppRequest:
       allOf:
       - $ref: '#/components/schemas/CrowdfundBaseData'
@@ -162,11 +124,51 @@ components:
           perksTemplate:
             type: string
             description: JSON of perks available in the app
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
+    CrowdfundAppData:
+      allOf:
+      - $ref: '#/components/schemas/CrowdfundBaseData'
+      - type: object
+        properties:
+          perks:
+            type: object
+            description: JSON of perks available in the app
+            example:
+            - description: null
+              id: test perk
+              image: null
+              price:
+                type: 2
+                formatted: $100.00
+                value: 100.0
+              title: test perk
+              buyButtonText: null
+              inventory: null
+              paymentMethods: null
+              disabled: false
+            - description: this is an amazing perk
+              id: test test
+              image: https://mainnet.demo.btcpayserver.org/img/errorpages/404_nicolas.jpg
+              price:
+                type: 1
+                formatted: $69.42
+                value: 69.42
+              title: test test
+              buyButtonText: null
+              inventory: 5
+              paymentMethods: null
+              disabled: false
+            - description: null
+              id: f$t45hj764325
+              image: null
+              price:
+                type: 0
+                formatted: null
+                value: null
+              title: amazing perk
+              buyButtonText: button text
+              inventory: null
+              paymentMethods: null
+              disabled: true
     CrowdfundBaseData:
       allOf:
       - $ref: '#/components/schemas/AppBaseData'
@@ -329,55 +331,53 @@ components:
             - string
             - 'null'
             description: Form ID to request customer data
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    CrowdfundAppData:
-      allOf:
-      - $ref: '#/components/schemas/CrowdfundBaseData'
-      - type: object
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the app does not appear in the apps list by default.
+          default: false
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
         properties:
-          perks:
-            type: object
-            description: JSON of perks available in the app
-            example:
-            - description: null
-              id: test perk
-              image: null
-              price:
-                type: 2
-                formatted: $100.00
-                value: 100.0
-              title: test perk
-              buyButtonText: null
-              inventory: null
-              paymentMethods: null
-              disabled: false
-            - description: this is an amazing perk
-              id: test test
-              image: https://mainnet.demo.btcpayserver.org/img/errorpages/404_nicolas.jpg
-              price:
-                type: 1
-                formatted: $69.42
-                value: 69.42
-              title: test test
-              buyButtonText: null
-              inventory: 5
-              paymentMethods: null
-              disabled: false
-            - description: null
-              id: f$t45hj764325
-              image: null
-              price:
-                type: 0
-                formatted: null
-                value: null
-              title: amazing perk
-              buyButtonText: button text
-              inventory: null
-              paymentMethods: null
-              disabled: true
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
   parameters:
     StoreId:
       name: storeId

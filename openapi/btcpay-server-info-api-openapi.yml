@@ -79,32 +79,31 @@ paths:
         Basic: []
 components:
   schemas:
+    ApplicationServerInfoData:
+      type: object
+      properties:
+        version:
+          type: string
+          description: BTCPay Server version
+        onion:
+          type: string
+          description: The Tor hostname
+        supportedPaymentMethods:
+          type: array
+          description: The payment methods this server supports
+          items:
+            type: string
+        fullySynched:
+          type: boolean
+          description: True if the instance is fully synchronized, according to NBXplorer
+        syncStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationServerInfoSyncStatusData'
     PaymentMethodId:
       type: string
       description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
       example: BTC-CHAIN
-    RoleData:
-      type: object
-      properties:
-        id:
-          description: The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)
-          type: string
-          example: Owner
-        role:
-          description: The role's name
-          type: string
-          example: Owner
-        permissions:
-          description: The permissions attached to this role
-          type: array
-          items:
-            type: string
-          example:
-          - btcpay.store.canmodifystoresettings
-        isServerRole:
-          description: Whether this role is at the scope of the store or scope of the server
-          type: boolean
-          example: true
     ApplicationServerInfoSyncStatusData:
       type: object
       description: Detailed sync status
@@ -143,27 +142,28 @@ components:
           minimum: 0.0
           maximum: 1.0
           description: The current synchronization progress
-    ApplicationServerInfoData:
+    RoleData:
       type: object
       properties:
-        version:
+        id:
+          description: The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)
           type: string
-          description: BTCPay Server version
-        onion:
+          example: Owner
+        role:
+          description: The role's name
           type: string
-          description: The Tor hostname
-        supportedPaymentMethods:
+          example: Owner
+        permissions:
+          description: The permissions attached to this role
           type: array
-          description: The payment methods this server supports
           items:
             type: string
-        fullySynched:
+          example:
+          - btcpay.store.canmodifystoresettings
+        isServerRole:
+          description: Whether this role is at the scope of the store or scope of the server
           type: boolean
-          description: True if the instance is fully synchronized, according to NBXplorer
-        syncStatus:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationServerInfoSyncStatusData'
+          example: true
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request

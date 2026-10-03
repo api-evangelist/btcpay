@@ -128,6 +128,10 @@ paths:
         Basic: []
 components:
   schemas:
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     UpdateEmailSettings:
       allOf:
       - $ref: '#/components/schemas/EmailSettingsBase'
@@ -139,31 +143,6 @@ components:
             - 'null'
             description: SMTP password. Keep null or empty to not update it.
             example: MyS3cr3t
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    GetEmailSettings:
-      allOf:
-      - $ref: '#/components/schemas/EmailSettingsBase'
-      - type: object
-        properties:
-          passwordSet:
-            type: boolean
-            description: '`true` if the password has been set.'
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     EmailSettingsBase:
       type: object
       properties:
@@ -187,6 +166,27 @@ components:
           type: boolean
           description: Disable TLS certificate security checks
           example: false
+    GetEmailSettings:
+      allOf:
+      - $ref: '#/components/schemas/EmailSettingsBase'
+      - type: object
+        properties:
+          passwordSet:
+            type: boolean
+            description: '`true` if the password has been set.'
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
   parameters:
     StoreId:
       name: storeId

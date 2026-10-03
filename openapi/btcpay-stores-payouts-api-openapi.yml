@@ -266,19 +266,24 @@ paths:
         Basic: []
 components:
   schemas:
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    CreatePayoutThroughStoreRequest:
+      allOf:
+      - $ref: '#/components/schemas/CreatePayoutRequest'
+      - type: object
         properties:
-          path:
+          pullPaymentId:
             type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
+            description: The pull payment to create this for. Optional.
+          approved:
+            type: boolean
+            description: Whether to approve this payout automatically upon creation
+          metadata:
+            type: object
+            description: Additional metadata to store with the payout
     PayoutPaymentProof:
       type: object
       additionalProperties: true
@@ -301,20 +306,6 @@ components:
             - string
             - 'null'
             description: A unique identifier to the proof of payout payment.
-    CreatePayoutThroughStoreRequest:
-      allOf:
-      - $ref: '#/components/schemas/CreatePayoutRequest'
-      - type: object
-        properties:
-          pullPaymentId:
-            type: string
-            description: The pull payment to create this for. Optional.
-          approved:
-            type: boolean
-            description: Whether to approve this payout automatically upon creation
-          metadata:
-            type: object
-            description: Additional metadata to store with the payout
     CreatePayoutRequest:
       type: object
       properties:
@@ -329,14 +320,6 @@ components:
           description: The amount of the payout in the currency of the pull payment (eg. USD).
         payoutMethodId:
           $ref: '#/components/schemas/PayoutMethodId'
-    PayoutDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PayoutData'
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     PayoutMethodId:
       type: string
       description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
@@ -406,6 +389,33 @@ components:
                 - 'null'
                 format: url
                 description: A link to the source of the payout creation. Shown on the payout list page.
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
+    PayoutDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PayoutData'
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
     PayoutState:
       type: string
       example: AwaitingPayment
@@ -422,16 +432,6 @@ components:
       - InProgress
       - Completed
       - Cancelled
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
   parameters:
     StoreId:
       name: storeId

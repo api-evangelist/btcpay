@@ -244,76 +244,32 @@ paths:
         Basic: []
 components:
   schemas:
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
+    TimeSpanDays:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: days
+      description: A span of times in days
+    TimeSpan:
+      type: number
+      format: int32
+      example: 90
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    StoreData:
+      allOf:
+      - $ref: '#/components/schemas/StoreBaseData'
+      - type: object
         properties:
-          path:
+          id:
             type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    ApplicationUserData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          description: The id of the user
-        email:
-          type: string
-          description: The email of the user
-        name:
-          type:
-          - string
-          - 'null'
-          description: The name of the user
-        imageUrl:
-          type:
-          - string
-          - 'null'
-          description: The profile picture URL of the user
-        invitationUrl:
-          type:
-          - string
-          - 'null'
-          description: The pending invitation URL of the user
-        emailConfirmed:
-          type: boolean
-          description: True if the email has been confirmed by the user
-        requiresEmailConfirmation:
-          type: boolean
-          description: True if the email requires confirmation to log in
-        approved:
-          type: boolean
-          description: True if an admin has approved the user
-        requiresApproval:
-          type: boolean
-          description: True if the instance requires approval to log in
-        storeQuota:
-          type:
-          - number
-          - 'null'
-          description: Per-user override for the max number of stores this user can create. Null means the server default applies
-        created:
-          type:
-          - number
-          - 'null'
-          description: The creation date of the user as a unix timestamp. Null if created before v1.0.5.6
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        disabled:
-          type: boolean
-          description: True if an admin has disabled the user
-        roles:
-          type: array
-          items:
-            type: string
-          description: The roles of the user
+            description: The id of the store
+    TimeSpanSeconds:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: seconds
+      description: A span of times in seconds
     StoreBaseData:
       type: object
       x-abstract: true
@@ -507,23 +463,82 @@ components:
           items:
             $ref: '#/components/schemas/PaymentMethodCriteriaData'
           description: The criteria required to activate specific payment methods.
-    TimeSpanDays:
-      allOf:
-      - $ref: '#/components/schemas/TimeSpan'
-      format: days
-      description: A span of times in days
-    StoreDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/StoreData'
+    NetworkFeeMode:
+      type: string
+      description: Check whether network fee should be added to the invoice if on-chain payment is used. ([More information](https://docs.btcpayserver.org/FAQ/Stores/#add-network-fee-to-invoice-vary-with-mining-fees))
+      x-enumNames:
+      - MultiplePaymentsOnly
+      - Always
+      - Never
+      enum:
+      - MultiplePaymentsOnly
+      - Always
+      - Never
     PaymentMethodId:
       type: string
       description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
       example: BTC-CHAIN
-    TimeSpan:
-      type: number
-      format: int32
-      example: 90
+    ApplicationUserData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The id of the user
+        email:
+          type: string
+          description: The email of the user
+        name:
+          type:
+          - string
+          - 'null'
+          description: The name of the user
+        imageUrl:
+          type:
+          - string
+          - 'null'
+          description: The profile picture URL of the user
+        invitationUrl:
+          type:
+          - string
+          - 'null'
+          description: The pending invitation URL of the user
+        emailConfirmed:
+          type: boolean
+          description: True if the email has been confirmed by the user
+        requiresEmailConfirmation:
+          type: boolean
+          description: True if the email requires confirmation to log in
+        approved:
+          type: boolean
+          description: True if an admin has approved the user
+        requiresApproval:
+          type: boolean
+          description: True if the instance requires approval to log in
+        storeQuota:
+          type:
+          - number
+          - 'null'
+          description: Per-user override for the max number of stores this user can create. Null means the server default applies
+        created:
+          type:
+          - number
+          - 'null'
+          description: The creation date of the user as a unix timestamp. Null if created before v1.0.5.6
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        disabled:
+          type: boolean
+          description: True if an admin has disabled the user
+        roles:
+          type: array
+          items:
+            type: string
+          description: The roles of the user
+    StoreDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/StoreData'
     SpeedPolicy:
       type: string
       description: "This is a risk mitigation parameter for the merchant to configure how they want to fulfill orders depending on the number of block confirmations for the transaction made by the consumer on the selected cryptocurrency.\n`\"HighSpeed\"`: 0 confirmations (1 confirmation if RBF enabled in transaction)   \n`\"MediumSpeed\"`: 1 confirmation   \n`\"LowMediumSpeed\"`: 2 confirmations   \n`\"LowSpeed\"`: 6 confirmations\n"
@@ -537,17 +552,59 @@ components:
       - MediumSpeed
       - LowSpeed
       - LowMediumSpeed
-    NetworkFeeMode:
-      type: string
-      description: Check whether network fee should be added to the invoice if on-chain payment is used. ([More information](https://docs.btcpayserver.org/FAQ/Stores/#add-network-fee-to-invoice-vary-with-mining-fees))
-      x-enumNames:
-      - MultiplePaymentsOnly
-      - Always
-      - Never
-      enum:
-      - MultiplePaymentsOnly
-      - Always
-      - Never
+    PaymentMethodCriteriaData:
+      type: object
+      properties:
+        paymentMethodId:
+          type: string
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodId'
+        currencyCode:
+          type: string
+          description: The currency
+          default: USD
+          example: USD
+        amount:
+          type: string
+          format: decimal
+          minimum: 0
+          description: The amount
+        above:
+          type: boolean
+          default: false
+          description: If the criterion is for above or below the amount
+    RoleData:
+      type: object
+      properties:
+        id:
+          description: The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)
+          type: string
+          example: Owner
+        role:
+          description: The role's name
+          type: string
+          example: Owner
+        permissions:
+          description: The permissions attached to this role
+          type: array
+          items:
+            type: string
+          example:
+          - btcpay.store.canmodifystoresettings
+        isServerRole:
+          description: Whether this role is at the scope of the store or scope of the server
+          type: boolean
+          example: true
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
     UnixTimestamp:
       type: number
       format: int32
@@ -574,76 +631,19 @@ components:
           - 'null'
           default: null
           description: Show the payment list in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
-    TimeSpanSeconds:
-      allOf:
-      - $ref: '#/components/schemas/TimeSpan'
-      format: seconds
-      description: A span of times in seconds
-    RoleData:
-      type: object
-      properties:
-        id:
-          description: The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)
-          type: string
-          example: Owner
-        role:
-          description: The role's name
-          type: string
-          example: Owner
-        permissions:
-          description: The permissions attached to this role
-          type: array
-          items:
-            type: string
-          example:
-          - btcpay.store.canmodifystoresettings
-        isServerRole:
-          description: Whether this role is at the scope of the store or scope of the server
-          type: boolean
-          example: true
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    PaymentMethodCriteriaData:
-      type: object
-      properties:
-        paymentMethodId:
-          type: string
-          allOf:
-          - $ref: '#/components/schemas/PaymentMethodId'
-        currencyCode:
-          type: string
-          description: The currency
-          default: USD
-          example: USD
-        amount:
-          type: string
-          format: decimal
-          minimum: 0
-          description: The amount
-        above:
-          type: boolean
-          default: false
-          description: If the criterion is for above or below the amount
-    StoreData:
-      allOf:
-      - $ref: '#/components/schemas/StoreBaseData'
-      - type: object
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
         properties:
-          id:
+          path:
             type: string
-            description: The id of the store
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
   parameters:
     StoreId:
       name: storeId

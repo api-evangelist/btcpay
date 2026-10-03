@@ -216,23 +216,10 @@ paths:
               $ref: '#/components/schemas/UpdateNotificationSettingsRequest'
 components:
   schemas:
-    NotificationSettingsItemData:
-      type: object
-      additionalProperties: false
-      properties:
-        identifier:
-          type: string
-          description: The identifier of the notification type
-        name:
-          type: string
-          description: The description of the notification type
-        enabled:
-          type: boolean
-          description: If the notification type is enabled
-      example:
-        identifier: newversion
-        name: New version
-        enabled: false
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     NotificationSettingsData:
       type: object
       additionalProperties: false
@@ -276,15 +263,23 @@ components:
       - identifier: external-payout-transaction
         name: External payout approval
         enabled: true
-    UpdateNotification:
+    NotificationSettingsItemData:
       type: object
       additionalProperties: false
       properties:
-        seen:
-          type:
-          - boolean
-          - 'null'
-          description: Sets the notification as seen/unseen. If left null, sets it to the opposite value
+        identifier:
+          type: string
+          description: The identifier of the notification type
+        name:
+          type: string
+          description: The description of the notification type
+        enabled:
+          type: boolean
+          description: If the notification type is enabled
+      example:
+        identifier: newversion
+        name: New version
+        enabled: false
     UpdateNotificationSettingsRequest:
       type: object
       additionalProperties: false
@@ -302,10 +297,6 @@ components:
       format: int32
       example: 1592312018
       description: A unix timestamp in seconds
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     NotificationData:
       type: object
       additionalProperties: false
@@ -343,6 +334,15 @@ components:
         seen:
           type: boolean
           description: If the notification has been seen by the user
+    UpdateNotification:
+      type: object
+      additionalProperties: false
+      properties:
+        seen:
+          type:
+          - boolean
+          - 'null'
+          description: Sets the notification as seen/unseen. If left null, sets it to the opposite value
   securitySchemes:
     API_Key:
       type: apiKey

@@ -90,14 +90,6 @@ components:
             - 'null'
             description: SMTP password. Keep null or empty to not update it.
             example: MyS3cr3t
-    GetEmailSettings:
-      allOf:
-      - $ref: '#/components/schemas/EmailSettingsBase'
-      - type: object
-        properties:
-          passwordSet:
-            type: boolean
-            description: '`true` if the password has been set.'
     UpdateServerEmailSettings:
       allOf:
       - $ref: '#/components/schemas/UpdateEmailSettings'
@@ -129,14 +121,6 @@ components:
           type: boolean
           description: Disable TLS certificate security checks
           example: false
-    GetServerEmailSettings:
-      allOf:
-      - $ref: '#/components/schemas/GetEmailSettings'
-      - type: object
-        properties:
-          enableStoresToUseServerEmailSettings:
-            type: boolean
-            description: Indicates if stores can use server email settings
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request
@@ -147,6 +131,22 @@ components:
         message:
           type: string
           description: User friendly error message about the error
+    GetEmailSettings:
+      allOf:
+      - $ref: '#/components/schemas/EmailSettingsBase'
+      - type: object
+        properties:
+          passwordSet:
+            type: boolean
+            description: '`true` if the password has been set.'
+    GetServerEmailSettings:
+      allOf:
+      - $ref: '#/components/schemas/GetEmailSettings'
+      - type: object
+        properties:
+          enableStoresToUseServerEmailSettings:
+            type: boolean
+            description: Indicates if stores can use server email settings
   securitySchemes:
     API_Key:
       type: apiKey

@@ -156,19 +156,14 @@ paths:
         Basic: []
 components:
   schemas:
-    ValidationProblemDetails:
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    StoreUserDataList:
       type: array
-      description: An array of validation errors of the request
       items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
+        $ref: '#/components/schemas/StoreUserData'
     ApplicationUserData:
       type: object
       additionalProperties: false
@@ -226,19 +221,6 @@ components:
           items:
             type: string
           description: The roles of the user
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    StoreUserDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/StoreUserData'
     StoreUserData:
       allOf:
       - type: object
@@ -265,6 +247,24 @@ components:
         message:
           type: string
           description: User friendly error message about the error
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
   parameters:
     StoreId:
       name: storeId
