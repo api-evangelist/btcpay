@@ -473,86 +473,6 @@ paths:
         Basic: []
 components:
   schemas:
-    CreateLightningInvoiceRequest:
-      type: object
-      properties:
-        amount:
-          type: string
-          description: Amount wrapped in a string, represented in a millisatoshi string. (1000 millisatoshi = 1 satoshi)
-        description:
-          type:
-          - string
-          - 'null'
-          description: Description of the invoice in the BOLT11
-        descriptionHashOnly:
-          type:
-          - boolean
-          - 'null'
-          default: false
-          description: If `descriptionHashOnly` is `true` (default is `false`), then the BOLT11 returned contains a hash of the `description`, rather than the `description`, itself. This allows for much longer descriptions, but they must be communicated via some other mechanism.
-        expiry:
-          description: Expiration time in seconds
-          allOf:
-          - $ref: '#/components/schemas/TimeSpanSeconds'
-        privateRouteHints:
-          type:
-          - boolean
-          - 'null'
-          default: false
-          description: True if the invoice should include private route hints
-    ConnectToNodeRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        nodeURI:
-          type:
-          - string
-          - 'null'
-          description: Node URI in the form `pubkey@endpoint[:port]`
-    LightningPaymentData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          description: The payment's ID
-        status:
-          $ref: '#/components/schemas/LightningPaymentStatus'
-        BOLT11:
-          type: string
-          description: The BOLT11 representation of the payment
-        paymentHash:
-          type: string
-          description: The payment hash
-        preimage:
-          type: string
-          description: The payment preimage (available when status is complete)
-        createdAt:
-          type:
-          - number
-          - 'null'
-          description: The unix timestamp when the payment got created
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        totalAmount:
-          type: string
-          description: The total amount (including fees) in millisatoshi
-        feeAmount:
-          type: string
-          description: The total fees in millisatoshi
-    OpenLightningChannelRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        nodeURI:
-          type: string
-          description: Node URI in the form `pubkey@endpoint[:port]`
-        channelAmount:
-          type: string
-          description: The amount to fund (in satoshi)
-        feeRate:
-          type: number
-          description: The amount to fund (in satoshi per byte)
     LightningInvoiceData:
       type: object
       additionalProperties: false
@@ -595,108 +515,6 @@ components:
           - object
           - 'null'
           description: The custom TLV records attached to a keysend payment
-    TimeSpanSeconds:
-      allOf:
-      - $ref: '#/components/schemas/TimeSpan'
-      format: seconds
-      description: A span of times in seconds
-    LightningNodeBalanceData:
-      type: object
-      properties:
-        onchain:
-          type:
-          - object
-          - 'null'
-          description: On-chain balance of the Lightning node
-          allOf:
-          - $ref: '#/components/schemas/OnchainBalanceData'
-        offchain:
-          type:
-          - object
-          - 'null'
-          description: Off-chain balance of the Lightning node
-          allOf:
-          - $ref: '#/components/schemas/OffchainBalanceData'
-    LightningInvoiceStatus:
-      type: string
-      description: ''
-      x-enumNames:
-      - Unpaid
-      - Paid
-      - Expired
-      enum:
-      - Unpaid
-      - Paid
-      - Expired
-    OffchainBalanceData:
-      type: object
-      properties:
-        opening:
-          type:
-          - string
-          - 'null'
-          description: The amount of current channel openings in millisatoshi
-        local:
-          type:
-          - string
-          - 'null'
-          description: The amount that is available on the local end of active channels in millisatoshi
-        remote:
-          type:
-          - string
-          - 'null'
-          description: The amount that is available on the remote end of active channels in millisatoshi
-        closing:
-          type:
-          - string
-          - 'null'
-          description: The amount of current channel closings in millisatoshi
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    PayLightningInvoiceRequest:
-      type: object
-      properties:
-        BOLT11:
-          type: string
-          description: The BOLT11 of the invoice to pay
-        amount:
-          type:
-          - string
-          - 'null'
-          description: Optional explicit payment amount in millisatoshi (if specified, it overrides the BOLT11 amount)
-        maxFeePercent:
-          type:
-          - string
-          - 'null'
-          format: float
-          description: The fee limit expressed as a percentage of the payment amount
-          example: '6.15'
-        maxFeeFlat:
-          type:
-          - string
-          - 'null'
-          description: The fee limit expressed as a fixed amount in satoshi
-          example: '21'
-        sendTimeout:
-          type:
-          - number
-          - 'null'
-          example: 30
-          default: 30
-          description: The number of seconds after which the payment times out
-          allOf:
-          - $ref: '#/components/schemas/TimeSpanSeconds'
     OnchainBalanceData:
       type: object
       properties:
@@ -715,21 +533,36 @@ components:
           - string
           - 'null'
           description: The reserved amount in satoshi
-    ProblemDetails:
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    LightningNodeBalanceData:
       type: object
-      description: Description of an error happening during processing of the request
       properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
+        onchain:
+          type:
+          - object
+          - 'null'
+          description: On-chain balance of the Lightning node
+          allOf:
+          - $ref: '#/components/schemas/OnchainBalanceData'
+        offchain:
+          type:
+          - object
+          - 'null'
+          description: Off-chain balance of the Lightning node
+          allOf:
+          - $ref: '#/components/schemas/OffchainBalanceData'
     HistogramData:
       type: object
       description: Histogram data for wallet balances over time
@@ -763,29 +596,89 @@ components:
           items:
             type: integer
             description: UNIX timestamp of the balance snapshot
-    LightningChannelData:
+    OffchainBalanceData:
       type: object
-      additionalProperties: false
       properties:
-        remoteNode:
-          type: string
-          description: The public key of the node (Node ID)
-        isPublic:
-          type: boolean
-          description: Whether the node is public
-        isActive:
-          type: boolean
-          description: Whether the node is online
-        capacity:
-          type: string
-          description: The capacity of the channel in millisatoshi
-        localBalance:
-          type: string
-          description: The local balance of the channel in millisatoshi
-        channelPoint:
+        opening:
           type:
           - string
           - 'null'
+          description: The amount of current channel openings in millisatoshi
+        local:
+          type:
+          - string
+          - 'null'
+          description: The amount that is available on the local end of active channels in millisatoshi
+        remote:
+          type:
+          - string
+          - 'null'
+          description: The amount that is available on the remote end of active channels in millisatoshi
+        closing:
+          type:
+          - string
+          - 'null'
+          description: The amount of current channel closings in millisatoshi
+    LightningPaymentStatus:
+      type: string
+      description: ''
+      x-enumNames:
+      - Unknown
+      - Pending
+      - Complete
+      - Failed
+      enum:
+      - Unknown
+      - Pending
+      - Complete
+      - Failed
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    ConnectToNodeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        nodeURI:
+          type:
+          - string
+          - 'null'
+          description: Node URI in the form `pubkey@endpoint[:port]`
+    PayLightningInvoiceRequest:
+      type: object
+      properties:
+        BOLT11:
+          type: string
+          description: The BOLT11 of the invoice to pay
+        amount:
+          type:
+          - string
+          - 'null'
+          description: Optional explicit payment amount in millisatoshi (if specified, it overrides the BOLT11 amount)
+        maxFeePercent:
+          type:
+          - string
+          - 'null'
+          format: float
+          description: The fee limit expressed as a percentage of the payment amount
+          example: '6.15'
+        maxFeeFlat:
+          type:
+          - string
+          - 'null'
+          description: The fee limit expressed as a fixed amount in satoshi
+          example: '21'
+        sendTimeout:
+          type:
+          - number
+          - 'null'
+          example: 30
+          default: 30
+          description: The number of seconds after which the payment times out
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
     LightningNodeInformationData:
       type: object
       properties:
@@ -832,23 +725,130 @@ components:
           - integer
           - 'null'
           description: The number of pending channels
-    LightningPaymentStatus:
+    LightningInvoiceStatus:
       type: string
       description: ''
       x-enumNames:
-      - Unknown
-      - Pending
-      - Complete
-      - Failed
+      - Unpaid
+      - Paid
+      - Expired
       enum:
-      - Unknown
-      - Pending
-      - Complete
-      - Failed
+      - Unpaid
+      - Paid
+      - Expired
+    LightningPaymentData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The payment's ID
+        status:
+          $ref: '#/components/schemas/LightningPaymentStatus'
+        BOLT11:
+          type: string
+          description: The BOLT11 representation of the payment
+        paymentHash:
+          type: string
+          description: The payment hash
+        preimage:
+          type: string
+          description: The payment preimage (available when status is complete)
+        createdAt:
+          type:
+          - number
+          - 'null'
+          description: The unix timestamp when the payment got created
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        totalAmount:
+          type: string
+          description: The total amount (including fees) in millisatoshi
+        feeAmount:
+          type: string
+          description: The total fees in millisatoshi
+    LightningChannelData:
+      type: object
+      additionalProperties: false
+      properties:
+        remoteNode:
+          type: string
+          description: The public key of the node (Node ID)
+        isPublic:
+          type: boolean
+          description: Whether the node is public
+        isActive:
+          type: boolean
+          description: Whether the node is online
+        capacity:
+          type: string
+          description: The capacity of the channel in millisatoshi
+        localBalance:
+          type: string
+          description: The local balance of the channel in millisatoshi
+        channelPoint:
+          type:
+          - string
+          - 'null'
     TimeSpan:
       type: number
       format: int32
       example: 90
+    TimeSpanSeconds:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: seconds
+      description: A span of times in seconds
+    OpenLightningChannelRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        nodeURI:
+          type: string
+          description: Node URI in the form `pubkey@endpoint[:port]`
+        channelAmount:
+          type: string
+          description: The amount to fund (in satoshi)
+        feeRate:
+          type: number
+          description: The amount to fund (in satoshi per byte)
+    CreateLightningInvoiceRequest:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount wrapped in a string, represented in a millisatoshi string. (1000 millisatoshi = 1 satoshi)
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of the invoice in the BOLT11
+        descriptionHashOnly:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: If `descriptionHashOnly` is `true` (default is `false`), then the BOLT11 returned contains a hash of the `description`, rather than the `description`, itself. This allows for much longer descriptions, but they must be communicated via some other mechanism.
+        expiry:
+          description: Expiration time in seconds
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+        privateRouteHints:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          description: True if the invoice should include private route hints
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
   parameters:
     CryptoCode:
       name: cryptoCode

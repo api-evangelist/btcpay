@@ -142,14 +142,6 @@ paths:
         - btcpay.store.canmodifystoresettings
         Basic: []
 components:
-  parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
   schemas:
     LightningAddressData:
       type: object
@@ -182,6 +174,14 @@ components:
       type: string
       description: Store ID of the item
       example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
   securitySchemes:
     API_Key:
       type: apiKey

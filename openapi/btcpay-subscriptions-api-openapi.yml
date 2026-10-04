@@ -552,62 +552,19 @@ paths:
         '404':
           description: Portal session not found.
 components:
-  parameters:
-    Subscriptions_Currency:
-      name: currency
-      in: path
-      required: true
-      description: Currency code for the credit balance. Use `current` to retrieve the current balance in the currency of the current plan.
-      schema:
-        type: string
-      example: current
-    PlanCheckoutId:
-      name: checkoutId
-      in: path
-      required: true
-      example: plancheckout_Hpm59L1NPCMUj477Q5
-      description: Unique identifier of the plan checkout session.
-      schema:
-        $ref: '#/components/schemas/PlanCheckoutId'
-    CustomerSelector:
-      name: customerSelector
-      in: path
-      required: true
-      description: 'Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`).'
-      schema:
-        $ref: '#/components/schemas/CustomerSelector'
-    OfferingId:
-      name: offeringId
-      in: path
-      required: true
-      description: Offering's ID
-      example: offering_DKWhZGB6PZsgTcPwpf
-      schema:
-        $ref: '#/components/schemas/OfferingId'
-    PlanId:
-      name: planId
-      in: path
-      required: true
-      description: Plan's ID
-      example: plan_KZMVyuQp3v2vFWnEUM
-      schema:
-        $ref: '#/components/schemas/PlanId'
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
-    PortalSessionId:
-      name: portalSessionId
-      in: path
-      required: true
-      example: ps_665afQ23ExGouiY4EZ
-      description: Identifier of the portal session.
-      schema:
-        $ref: '#/components/schemas/PortalSessionId'
   schemas:
+    CreditModel:
+      type: object
+      description: Represents a subscriber's credit balance in a specific currency.
+      properties:
+        currency:
+          type: string
+          description: Currency code of the credit balance.
+          example: USD
+        value:
+          type: string
+          description: Current credit value as a numeric string.
+          example: '150.00'
     FeatureModel:
       type: object
       description: Represents a feature that can be included in an offering or plan.
@@ -623,6 +580,136 @@ components:
           type: string
           description: Short description of the feature.
           example: Access to analytics dashboard.
+    CustomerId:
+      type: string
+      description: Unique identifier of the customer.
+      example: cust_GUGnpx3311fkaqGk7f
+    OnPayBehavior:
+      type: string
+      description: 'Defines how the system should behave when payment is processed during a plan checkout or migration.
+
+        * `SoftMigration`: Starts the plan only if payment is due. If no payment is due yet, the amount is added as credit instead of starting the plan.
+
+        * `HardMigration`: Starts the plan immediately, even if payment is not due. If the user already paid for unused time, the unused portion is refunded before starting the plan.'
+      enum:
+      - SoftMigration
+      - HardMigration
+      example: SoftMigration
+      x-enumDescriptions:
+        SoftMigration: Starts the plan only if payment is due. If no payment is due yet, the amount is added as credit instead of starting the plan.
+        HardMigration: Starts the plan immediately, even if payment is not due. If the user already paid for unused time, the unused portion is refunded before starting the plan.
+    CustomerSelector:
+      type: string
+      description: 'Flexible identifier for selecting a customer. Supports: customer ID (e.g., `cust_abc123`), an email (e.g., `user@example.com`), or a key/value identity (e.g., `Email:user@example.com`).'
+      example: cust_GUGnpx3311fkaqGk7f
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    SuspendSubscriberRequest:
+      type: object
+      description: Request payload for suspending a subscriber.
+      properties:
+        reason:
+          type: string
+          description: Reason for the suspension.
+          example: Suspicious behavior detected
+    OfferingId:
+      type: string
+      description: Offering's ID
+      example: offering_DKWhZGB6PZsgTcPwpf
+    PortalSessionModel:
+      type: object
+      description: Represents a subscriber portal session used for managing subscriptions, billing, and account details.
+      properties:
+        baseUrl:
+          $ref: '#/components/schemas/BaseUrl'
+        id:
+          $ref: '#/components/schemas/PortalSessionId'
+        subscriber:
+          $ref: '#/components/schemas/SubscriberModel'
+          description: The subscriber associated with this portal session.
+        expiration:
+          type:
+          - integer
+          - 'null'
+          format: unix-time
+          description: Expiration timestamp for the portal session.
+          example: 1710602000
+        isExpired:
+          type: boolean
+          description: Indicates whether the portal session is expired.
+          example: false
+        url:
+          type: string
+          description: Public URL where the subscriber can access the portal session.
+          example: https://btcpay.example.com/subscriber-portal/ps_665afQ23ExGouiY4EZ
+    CreateOfferingModel:
+      type: object
+      description: New offering data to create.
+      required:
+      - appName
+      properties:
+        appName:
+          type:
+          - string
+          - 'null'
+          description: Display name of the related [application](#tag/Apps).
+          example: Example App
+        successRedirectUrl:
+          type:
+          - string
+          - 'null'
+          description: The default URL to redirect to after a plan checkout is successful.
+          example: https://example.com/success
+        metadata:
+          type: object
+          description: Custom metadata for the offering.
+          additionalProperties: true
+          example:
+            category: saas
+            region: us
+        features:
+          type:
+          - array
+          - 'null'
+          description: List of features included in this offering.
+          items:
+            $ref: '#/components/schemas/FeatureModel'
+    UpdateSubscriberDatesRequest:
+      type: object
+      description: Request payload for updating subscriber dates. All fields are optional — omitting a field leaves the corresponding date unchanged.
+      properties:
+        startDate:
+          type:
+          - integer
+          - 'null'
+          format: unix-time
+          description: New subscription start date as a Unix timestamp. Omit to leave the current start date unchanged.
+          example: 1710000000
+        expirationDate:
+          type:
+          - integer
+          - 'null'
+          format: unix-time
+          description: New expiration date as a Unix timestamp. Updates `trialEnd` if the subscriber is in a trial, otherwise updates `periodEnd`. Grace period end and reminder date are recalculated automatically. Omit to leave the current expiration date unchanged.
+          example: 1712678400
+    CreatePortalSessionRequest:
+      type: object
+      description: Request payload for creating a subscriber portal session.
+      properties:
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        offeringId:
+          $ref: '#/components/schemas/OfferingId'
+        customerSelector:
+          $ref: '#/components/schemas/CustomerSelector'
+        durationMinutes:
+          type:
+          - integer
+          - 'null'
+          description: Duration in minutes before the portal session expires.
+          example: 30
     SubscriberModel:
       type: object
       description: Represents a subscriber of an offering.
@@ -707,56 +794,34 @@ components:
           example: 1713200000
         phase:
           $ref: '#/components/schemas/SubscriptionPhase'
-    OfferingId:
+    InvoiceId:
       type: string
-      description: Offering's ID
-      example: offering_DKWhZGB6PZsgTcPwpf
-    OnPayBehavior:
+      description: The invoice ID
+      example: HMprBnL9BTXWuPvpoKBS6e
+    BaseUrl:
       type: string
-      description: 'Defines how the system should behave when payment is processed during a plan checkout or migration.
-
-        * `SoftMigration`: Starts the plan only if payment is due. If no payment is due yet, the amount is added as credit instead of starting the plan.
-
-        * `HardMigration`: Starts the plan immediately, even if payment is not due. If the user already paid for unused time, the unused portion is refunded before starting the plan.'
-      enum:
-      - SoftMigration
-      - HardMigration
-      example: SoftMigration
-      x-enumDescriptions:
-        SoftMigration: Starts the plan only if payment is due. If no payment is due yet, the amount is added as credit instead of starting the plan.
-        HardMigration: Starts the plan immediately, even if payment is not due. If the user already paid for unused time, the unused portion is refunded before starting the plan.
-    CustomerSelector:
-      type: string
-      description: 'Flexible identifier for selecting a customer. Supports: customer ID (e.g., `cust_abc123`), an email (e.g., `user@example.com`), or a key/value identity (e.g., `Email:user@example.com`).'
-      example: cust_GUGnpx3311fkaqGk7f
-    CreditModel:
+      description: Base URL of the BTCPay Server instance.
+      example: https://btcpay.example.com/
+    UpdateCreditRequest:
       type: object
-      description: Represents a subscriber's credit balance in a specific currency.
+      description: Request payload for updating subscriber credit.
       properties:
-        currency:
+        credit:
           type: string
-          description: Currency code of the credit balance.
-          example: USD
-        value:
+          description: Amount of credit to add as a numeric string.
+          example: '25.00'
+        charge:
           type: string
-          description: Current credit value as a numeric string.
-          example: '150.00'
-    CreatePortalSessionRequest:
-      type: object
-      description: Request payload for creating a subscriber portal session.
-      properties:
-        storeId:
-          $ref: '#/components/schemas/StoreId'
-        offeringId:
-          $ref: '#/components/schemas/OfferingId'
-        customerSelector:
-          $ref: '#/components/schemas/CustomerSelector'
-        durationMinutes:
-          type:
-          - integer
-          - 'null'
-          description: Duration in minutes before the portal session expires.
-          example: 30
+          description: Amount to deduct as a numeric string.
+          example: '10.00'
+        description:
+          type: string
+          description: Short description explaining the credit change.
+          example: Monthly reward bonus
+        allowOverdraft:
+          type: boolean
+          description: Indicates if the credit balance is allowed to go negative.
+          example: false
     CreatePlanRequest:
       type: object
       description: Request payload for creating a new offering plan.
@@ -830,338 +895,14 @@ components:
             type: string
           example:
           - feature-analytics
-    PlanCheckoutId:
-      type: string
-      description: Unique identifier of the plan checkout session.
-      example: plancheckout_Hpm59L1NPCMUj477Q5
-    CustomerId:
-      type: string
-      description: Unique identifier of the customer.
-      example: cust_GUGnpx3311fkaqGk7f
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    PortalSessionId:
-      type: string
-      example: ps_665afQ23ExGouiY4EZ
-      description: Identifier of the portal session.
-    SuspendSubscriberRequest:
-      type: object
-      description: Request payload for suspending a subscriber.
-      properties:
-        reason:
-          type: string
-          description: Reason for the suspension.
-          example: Suspicious behavior detected
-    CreateOfferingModel:
-      type: object
-      description: New offering data to create.
-      required:
-      - appName
-      properties:
-        appName:
-          type:
-          - string
-          - 'null'
-          description: Display name of the related [application](#tag/Apps).
-          example: Example App
-        successRedirectUrl:
-          type:
-          - string
-          - 'null'
-          description: The default URL to redirect to after a plan checkout is successful.
-          example: https://example.com/success
-        metadata:
-          type: object
-          description: Custom metadata for the offering.
-          additionalProperties: true
-          example:
-            category: saas
-            region: us
-        features:
-          type:
-          - array
-          - 'null'
-          description: List of features included in this offering.
-          items:
-            $ref: '#/components/schemas/FeatureModel'
-    PortalSessionModel:
-      type: object
-      description: Represents a subscriber portal session used for managing subscriptions, billing, and account details.
-      properties:
-        baseUrl:
-          $ref: '#/components/schemas/BaseUrl'
-        id:
-          $ref: '#/components/schemas/PortalSessionId'
-        subscriber:
-          $ref: '#/components/schemas/SubscriberModel'
-          description: The subscriber associated with this portal session.
-        expiration:
-          type:
-          - integer
-          - 'null'
-          format: unix-time
-          description: Expiration timestamp for the portal session.
-          example: 1710602000
-        isExpired:
-          type: boolean
-          description: Indicates whether the portal session is expired.
-          example: false
-        url:
-          type: string
-          description: Public URL where the subscriber can access the portal session.
-          example: https://btcpay.example.com/subscriber-portal/ps_665afQ23ExGouiY4EZ
-    SubscriptionPhase:
-      type: string
-      description: Lifecycle phase of the subscription.
-      enum:
-      - Trial
-      - Normal
-      - Grace
-      - Expired
-      example: Normal
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
-    BaseUrl:
-      type: string
-      description: Base URL of the BTCPay Server instance.
-      example: https://btcpay.example.com/
-    CreatePlanCheckoutRequest:
-      type: object
-      description: Request payload for initiating a plan checkout session.
-      properties:
-        storeId:
-          $ref: '#/components/schemas/StoreId'
-        offeringId:
-          $ref: '#/components/schemas/OfferingId'
-        planId:
-          $ref: '#/components/schemas/PlanId'
-        customerSelector:
-          $ref: '#/components/schemas/CustomerSelector'
-        durationMinutes:
-          type:
-          - integer
-          - 'null'
-          description: How long the checkout session is valid, in minutes.
-          example: 30
-        onPayBehavior:
-          $ref: '#/components/schemas/OnPayBehavior'
-          default: SoftMigration
-        newSubscriberMetadata:
-          type: object
-          description: Metadata used when creating a new subscriber.
-          additionalProperties: true
-          example:
-            locale: en-US
-        invoiceMetadata:
-          type: object
-          description: Metadata attached to the created invoice.
-          additionalProperties: true
-          example:
-            campaign: winter-sale
-        metadata:
-          type: object
-          description: Custom metadata for the checkout session.
-          additionalProperties: true
-          example:
-            flow: upgrade
-        isTrial:
-          type:
-          - boolean
-          - 'null'
-          description: Indicates if the checkout starts a trial.
-          example: false
-        creditPurchase:
-          type:
-          - string
-          - 'null'
-          description: Amount of credit to purchase.
-          example: '20.00'
-        successRedirectLink:
-          type: string
-          description: URL to redirect the user after checkout success. (This default to offering's successRedirectLink, also, the `checkoutPlanId` query parameter will be added to the URL.)
-          example: https://example.com/thank-you
-        newSubscriberEmail:
-          type:
-          - string
-          - 'null'
-          description: Email address for creating a new subscriber. Keep `null` to let the user choose an email address in the checkout page.
-          example: user@example.com
-    CustomerModel:
-      type: object
-      description: Represents a customer associated with a store.
-      properties:
-        storeId:
-          $ref: '#/components/schemas/StoreId'
-        id:
-          $ref: '#/components/schemas/CustomerId'
-        externalId:
-          type: string
-          description: External system identifier for the customer.
-          example: ext_4455
-        identities:
-          type: object
-          description: Identity attributes for matching and lookup (e.g., email, username).
-          additionalProperties: true
-          example:
-            Email: subscriber@example.com
-        metadata:
-          type: object
-          description: Custom metadata associated with the customer.
-          additionalProperties: true
-          example:
-            segment: premium
-            locale: en-US
-    InvoiceId:
-      type: string
-      description: The invoice ID
-      example: HMprBnL9BTXWuPvpoKBS6e
-    UpdateCreditRequest:
-      type: object
-      description: Request payload for updating subscriber credit.
-      properties:
-        credit:
-          type: string
-          description: Amount of credit to add as a numeric string.
-          example: '25.00'
-        charge:
-          type: string
-          description: Amount to deduct as a numeric string.
-          example: '10.00'
-        description:
-          type: string
-          description: Short description explaining the credit change.
-          example: Monthly reward bonus
-        allowOverdraft:
-          type: boolean
-          description: Indicates if the credit balance is allowed to go negative.
-          example: false
-    UpdateSubscriberDatesRequest:
-      type: object
-      description: Request payload for updating subscriber dates. All fields are optional — omitting a field leaves the corresponding date unchanged.
-      properties:
-        startDate:
-          type:
-          - integer
-          - 'null'
-          format: unix-time
-          description: New subscription start date as a Unix timestamp. Omit to leave the current start date unchanged.
-          example: 1710000000
-        expirationDate:
-          type:
-          - integer
-          - 'null'
-          format: unix-time
-          description: New expiration date as a Unix timestamp. Updates `trialEnd` if the subscriber is in a trial, otherwise updates `periodEnd`. Grace period end and reminder date are recalculated automatically. Omit to leave the current expiration date unchanged.
-          example: 1712678400
     PlanId:
       type: string
       description: Plan's ID
       example: plan_KZMVyuQp3v2vFWnEUM
-    OfferingModel:
-      allOf:
-      - type: object
-        description: Represents an offering available in a store.
-        required:
-        - appName
-        properties:
-          id:
-            $ref: '#/components/schemas/OfferingId'
-          storeId:
-            $ref: '#/components/schemas/StoreId'
-          appId:
-            type: string
-            description: Identifier of the related [application](#tag/Apps).
-            example: app-001
-          plans:
-            type:
-            - array
-            - 'null'
-            description: List of plans available for this offering.
-            items:
-              $ref: '#/components/schemas/OfferingPlanModel'
-      - $ref: '#/components/schemas/CreateOfferingModel'
-    OfferingPlanModel:
-      type: object
-      description: Represents a pricing plan for an offering.
-      properties:
-        id:
-          $ref: '#/components/schemas/PlanId'
-        name:
-          type: string
-          description: Display name of the plan.
-          example: Starter Plan
-        status:
-          type: string
-          description: Current status of the plan.
-          enum:
-          - Active
-          - Retired
-          example: Active
-        price:
-          type: string
-          description: Price of the plan as a numeric string.
-          pattern: ^[0-9]+(\.[0-9]+)?$
-          example: '19.99'
-        currency:
-          type: string
-          description: Currency code for the price.
-          example: USD
-        recurringType:
-          type: string
-          description: Recurring interval for billing.
-          enum:
-          - Monthly
-          - Quarterly
-          - Yearly
-          - Lifetime
-          example: Monthly
-        gracePeriodDays:
-          type: integer
-          description: Number of grace period days after expiry.
-          example: 7
-        trialDays:
-          type: integer
-          description: Number of trial days before billing.
-          example: 14
-        description:
-          type: string
-          description: Short description of the plan.
-          example: Standard monthly subscription.
-        memberCount:
-          type: integer
-          description: Maximum number of members allowed under this plan.
-          example: 10
-        optimisticActivation:
-          type: boolean
-          description: Indicates if the plan is activated before payment confirmation.
-          example: true
-        features:
-          type: array
-          description: List of feature identifiers included in this plan.
-          items:
-            type: string
-          example:
-          - feature-analytics
-        renewable:
-          type: boolean
-          description: Indicates if the plan can be renewed.
-          example: true
-        metadata:
-          type: object
-          description: Custom metadata for the plan.
-          additionalProperties: true
-          example:
-            tier: standard
+    PlanCheckoutId:
+      type: string
+      description: Unique identifier of the plan checkout session.
+      example: plancheckout_Hpm59L1NPCMUj477Q5
     PlanCheckoutModel:
       type: object
       description: Represents a checkout session for activating or purchasing a subscription plan.
@@ -1253,6 +994,265 @@ components:
           - 'null'
           description: Credit amount to purchase to top-up the account. Used when the user wants to top-up his credits. This will not automatically renew the plan.
           example: '10.00'
+    OfferingPlanModel:
+      type: object
+      description: Represents a pricing plan for an offering.
+      properties:
+        id:
+          $ref: '#/components/schemas/PlanId'
+        name:
+          type: string
+          description: Display name of the plan.
+          example: Starter Plan
+        status:
+          type: string
+          description: Current status of the plan.
+          enum:
+          - Active
+          - Retired
+          example: Active
+        price:
+          type: string
+          description: Price of the plan as a numeric string.
+          pattern: ^[0-9]+(\.[0-9]+)?$
+          example: '19.99'
+        currency:
+          type: string
+          description: Currency code for the price.
+          example: USD
+        recurringType:
+          type: string
+          description: Recurring interval for billing.
+          enum:
+          - Monthly
+          - Quarterly
+          - Yearly
+          - Lifetime
+          example: Monthly
+        gracePeriodDays:
+          type: integer
+          description: Number of grace period days after expiry.
+          example: 7
+        trialDays:
+          type: integer
+          description: Number of trial days before billing.
+          example: 14
+        description:
+          type: string
+          description: Short description of the plan.
+          example: Standard monthly subscription.
+        memberCount:
+          type: integer
+          description: Maximum number of members allowed under this plan.
+          example: 10
+        optimisticActivation:
+          type: boolean
+          description: Indicates if the plan is activated before payment confirmation.
+          example: true
+        features:
+          type: array
+          description: List of feature identifiers included in this plan.
+          items:
+            type: string
+          example:
+          - feature-analytics
+        renewable:
+          type: boolean
+          description: Indicates if the plan can be renewed.
+          example: true
+        metadata:
+          type: object
+          description: Custom metadata for the plan.
+          additionalProperties: true
+          example:
+            tier: standard
+    OfferingModel:
+      allOf:
+      - type: object
+        description: Represents an offering available in a store.
+        required:
+        - appName
+        properties:
+          id:
+            $ref: '#/components/schemas/OfferingId'
+          storeId:
+            $ref: '#/components/schemas/StoreId'
+          appId:
+            type: string
+            description: Identifier of the related [application](#tag/Apps).
+            example: app-001
+          plans:
+            type:
+            - array
+            - 'null'
+            description: List of plans available for this offering.
+            items:
+              $ref: '#/components/schemas/OfferingPlanModel'
+      - $ref: '#/components/schemas/CreateOfferingModel'
+    CustomerModel:
+      type: object
+      description: Represents a customer associated with a store.
+      properties:
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        id:
+          $ref: '#/components/schemas/CustomerId'
+        externalId:
+          type: string
+          description: External system identifier for the customer.
+          example: ext_4455
+        identities:
+          type: object
+          description: Identity attributes for matching and lookup (e.g., email, username).
+          additionalProperties: true
+          example:
+            Email: subscriber@example.com
+        metadata:
+          type: object
+          description: Custom metadata associated with the customer.
+          additionalProperties: true
+          example:
+            segment: premium
+            locale: en-US
+    CreatePlanCheckoutRequest:
+      type: object
+      description: Request payload for initiating a plan checkout session.
+      properties:
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        offeringId:
+          $ref: '#/components/schemas/OfferingId'
+        planId:
+          $ref: '#/components/schemas/PlanId'
+        customerSelector:
+          $ref: '#/components/schemas/CustomerSelector'
+        durationMinutes:
+          type:
+          - integer
+          - 'null'
+          description: How long the checkout session is valid, in minutes.
+          example: 30
+        onPayBehavior:
+          $ref: '#/components/schemas/OnPayBehavior'
+          default: SoftMigration
+        newSubscriberMetadata:
+          type: object
+          description: Metadata used when creating a new subscriber.
+          additionalProperties: true
+          example:
+            locale: en-US
+        invoiceMetadata:
+          type: object
+          description: Metadata attached to the created invoice.
+          additionalProperties: true
+          example:
+            campaign: winter-sale
+        metadata:
+          type: object
+          description: Custom metadata for the checkout session.
+          additionalProperties: true
+          example:
+            flow: upgrade
+        isTrial:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if the checkout starts a trial.
+          example: false
+        creditPurchase:
+          type:
+          - string
+          - 'null'
+          description: Amount of credit to purchase.
+          example: '20.00'
+        successRedirectLink:
+          type: string
+          description: URL to redirect the user after checkout success. (This default to offering's successRedirectLink, also, the `checkoutPlanId` query parameter will be added to the URL.)
+          example: https://example.com/thank-you
+        newSubscriberEmail:
+          type:
+          - string
+          - 'null'
+          description: Email address for creating a new subscriber. Keep `null` to let the user choose an email address in the checkout page.
+          example: user@example.com
+    PortalSessionId:
+      type: string
+      example: ps_665afQ23ExGouiY4EZ
+      description: Identifier of the portal session.
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
+    SubscriptionPhase:
+      type: string
+      description: Lifecycle phase of the subscription.
+      enum:
+      - Trial
+      - Normal
+      - Grace
+      - Expired
+      example: Normal
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    Subscriptions_Currency:
+      name: currency
+      in: path
+      required: true
+      description: Currency code for the credit balance. Use `current` to retrieve the current balance in the currency of the current plan.
+      schema:
+        type: string
+      example: current
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      description: Plan's ID
+      example: plan_KZMVyuQp3v2vFWnEUM
+      schema:
+        $ref: '#/components/schemas/PlanId'
+    CustomerSelector:
+      name: customerSelector
+      in: path
+      required: true
+      description: 'Flexible customer selector. Supports: a customer ID (e.g., `cust_GUGnpx3311fkaqGk7f`), an email (e.g., `subscriber@example.com`), or a key/value identity (e.g., `Email:subscriber@example.com`).'
+      schema:
+        $ref: '#/components/schemas/CustomerSelector'
+    PlanCheckoutId:
+      name: checkoutId
+      in: path
+      required: true
+      example: plancheckout_Hpm59L1NPCMUj477Q5
+      description: Unique identifier of the plan checkout session.
+      schema:
+        $ref: '#/components/schemas/PlanCheckoutId'
+    PortalSessionId:
+      name: portalSessionId
+      in: path
+      required: true
+      example: ps_665afQ23ExGouiY4EZ
+      description: Identifier of the portal session.
+      schema:
+        $ref: '#/components/schemas/PortalSessionId'
+    OfferingId:
+      name: offeringId
+      in: path
+      required: true
+      description: Offering's ID
+      example: offering_DKWhZGB6PZsgTcPwpf
+      schema:
+        $ref: '#/components/schemas/OfferingId'
   securitySchemes:
     API_Key:
       type: apiKey

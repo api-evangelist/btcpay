@@ -253,19 +253,6 @@ paths:
       security: []
 components:
   schemas:
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
     PayoutPaymentProof:
       type: object
       additionalProperties: true
@@ -304,6 +291,48 @@ components:
       - InProgress
       - Completed
       - Cancelled
+    PayoutDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PayoutData'
+    PullPaymentData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the pull payment
+        name:
+          type: string
+          description: Name given to pull payment when it was created
+        description:
+          type: string
+          description: Description given to pull payment when it was created
+        currency:
+          type: string
+          example: BTC
+          description: The currency of the pull payment's amount
+        amount:
+          type: string
+          format: decimal
+          example: '1.12000000'
+          description: The amount in the currency of this pull payment as a decimal string
+        BOLT11Expiration:
+          type: string
+          example: 30
+          description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
+        autoApproveClaims:
+          type:
+          - boolean
+          - 'null'
+          example: false
+          default: false
+          description: Any payouts created for this pull payment will skip the approval phase upon creation
+        archived:
+          type: boolean
+          description: Whether this pull payment is archived
+        viewLink:
+          type: string
+          description: The link to a page to claim payouts to this pull payment
     LNURLData:
       type: object
       properties:
@@ -380,6 +409,23 @@ components:
                 - 'null'
                 format: url
                 description: A link to the source of the payout creation. Shown on the payout list page.
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request
@@ -390,48 +436,6 @@ components:
         message:
           type: string
           description: User friendly error message about the error
-    PullPaymentData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the pull payment
-        name:
-          type: string
-          description: Name given to pull payment when it was created
-        description:
-          type: string
-          description: Description given to pull payment when it was created
-        currency:
-          type: string
-          example: BTC
-          description: The currency of the pull payment's amount
-        amount:
-          type: string
-          format: decimal
-          example: '1.12000000'
-          description: The amount in the currency of this pull payment as a decimal string
-        BOLT11Expiration:
-          type: string
-          example: 30
-          description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
-        autoApproveClaims:
-          type:
-          - boolean
-          - 'null'
-          example: false
-          default: false
-          description: Any payouts created for this pull payment will skip the approval phase upon creation
-        archived:
-          type: boolean
-          description: Whether this pull payment is archived
-        viewLink:
-          type: string
-          description: The link to a page to claim payouts to this pull payment
-    PayoutDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PayoutData'
     CreatePayoutRequest:
       type: object
       properties:
@@ -446,10 +450,6 @@ components:
           description: The amount of the payout in the currency of the pull payment (eg. USD).
         payoutMethodId:
           $ref: '#/components/schemas/PayoutMethodId'
-    PayoutMethodId:
-      type: string
-      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
-      example: BTC-LN
   securitySchemes:
     API_Key:
       type: apiKey

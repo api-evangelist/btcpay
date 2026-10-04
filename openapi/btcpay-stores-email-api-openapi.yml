@@ -128,10 +128,6 @@ paths:
         Basic: []
 components:
   schemas:
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     UpdateEmailSettings:
       allOf:
       - $ref: '#/components/schemas/EmailSettingsBase'
@@ -187,6 +183,10 @@ components:
           message:
             type: string
             description: User friendly error message about the validation
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
   parameters:
     StoreId:
       name: storeId

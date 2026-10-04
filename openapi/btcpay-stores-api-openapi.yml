@@ -244,19 +244,6 @@ paths:
         Basic: []
 components:
   schemas:
-    TimeSpanDays:
-      allOf:
-      - $ref: '#/components/schemas/TimeSpan'
-      format: days
-      description: A span of times in days
-    TimeSpan:
-      type: number
-      format: int32
-      example: 90
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     StoreData:
       allOf:
       - $ref: '#/components/schemas/StoreBaseData'
@@ -265,11 +252,64 @@ components:
           id:
             type: string
             description: The id of the store
-    TimeSpanSeconds:
-      allOf:
-      - $ref: '#/components/schemas/TimeSpan'
-      format: seconds
-      description: A span of times in seconds
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    RoleData:
+      type: object
+      properties:
+        id:
+          description: The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)
+          type: string
+          example: Owner
+        role:
+          description: The role's name
+          type: string
+          example: Owner
+        permissions:
+          description: The permissions attached to this role
+          type: array
+          items:
+            type: string
+          example:
+          - btcpay.store.canmodifystoresettings
+        isServerRole:
+          description: Whether this role is at the scope of the store or scope of the server
+          type: boolean
+          example: true
+    ReceiptOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+          description: A public page will be accessible once the invoice is settled. If null or unspecified, it will fallback to the store's settings. (The default store settings is true)
+        showQR:
+          type:
+          - boolean
+          - 'null'
+          default: null
+          description: Show the QR code of the receipt in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
+        showPayments:
+          type:
+          - boolean
+          - 'null'
+          default: null
+          description: Show the payment list in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
+    NetworkFeeMode:
+      type: string
+      description: Check whether network fee should be added to the invoice if on-chain payment is used. ([More information](https://docs.btcpayserver.org/FAQ/Stores/#add-network-fee-to-invoice-vary-with-mining-fees))
+      x-enumNames:
+      - MultiplePaymentsOnly
+      - Always
+      - Never
+      enum:
+      - MultiplePaymentsOnly
+      - Always
+      - Never
     StoreBaseData:
       type: object
       x-abstract: true
@@ -463,21 +503,51 @@ components:
           items:
             $ref: '#/components/schemas/PaymentMethodCriteriaData'
           description: The criteria required to activate specific payment methods.
-    NetworkFeeMode:
+    StoreDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/StoreData'
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    TimeSpan:
+      type: number
+      format: int32
+      example: 90
+    StoreId:
       type: string
-      description: Check whether network fee should be added to the invoice if on-chain payment is used. ([More information](https://docs.btcpayserver.org/FAQ/Stores/#add-network-fee-to-invoice-vary-with-mining-fees))
-      x-enumNames:
-      - MultiplePaymentsOnly
-      - Always
-      - Never
-      enum:
-      - MultiplePaymentsOnly
-      - Always
-      - Never
-    PaymentMethodId:
-      type: string
-      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
-      example: BTC-CHAIN
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    TimeSpanSeconds:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: seconds
+      description: A span of times in seconds
     ApplicationUserData:
       type: object
       additionalProperties: false
@@ -535,10 +605,6 @@ components:
           items:
             type: string
           description: The roles of the user
-    StoreDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/StoreData'
     SpeedPolicy:
       type: string
       description: "This is a risk mitigation parameter for the merchant to configure how they want to fulfill orders depending on the number of block confirmations for the transaction made by the consumer on the selected cryptocurrency.\n`\"HighSpeed\"`: 0 confirmations (1 confirmation if RBF enabled in transaction)   \n`\"MediumSpeed\"`: 1 confirmation   \n`\"LowMediumSpeed\"`: 2 confirmations   \n`\"LowSpeed\"`: 6 confirmations\n"
@@ -552,6 +618,11 @@ components:
       - MediumSpeed
       - LowSpeed
       - LowMediumSpeed
+    TimeSpanDays:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: days
+      description: A span of times in days
     PaymentMethodCriteriaData:
       type: object
       properties:
@@ -573,77 +644,6 @@ components:
           type: boolean
           default: false
           description: If the criterion is for above or below the amount
-    RoleData:
-      type: object
-      properties:
-        id:
-          description: The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)
-          type: string
-          example: Owner
-        role:
-          description: The role's name
-          type: string
-          example: Owner
-        permissions:
-          description: The permissions attached to this role
-          type: array
-          items:
-            type: string
-          example:
-          - btcpay.store.canmodifystoresettings
-        isServerRole:
-          description: Whether this role is at the scope of the store or scope of the server
-          type: boolean
-          example: true
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    ReceiptOptions:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-          description: A public page will be accessible once the invoice is settled. If null or unspecified, it will fallback to the store's settings. (The default store settings is true)
-        showQR:
-          type:
-          - boolean
-          - 'null'
-          default: null
-          description: Show the QR code of the receipt in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
-        showPayments:
-          type:
-          - boolean
-          - 'null'
-          default: null
-          description: Show the payment list in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
   parameters:
     StoreId:
       name: storeId

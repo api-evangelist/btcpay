@@ -150,11 +150,15 @@ paths:
           description: The invoice could not be found
       security: []
 components:
-  schemas:
+  parameters:
     InvoiceId:
-      type: string
+      name: invoiceId
+      in: path
+      required: true
       description: The invoice ID
-      example: HMprBnL9BTXWuPvpoKBS6e
+      schema:
+        $ref: '#/components/schemas/InvoiceId'
+  schemas:
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request
@@ -165,14 +169,10 @@ components:
         message:
           type: string
           description: User friendly error message about the error
-  parameters:
     InvoiceId:
-      name: invoiceId
-      in: path
-      required: true
+      type: string
       description: The invoice ID
-      schema:
-        $ref: '#/components/schemas/InvoiceId'
+      example: HMprBnL9BTXWuPvpoKBS6e
   securitySchemes:
     API_Key:
       type: apiKey

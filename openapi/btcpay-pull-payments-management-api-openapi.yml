@@ -166,10 +166,10 @@ paths:
         Basic: []
 components:
   schemas:
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    PullPaymentDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PullPaymentData'
     PullPaymentData:
       type: object
       properties:
@@ -221,10 +221,10 @@ components:
           message:
             type: string
             description: User friendly error message about the validation
-    PullPaymentDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PullPaymentData'
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
   parameters:
     StoreId:
       name: storeId

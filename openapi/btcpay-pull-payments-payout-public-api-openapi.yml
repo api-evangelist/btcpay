@@ -58,28 +58,6 @@ paths:
       security: []
 components:
   schemas:
-    PayoutPaymentProof:
-      type: object
-      additionalProperties: true
-      description: Additional information around how the payout is being or has been paid out. The mentioned properties are all optional (except `proofType`) and you can introduce any json format you wish.
-      properties:
-        proofType:
-          type: string
-          description: The type of payment proof it is.
-      anyOf:
-      - properties:
-          link:
-            type:
-            - string
-            - 'null'
-            format: url
-            description: A link to the proof of payout payment.
-      - properties:
-          id:
-            type:
-            - string
-            - 'null'
-            description: A unique identifier to the proof of payout payment.
     PayoutData:
       type: object
       properties:
@@ -165,6 +143,28 @@ components:
       type: string
       description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
       example: BTC-LN
+    PayoutPaymentProof:
+      type: object
+      additionalProperties: true
+      description: Additional information around how the payout is being or has been paid out. The mentioned properties are all optional (except `proofType`) and you can introduce any json format you wish.
+      properties:
+        proofType:
+          type: string
+          description: The type of payment proof it is.
+      anyOf:
+      - properties:
+          link:
+            type:
+            - string
+            - 'null'
+            format: url
+            description: A link to the proof of payout payment.
+      - properties:
+          id:
+            type:
+            - string
+            - 'null'
+            description: A unique identifier to the proof of payout payment.
   securitySchemes:
     API_Key:
       type: apiKey

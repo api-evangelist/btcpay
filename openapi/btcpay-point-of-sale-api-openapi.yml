@@ -46,6 +46,66 @@ paths:
           description: POS app with specified ID was not found
 components:
   schemas:
+    PointOfSaleAppData:
+      allOf:
+      - $ref: '#/components/schemas/PointOfSaleBaseData'
+      - type: object
+        properties:
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/AppItem'
+            description: JSON object of app items
+            example:
+            - id: green tea
+              title: Green Tea
+              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
+              image: ~/img/pos-sample/green-tea.jpg
+              price: '1.0'
+              priceType: Fixed
+              buyButtonText: null
+              inventory: 5
+              paymentMethods: null
+              disabled: false
+            - id: black tea
+              title: Black Tea
+              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
+              image: ~/img/pos-sample/black-tea.jpg
+              price: '2.0'
+              priceType: Fixed
+              buyButtonText: Test Buy Button Text
+              inventory: null
+              paymentMethods: null
+              disabled: false
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the app does not appear in the apps list by default.
+          default: false
     PointOfSaleBaseData:
       allOf:
       - $ref: '#/components/schemas/AppBaseData'
@@ -188,70 +248,6 @@ components:
             - string
             - 'null'
             description: Form ID to request customer data
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    PointOfSaleAppData:
-      allOf:
-      - $ref: '#/components/schemas/PointOfSaleBaseData'
-      - type: object
-        properties:
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/AppItem'
-            description: JSON object of app items
-            example:
-            - id: green tea
-              title: Green Tea
-              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
-              image: ~/img/pos-sample/green-tea.jpg
-              price: '1.0'
-              priceType: Fixed
-              buyButtonText: null
-              inventory: 5
-              paymentMethods: null
-              disabled: false
-            - id: black tea
-              title: Black Tea
-              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
-              image: ~/img/pos-sample/black-tea.jpg
-              price: '2.0'
-              priceType: Fixed
-              buyButtonText: Test Buy Button Text
-              inventory: null
-              paymentMethods: null
-              disabled: false
-    AppBaseData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the app
-          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
-        appName:
-          type: string
-          description: Name given to the app when it was created
-          example: my test app
-        storeId:
-          description: Id of the store to which the app belongs
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
-        created:
-          type: integer
-          example: 1651554744
-          description: UNIX timestamp for when the app was created
-        appType:
-          type: string
-          example: PointOfSale
-          description: Type of the app which was created
-        archived:
-          type:
-          - boolean
-          - 'null'
-          description: If true, the app does not appear in the apps list by default.
-          default: false
     AppItem:
       type: object
       properties:
@@ -301,6 +297,10 @@ components:
           type: boolean
           description: If true, the item does not appear in the list by default.
           default: false
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
   parameters:
     AppId:
       name: appId
