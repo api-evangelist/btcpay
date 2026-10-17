@@ -77,35 +77,6 @@ components:
               inventory: null
               paymentMethods: null
               disabled: false
-    AppBaseData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the app
-          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
-        appName:
-          type: string
-          description: Name given to the app when it was created
-          example: my test app
-        storeId:
-          description: Id of the store to which the app belongs
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
-        created:
-          type: integer
-          example: 1651554744
-          description: UNIX timestamp for when the app was created
-        appType:
-          type: string
-          example: PointOfSale
-          description: Type of the app which was created
-        archived:
-          type:
-          - boolean
-          - 'null'
-          description: If true, the app does not appear in the apps list by default.
-          default: false
     PointOfSaleBaseData:
       allOf:
       - $ref: '#/components/schemas/AppBaseData'
@@ -248,6 +219,35 @@ components:
             - string
             - 'null'
             description: Form ID to request customer data
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the app does not appear in the apps list by default.
+          default: false
     AppItem:
       type: object
       properties:

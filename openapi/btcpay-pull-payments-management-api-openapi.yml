@@ -166,10 +166,6 @@ paths:
         Basic: []
 components:
   schemas:
-    PullPaymentDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PullPaymentData'
     PullPaymentData:
       type: object
       properties:
@@ -208,6 +204,10 @@ components:
         viewLink:
           type: string
           description: The link to a page to claim payouts to this pull payment
+    PullPaymentDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PullPaymentData'
     ValidationProblemDetails:
       type: array
       description: An array of validation errors of the request

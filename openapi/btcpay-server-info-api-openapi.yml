@@ -79,10 +79,27 @@ paths:
         Basic: []
 components:
   schemas:
-    PaymentMethodId:
-      type: string
-      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
-      example: BTC-CHAIN
+    ApplicationServerInfoData:
+      type: object
+      properties:
+        version:
+          type: string
+          description: BTCPay Server version
+        onion:
+          type: string
+          description: The Tor hostname
+        supportedPaymentMethods:
+          type: array
+          description: The payment methods this server supports
+          items:
+            type: string
+        fullySynched:
+          type: boolean
+          description: True if the instance is fully synchronized, according to NBXplorer
+        syncStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationServerInfoSyncStatusData'
     RoleData:
       type: object
       properties:
@@ -105,6 +122,28 @@ components:
           description: Whether this role is at the scope of the store or scope of the server
           type: boolean
           example: true
+    ApplicationServerInfoNodeStatusData:
+      type:
+      - object
+      - 'null'
+      description: Detailed sync status of the internal full node
+      properties:
+        headers:
+          type: integer
+          description: The height of the chain of header of the internal full node
+        blocks:
+          type: integer
+          description: The height of the latest validated block of the internal full node
+        verificationProgress:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          description: The current synchronization progress
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
     ApplicationServerInfoSyncStatusData:
       type: object
       description: Detailed sync status
@@ -125,24 +164,6 @@ components:
         available:
           type: boolean
           description: True if the full node and the indexer are fully synchronized
-    ApplicationServerInfoNodeStatusData:
-      type:
-      - object
-      - 'null'
-      description: Detailed sync status of the internal full node
-      properties:
-        headers:
-          type: integer
-          description: The height of the chain of header of the internal full node
-        blocks:
-          type: integer
-          description: The height of the latest validated block of the internal full node
-        verificationProgress:
-          type: number
-          format: double
-          minimum: 0.0
-          maximum: 1.0
-          description: The current synchronization progress
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request
@@ -153,27 +174,6 @@ components:
         message:
           type: string
           description: User friendly error message about the error
-    ApplicationServerInfoData:
-      type: object
-      properties:
-        version:
-          type: string
-          description: BTCPay Server version
-        onion:
-          type: string
-          description: The Tor hostname
-        supportedPaymentMethods:
-          type: array
-          description: The payment methods this server supports
-          items:
-            type: string
-        fullySynched:
-          type: boolean
-          description: True if the instance is fully synchronized, according to NBXplorer
-        syncStatus:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationServerInfoSyncStatusData'
   securitySchemes:
     API_Key:
       type: apiKey

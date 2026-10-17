@@ -123,26 +123,6 @@ components:
                 - 'null'
                 format: url
                 description: A link to the source of the payout creation. Shown on the payout list page.
-    PayoutState:
-      type: string
-      example: AwaitingPayment
-      description: The state of the payout (`AwaitingApproval`, `AwaitingPayment`, `InProgress`, `Completed`, `Cancelled`)
-      x-enumNames:
-      - AwaitingApproval
-      - AwaitingPayment
-      - InProgress
-      - Completed
-      - Cancelled
-      enum:
-      - AwaitingApproval
-      - AwaitingPayment
-      - InProgress
-      - Completed
-      - Cancelled
-    PayoutMethodId:
-      type: string
-      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
-      example: BTC-LN
     PayoutPaymentProof:
       type: object
       additionalProperties: true
@@ -165,6 +145,26 @@ components:
             - string
             - 'null'
             description: A unique identifier to the proof of payout payment.
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
+    PayoutState:
+      type: string
+      example: AwaitingPayment
+      description: The state of the payout (`AwaitingApproval`, `AwaitingPayment`, `InProgress`, `Completed`, `Cancelled`)
+      x-enumNames:
+      - AwaitingApproval
+      - AwaitingPayment
+      - InProgress
+      - Completed
+      - Cancelled
+      enum:
+      - AwaitingApproval
+      - AwaitingPayment
+      - InProgress
+      - Completed
+      - Cancelled
   securitySchemes:
     API_Key:
       type: apiKey

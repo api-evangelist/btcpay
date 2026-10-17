@@ -155,70 +155,7 @@ paths:
         - btcpay.store.canmodifystoresettings
         Basic: []
 components:
-  parameters:
-    UserIdOrEmail:
-      name: idOrEmail
-      in: path
-      required: true
-      description: The user's id or email
-      schema:
-        type: string
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
   schemas:
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    StoreUserData:
-      allOf:
-      - type: object
-        properties:
-          userId:
-            type: string
-            description: The id of the user (Deprecated, use `id` instead)
-            deprecated: true
-          role:
-            type: string
-            description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest` (Deprecated, use `storeRole` instead)
-            deprecated: true
-          storeRole:
-            type: string
-            description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest`
-      - $ref: '#/components/schemas/ApplicationUserData'
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
     ApplicationUserData:
       type: object
       additionalProperties: false
@@ -276,10 +213,73 @@ components:
           items:
             type: string
           description: The roles of the user
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    StoreUserData:
+      allOf:
+      - type: object
+        properties:
+          userId:
+            type: string
+            description: The id of the user (Deprecated, use `id` instead)
+            deprecated: true
+          role:
+            type: string
+            description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest` (Deprecated, use `storeRole` instead)
+            deprecated: true
+          storeRole:
+            type: string
+            description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest`
+      - $ref: '#/components/schemas/ApplicationUserData'
     StoreUserDataList:
       type: array
       items:
         $ref: '#/components/schemas/StoreUserData'
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    UserIdOrEmail:
+      name: idOrEmail
+      in: path
+      required: true
+      description: The user's id or email
+      schema:
+        type: string
   securitySchemes:
     API_Key:
       type: apiKey

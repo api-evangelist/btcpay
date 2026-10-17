@@ -159,6 +159,10 @@ components:
       schema:
         $ref: '#/components/schemas/InvoiceId'
   schemas:
+    InvoiceId:
+      type: string
+      description: The invoice ID
+      example: HMprBnL9BTXWuPvpoKBS6e
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request
@@ -169,10 +173,6 @@ components:
         message:
           type: string
           description: User friendly error message about the error
-    InvoiceId:
-      type: string
-      description: The invoice ID
-      example: HMprBnL9BTXWuPvpoKBS6e
   securitySchemes:
     API_Key:
       type: apiKey

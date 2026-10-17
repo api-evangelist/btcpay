@@ -273,50 +273,6 @@ paths:
         Basic: []
 components:
   schemas:
-    PaymentMethodId:
-      type: string
-      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
-      example: BTC-CHAIN
-    UpdateOnChainAutomatedTransferSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        feeTargetBlock:
-          type:
-          - number
-          - 'null'
-          description: How many blocks should the fee rate calculation target to confirm in. Set to 1 if not provided
-        intervalSeconds:
-          description: How often should the processor run
-          allOf:
-          - $ref: '#/components/schemas/TimeSpanSeconds'
-        threshold:
-          type: string
-          format: decimal
-          minimum: 0
-          description: Only process payouts when this payout sum is reached.
-          example: '0.1'
-        processNewPayoutsInstantly:
-          description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
-          type: boolean
-          default: false
-    PayoutProcessorData:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          description: unique identifier of the payout processor
-          type: string
-        friendlyName:
-          description: Human name of the payout processor
-          type: string
-        payoutMethods:
-          description: Supported, payment methods by this processor
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
     UpdateLightningAutomatedTransferSettings:
       type: object
       additionalProperties: false
@@ -334,23 +290,6 @@ components:
           description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
           type: boolean
           default: false
-    PayoutMethodId:
-      type: string
-      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
-      example: BTC-LN
-    TimeSpan:
-      type: number
-      format: int32
-      example: 90
-    TimeSpanSeconds:
-      allOf:
-      - $ref: '#/components/schemas/TimeSpan'
-      format: seconds
-      description: A span of times in seconds
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     LightningAutomatedTransferSettings:
       type: object
       additionalProperties: false
@@ -393,7 +332,76 @@ components:
           description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
           type: boolean
           default: false
+    PayoutProcessorData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: unique identifier of the payout processor
+          type: string
+        friendlyName:
+          description: Human name of the payout processor
+          type: string
+        payoutMethods:
+          description: Supported, payment methods by this processor
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    TimeSpan:
+      type: number
+      format: int32
+      example: 90
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    TimeSpanSeconds:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: seconds
+      description: A span of times in seconds
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    UpdateOnChainAutomatedTransferSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        feeTargetBlock:
+          type:
+          - number
+          - 'null'
+          description: How many blocks should the fee rate calculation target to confirm in. Set to 1 if not provided
+        intervalSeconds:
+          description: How often should the processor run
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+        threshold:
+          type: string
+          format: decimal
+          minimum: 0
+          description: Only process payouts when this payout sum is reached.
+          example: '0.1'
+        processNewPayoutsInstantly:
+          description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
+          type: boolean
+          default: false
   parameters:
+    PayoutMethodId:
+      name: payoutMethodId
+      in: path
+      required: true
+      description: The payout method id
+      schema:
+        $ref: '#/components/schemas/PayoutMethodId'
+      example: BTC-CHAIN
     StoreId:
       name: storeId
       in: path
@@ -408,14 +416,6 @@ components:
       description: The payment method id of the payment method to update
       schema:
         $ref: '#/components/schemas/PaymentMethodId'
-      example: BTC-CHAIN
-    PayoutMethodId:
-      name: payoutMethodId
-      in: path
-      required: true
-      description: The payout method id
-      schema:
-        $ref: '#/components/schemas/PayoutMethodId'
       example: BTC-CHAIN
   securitySchemes:
     API_Key:

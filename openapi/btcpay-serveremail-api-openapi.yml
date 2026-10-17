@@ -79,6 +79,14 @@ paths:
         Basic: []
 components:
   schemas:
+    GetServerEmailSettings:
+      allOf:
+      - $ref: '#/components/schemas/GetEmailSettings'
+      - type: object
+        properties:
+          enableStoresToUseServerEmailSettings:
+            type: boolean
+            description: Indicates if stores can use server email settings
     UpdateEmailSettings:
       allOf:
       - $ref: '#/components/schemas/EmailSettingsBase'
@@ -90,6 +98,22 @@ components:
             - 'null'
             description: SMTP password. Keep null or empty to not update it.
             example: MyS3cr3t
+    GetEmailSettings:
+      allOf:
+      - $ref: '#/components/schemas/EmailSettingsBase'
+      - type: object
+        properties:
+          passwordSet:
+            type: boolean
+            description: '`true` if the password has been set.'
+    UpdateServerEmailSettings:
+      allOf:
+      - $ref: '#/components/schemas/UpdateEmailSettings'
+      - type: object
+        properties:
+          enableStoresToUseServerEmailSettings:
+            type: boolean
+            description: Indicates if stores can use server email settings
     EmailSettingsBase:
       type: object
       properties:
@@ -113,30 +137,6 @@ components:
           type: boolean
           description: Disable TLS certificate security checks
           example: false
-    GetServerEmailSettings:
-      allOf:
-      - $ref: '#/components/schemas/GetEmailSettings'
-      - type: object
-        properties:
-          enableStoresToUseServerEmailSettings:
-            type: boolean
-            description: Indicates if stores can use server email settings
-    GetEmailSettings:
-      allOf:
-      - $ref: '#/components/schemas/EmailSettingsBase'
-      - type: object
-        properties:
-          passwordSet:
-            type: boolean
-            description: '`true` if the password has been set.'
-    UpdateServerEmailSettings:
-      allOf:
-      - $ref: '#/components/schemas/UpdateEmailSettings'
-      - type: object
-        properties:
-          enableStoresToUseServerEmailSettings:
-            type: boolean
-            description: Indicates if stores can use server email settings
     ProblemDetails:
       type: object
       description: Description of an error happening during processing of the request

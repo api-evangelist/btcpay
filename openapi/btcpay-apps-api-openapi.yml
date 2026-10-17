@@ -408,311 +408,41 @@ paths:
         Basic: []
 components:
   schemas:
-    AppItem:
+    FileData:
       type: object
+      additionalProperties: false
       properties:
         id:
           type: string
-          example: green-tea
-          description: Unique ID of the item
-        title:
+          description: The id of the file
+        userId:
           type: string
-          example: Green Tea
-          description: The display name of the item
-        description:
+          description: The id of the user that uploaded the file
+        uri:
           type: string
-          example: Lovely, fresh and tender.
-          description: A description text for the item
-        image:
-          type: string
-          example: http://teashop.com/img/green-tea.jpg
-          description: An image URL for the item
-        price:
+          description: The internal URI of the file
+        url:
           type:
           - string
           - 'null'
-          format: decimal
-          example: '21.0'
-        priceType:
-          type: string
-          x-enumNames:
-          - Fixed
-          - Topup
-          - Minimum
-          enum:
-          - Fixed
-          - Topup
-          - Minimum
-        buyButtonText:
-          type: string
-          example: Buy me!
-          description: A custom text for the buy button for the item
-        inventory:
+          description: The full URL of the file
+        originalName:
           type:
-          - integer
+          - string
           - 'null'
-          example: 21
-          description: The remaining stock the item
-        disabled:
-          type: boolean
-          description: If true, the item does not appear in the list by default.
-          default: false
-    PointOfSaleAppData:
-      allOf:
-      - $ref: '#/components/schemas/PointOfSaleBaseData'
-      - type: object
-        properties:
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/AppItem'
-            description: JSON object of app items
-            example:
-            - id: green tea
-              title: Green Tea
-              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
-              image: ~/img/pos-sample/green-tea.jpg
-              price: '1.0'
-              priceType: Fixed
-              buyButtonText: null
-              inventory: 5
-              paymentMethods: null
-              disabled: false
-            - id: black tea
-              title: Black Tea
-              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
-              image: ~/img/pos-sample/black-tea.jpg
-              price: '2.0'
-              priceType: Fixed
-              buyButtonText: Test Buy Button Text
-              inventory: null
-              paymentMethods: null
-              disabled: false
-    AppBaseData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the app
-          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
-        appName:
-          type: string
-          description: Name given to the app when it was created
-          example: my test app
-        storeId:
-          description: Id of the store to which the app belongs
-          allOf:
-          - $ref: '#/components/schemas/StoreId'
+          description: The original name of the file
+        storageName:
+          type:
+          - string
+          - 'null'
+          description: The storage name of the file
         created:
-          type: integer
-          example: 1651554744
-          description: UNIX timestamp for when the app was created
-        appType:
-          type: string
-          example: PointOfSale
-          description: Type of the app which was created
-        archived:
           type:
-          - boolean
+          - number
           - 'null'
-          description: If true, the app does not appear in the apps list by default.
-          default: false
-    AppSalesStatsItem:
-      type: object
-      properties:
-        date:
-          type: integer
-          description: UNIX timestamp of the beginning of that day
-        label:
-          type: string
-          description: Short date as label
-          example: Jul 21
-        salesCount:
-          type: integer
-          example: 21
-          description: Total sales on that day
-    PointOfSaleBaseData:
-      allOf:
-      - $ref: '#/components/schemas/AppBaseData'
-      - type: object
-        properties:
-          title:
-            type:
-            - string
-            - 'null'
-            description: Display title of the app
-            example: My PoS app
-          description:
-            type:
-            - string
-            - 'null'
-            description: App description
-            example: This is my amazing PoS app
-          defaultView:
-            type:
-            - string
-            - 'null'
-            description: App view type (e.g., static, cart, etc...)
-            example: Cart
-            x-enumNames:
-            - Static
-            - Cart
-            - Light
-            - Print
-            enum:
-            - Static
-            - Cart
-            - Light
-            - Print
-          showItems:
-            type:
-            - boolean
-            - 'null'
-            default: false
-            description: Display item selection for keypad
-            example: true
-          showCustomAmount:
-            type:
-            - boolean
-            - 'null'
-            description: Whether the option to enter a custom amount is shown
-            example: true
-          showDiscount:
-            default: false
-            type:
-            - boolean
-            - 'null'
-            description: Whether the option to enter a discount is shown
-            example: false
-          showSearch:
-            type:
-            - boolean
-            - 'null'
-            description: Display the search bar
-            example: false
-            default: true
-          showCategories:
-            type:
-            - boolean
-            - 'null'
-            description: Display the list of categories
-            example: false
-            default: true
-          enableTips:
-            default: false
-            type:
-            - boolean
-            - 'null'
-            description: Whether the option to enter a tip is shown
-            example: true
-          currency:
-            type:
-            - string
-            - 'null'
-            description: Currency used for the app
-            example: BTC
-          fixedAmountPayButtonText:
-            type:
-            - string
-            - 'null'
-            description: Payment button text template for items with a set price
-            example: Buy for {0}
-          customAmountPayButtonText:
-            type:
-            - string
-            - 'null'
-            description: Payment button text which appears for items which allow user to input a custom amount
-            example: Pay
-          tipText:
-            type:
-            - string
-            - 'null'
-            description: Prompt which appears next to the tip amount field if tipping is enabled
-            example: Do you want to leave a tip?
-          customTipPercentages:
-            type:
-            - array
-            - 'null'
-            description: Array of predefined tip percentage amounts
-            items:
-              type: number
-            default:
-            - 15
-            - 18
-            - 20
-          notificationUrl:
-            type:
-            - string
-            - 'null'
-            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
-          redirectUrl:
-            type:
-            - string
-            - 'null'
-            description: URL user is redirected to once invoice is paid
-          redirectAutomatically:
-            type:
-            - boolean
-            - 'null'
-            description: Whether user is redirected to specified redirect URL automatically after the invoice is paid
-            example: true
-          htmlLang:
-            type:
-            - string
-            - 'null'
-            description: Used for SEO, the [HTML Lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) of the page
-            example: en
-          htmlMetaTags:
-            type:
-            - string
-            - 'null'
-            description: Used for SEO, the [Meta tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) of the page
-            example: <meta name="description" content="Your description">
-          formId:
-            type:
-            - string
-            - 'null'
-            description: Form ID to request customer data
-    PointOfSaleAppRequest:
-      allOf:
-      - $ref: '#/components/schemas/PointOfSaleBaseData'
-      - type: object
-        properties:
-          template:
-            type: string
-            description: JSON of item available in the app
-    AppSalesStats:
-      type: object
-      properties:
-        salesCount:
-          type: integer
-          example: 615
-          description: Total sales in that period
-        series:
-          type: array
-          items:
-            $ref: '#/components/schemas/AppSalesStatsItem'
-    AppItemStats:
-      type: object
-      properties:
-        itemCode:
-          type: string
-          description: Item ID
-        title:
-          type: string
-          description: Item Name
-        salesCount:
-          type: integer
-          example: 21
-          description: Total sales of that item
-        total:
-          type: string
-          format: decimal
-          description: The total amount of sales of that item
-        totalFormatted:
-          type: string
-          description: The formatted total amount of sales of that item
-          example: 615.21 USD
+          description: The creation date of the file as a unix timestamp
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
     CrowdfundBaseData:
       allOf:
       - $ref: '#/components/schemas/AppBaseData'
@@ -875,63 +605,95 @@ components:
             - string
             - 'null'
             description: Form ID to request customer data
+    AppItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: green-tea
+          description: Unique ID of the item
+        title:
+          type: string
+          example: Green Tea
+          description: The display name of the item
+        description:
+          type: string
+          example: Lovely, fresh and tender.
+          description: A description text for the item
+        image:
+          type: string
+          example: http://teashop.com/img/green-tea.jpg
+          description: An image URL for the item
+        price:
+          type:
+          - string
+          - 'null'
+          format: decimal
+          example: '21.0'
+        priceType:
+          type: string
+          x-enumNames:
+          - Fixed
+          - Topup
+          - Minimum
+          enum:
+          - Fixed
+          - Topup
+          - Minimum
+        buyButtonText:
+          type: string
+          example: Buy me!
+          description: A custom text for the buy button for the item
+        inventory:
+          type:
+          - integer
+          - 'null'
+          example: 21
+          description: The remaining stock the item
+        disabled:
+          type: boolean
+          description: If true, the item does not appear in the list by default.
+          default: false
     UnixTimestamp:
       type: number
       format: int32
       example: 1592312018
       description: A unix timestamp in seconds
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    FileData:
+    AppSalesStatsItem:
       type: object
-      additionalProperties: false
       properties:
-        id:
+        date:
+          type: integer
+          description: UNIX timestamp of the beginning of that day
+        label:
           type: string
-          description: The id of the file
-        userId:
+          description: Short date as label
+          example: Jul 21
+        salesCount:
+          type: integer
+          example: 21
+          description: Total sales on that day
+    AppItemStats:
+      type: object
+      properties:
+        itemCode:
           type: string
-          description: The id of the user that uploaded the file
-        uri:
+          description: Item ID
+        title:
           type: string
-          description: The internal URI of the file
-        url:
-          type:
-          - string
-          - 'null'
-          description: The full URL of the file
-        originalName:
-          type:
-          - string
-          - 'null'
-          description: The original name of the file
-        storageName:
-          type:
-          - string
-          - 'null'
-          description: The storage name of the file
-        created:
-          type:
-          - number
-          - 'null'
-          description: The creation date of the file as a unix timestamp
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
+          description: Item Name
+        salesCount:
+          type: integer
+          example: 21
+          description: Total sales of that item
+        total:
+          type: string
+          format: decimal
+          description: The total amount of sales of that item
+        totalFormatted:
+          type: string
+          description: The formatted total amount of sales of that item
+          example: 615.21 USD
     CrowdfundAppData:
       allOf:
       - $ref: '#/components/schemas/CrowdfundBaseData'
@@ -977,6 +739,56 @@ components:
               inventory: null
               paymentMethods: null
               disabled: true
+    PointOfSaleAppRequest:
+      allOf:
+      - $ref: '#/components/schemas/PointOfSaleBaseData'
+      - type: object
+        properties:
+          template:
+            type: string
+            description: JSON of item available in the app
+    PointOfSaleAppData:
+      allOf:
+      - $ref: '#/components/schemas/PointOfSaleBaseData'
+      - type: object
+        properties:
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/AppItem'
+            description: JSON object of app items
+            example:
+            - id: green tea
+              title: Green Tea
+              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
+              image: ~/img/pos-sample/green-tea.jpg
+              price: '1.0'
+              priceType: Fixed
+              buyButtonText: null
+              inventory: 5
+              paymentMethods: null
+              disabled: false
+            - id: black tea
+              title: Black Tea
+              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
+              image: ~/img/pos-sample/black-tea.jpg
+              price: '2.0'
+              priceType: Fixed
+              buyButtonText: Test Buy Button Text
+              inventory: null
+              paymentMethods: null
+              disabled: false
+    AppSalesStats:
+      type: object
+      properties:
+        salesCount:
+          type: integer
+          example: 615
+          description: Total sales in that period
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppSalesStatsItem'
     CrowdfundAppRequest:
       allOf:
       - $ref: '#/components/schemas/CrowdfundBaseData'
@@ -985,6 +797,194 @@ components:
           perksTemplate:
             type: string
             description: JSON of perks available in the app
+    PointOfSaleBaseData:
+      allOf:
+      - $ref: '#/components/schemas/AppBaseData'
+      - type: object
+        properties:
+          title:
+            type:
+            - string
+            - 'null'
+            description: Display title of the app
+            example: My PoS app
+          description:
+            type:
+            - string
+            - 'null'
+            description: App description
+            example: This is my amazing PoS app
+          defaultView:
+            type:
+            - string
+            - 'null'
+            description: App view type (e.g., static, cart, etc...)
+            example: Cart
+            x-enumNames:
+            - Static
+            - Cart
+            - Light
+            - Print
+            enum:
+            - Static
+            - Cart
+            - Light
+            - Print
+          showItems:
+            type:
+            - boolean
+            - 'null'
+            default: false
+            description: Display item selection for keypad
+            example: true
+          showCustomAmount:
+            type:
+            - boolean
+            - 'null'
+            description: Whether the option to enter a custom amount is shown
+            example: true
+          showDiscount:
+            default: false
+            type:
+            - boolean
+            - 'null'
+            description: Whether the option to enter a discount is shown
+            example: false
+          showSearch:
+            type:
+            - boolean
+            - 'null'
+            description: Display the search bar
+            example: false
+            default: true
+          showCategories:
+            type:
+            - boolean
+            - 'null'
+            description: Display the list of categories
+            example: false
+            default: true
+          enableTips:
+            default: false
+            type:
+            - boolean
+            - 'null'
+            description: Whether the option to enter a tip is shown
+            example: true
+          currency:
+            type:
+            - string
+            - 'null'
+            description: Currency used for the app
+            example: BTC
+          fixedAmountPayButtonText:
+            type:
+            - string
+            - 'null'
+            description: Payment button text template for items with a set price
+            example: Buy for {0}
+          customAmountPayButtonText:
+            type:
+            - string
+            - 'null'
+            description: Payment button text which appears for items which allow user to input a custom amount
+            example: Pay
+          tipText:
+            type:
+            - string
+            - 'null'
+            description: Prompt which appears next to the tip amount field if tipping is enabled
+            example: Do you want to leave a tip?
+          customTipPercentages:
+            type:
+            - array
+            - 'null'
+            description: Array of predefined tip percentage amounts
+            items:
+              type: number
+            default:
+            - 15
+            - 18
+            - 20
+          notificationUrl:
+            type:
+            - string
+            - 'null'
+            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
+          redirectUrl:
+            type:
+            - string
+            - 'null'
+            description: URL user is redirected to once invoice is paid
+          redirectAutomatically:
+            type:
+            - boolean
+            - 'null'
+            description: Whether user is redirected to specified redirect URL automatically after the invoice is paid
+            example: true
+          htmlLang:
+            type:
+            - string
+            - 'null'
+            description: Used for SEO, the [HTML Lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang) of the page
+            example: en
+          htmlMetaTags:
+            type:
+            - string
+            - 'null'
+            description: Used for SEO, the [Meta tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta) of the page
+            example: <meta name="description" content="Your description">
+          formId:
+            type:
+            - string
+            - 'null'
+            description: Form ID to request customer data
+    AppBaseData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the app
+          example: 3ki4jsAkN4u9rv1PUzj1odX4Nx7s
+        appName:
+          type: string
+          description: Name given to the app when it was created
+          example: my test app
+        storeId:
+          description: Id of the store to which the app belongs
+          allOf:
+          - $ref: '#/components/schemas/StoreId'
+        created:
+          type: integer
+          example: 1651554744
+          description: UNIX timestamp for when the app was created
+        appType:
+          type: string
+          example: PointOfSale
+          description: Type of the app which was created
+        archived:
+          type:
+          - boolean
+          - 'null'
+          description: If true, the app does not appear in the apps list by default.
+          default: false
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
   parameters:
     StoreId:
       name: storeId

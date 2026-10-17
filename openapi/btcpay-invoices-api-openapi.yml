@@ -418,26 +418,15 @@ paths:
         Basic: []
 components:
   schemas:
-    MarkInvoiceStatusRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          description: Mark an invoice as completed or invalid.
-          allOf:
-          - $ref: '#/components/schemas/InvoiceStatusMark'
-    PaymentStatus:
+    InvoiceType:
       type: string
-      description: The status of the payment
+      description: The type of the invoice
       x-enumNames:
-      - Invalid
-      - Processing
-      - Settled
+      - Standard
+      - TopUp
       enum:
-      - Invalid
-      - Processing
-      - Settled
+      - Standard
+      - TopUp
     InvoicePaymentMethodDataModel:
       type: object
       additionalProperties: false
@@ -535,6 +524,36 @@ components:
                 example: '3.975'
           - type: object
             description: No additional information
+    InvoiceAdditionalStatus:
+      type: string
+      description: An additional status that describes why an invoice is in its current status.
+      x-enumNames:
+      - None
+      - PaidLate
+      - PaidPartial
+      - Marked
+      - Invalid
+      - PaidOver
+      enum:
+      - None
+      - PaidLate
+      - PaidPartial
+      - Marked
+      - Invalid
+      - PaidOver
+    SpeedPolicy:
+      type: string
+      description: "This is a risk mitigation parameter for the merchant to configure how they want to fulfill orders depending on the number of block confirmations for the transaction made by the consumer on the selected cryptocurrency.\n`\"HighSpeed\"`: 0 confirmations (1 confirmation if RBF enabled in transaction)   \n`\"MediumSpeed\"`: 1 confirmation   \n`\"LowMediumSpeed\"`: 2 confirmations   \n`\"LowSpeed\"`: 6 confirmations\n"
+      x-enumNames:
+      - HighSpeed
+      - MediumSpeed
+      - LowSpeed
+      - LowMediumSpeed
+      enum:
+      - HighSpeed
+      - MediumSpeed
+      - LowSpeed
+      - LowMediumSpeed
     ValidationProblemDetails:
       type: array
       description: An array of validation errors of the request
@@ -548,6 +567,58 @@ components:
           message:
             type: string
             description: User friendly error message about the validation
+    InvoiceDataBase:
+      properties:
+        metadata:
+          $ref: '#/components/schemas/InvoiceMetadata'
+        checkout:
+          type:
+          - object
+          - 'null'
+          description: Additional settings to customize the checkout flow
+          allOf:
+          - $ref: '#/components/schemas/CheckoutOptions'
+        receipt:
+          type:
+          - object
+          - 'null'
+          description: Additional settings to customize the public receipt
+          allOf:
+          - $ref: '#/components/schemas/ReceiptOptions'
+    ReceiptOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type:
+          - boolean
+          - 'null'
+          description: A public page will be accessible once the invoice is settled. If null or unspecified, it will fallback to the store's settings. (The default store settings is true)
+        showQR:
+          type:
+          - boolean
+          - 'null'
+          default: null
+          description: Show the QR code of the receipt in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
+        showPayments:
+          type:
+          - boolean
+          - 'null'
+          default: null
+          description: Show the payment list in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
+    TimeSpan:
+      type: number
+      format: int32
+      example: 90
+    InvoiceStatusMark:
+      type: string
+      description: ''
+      x-enumNames:
+      - Invalid
+      - Settled
+      enum:
+      - Invalid
+      - Settled
     CreateInvoiceRequest:
       allOf:
       - $ref: '#/components/schemas/InvoiceDataBase'
@@ -574,65 +645,124 @@ components:
             items:
               type: string
             description: Additional search term to help you find this invoice via text search
-    StoreId:
+    InvoiceStatus:
       type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    InvoiceData:
-      allOf:
-      - $ref: '#/components/schemas/InvoiceDataBase'
-      - type: object
-        additionalProperties: false
-        properties:
-          id:
-            $ref: '#/components/schemas/InvoiceId'
-          storeId:
-            description: The store identifier that the invoice belongs to
-            allOf:
-            - $ref: '#/components/schemas/StoreId'
-          amount:
-            type: string
-            format: decimal
-            description: The amount of the invoice. Note that the amount will be zero for a top-up invoice that is paid after invoice expiry.
-            example: '5.00'
-          paidAmount:
-            type: string
-            format: decimal
-            description: The actual amount paid by the customer/buyer.
-            example: '5.00'
-          currency:
-            type: string
-            description: The currency of the invoice
-            example: USD
+      description: The status of the invoice
+      x-enumNames:
+      - New
+      - Processing
+      - Expired
+      - Invalid
+      - Settled
+      enum:
+      - New
+      - Processing
+      - Expired
+      - Invalid
+      - Settled
+    UpdateInvoiceRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        metadata:
+          $ref: '#/components/schemas/InvoiceMetadata'
+    InvoiceId:
+      type: string
+      description: The invoice ID
+      example: HMprBnL9BTXWuPvpoKBS6e
+    InvoiceDataList:
+      type: array
+      items:
+        allOf:
+        - type: object
+          properties:
+            paymentMethods:
+              type: array
+              items:
+                $ref: '#/components/schemas/InvoicePaymentMethodDataModel'
+        - $ref: '#/components/schemas/InvoiceData'
+    RefundInvoiceRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - refundVariant
+      properties:
+        name:
           type:
-            $ref: '#/components/schemas/InvoiceType'
-          checkoutLink:
-            type: string
-            description: The link to the checkout page, where you can redirect the customer
-          createdTime:
-            description: The creation time of the invoice
-            allOf:
-            - $ref: '#/components/schemas/UnixTimestamp'
-          expirationTime:
-            description: The expiration time of the invoice
-            allOf:
-            - $ref: '#/components/schemas/UnixTimestamp'
-          monitoringExpiration:
-            description: Expiration time for monitoring of the invoice for any changes
-            allOf:
-            - $ref: '#/components/schemas/UnixTimestamp'
-          status:
-            $ref: '#/components/schemas/InvoiceStatus'
-          additionalStatus:
-            $ref: '#/components/schemas/InvoiceAdditionalStatus'
-          availableStatusesForManualMarking:
-            type: array
-            description: The statuses the invoice can be manually marked as
-            items:
-              $ref: '#/components/schemas/InvoiceStatus'
-          archived:
-            type: boolean
-            description: true if the invoice is archived
+          - string
+          - 'null'
+          description: 'Name of the pull payment (Default: ''Refund'' followed by the invoice id)'
+        description:
+          type: string
+          description: Description of the pull payment
+        payoutMethodId:
+          $ref: '#/components/schemas/PayoutMethodId'
+        refundVariant:
+          type: string
+          description: '* `RateThen`: Refund the crypto currency price, at the rate the invoice got paid.
+
+            * `CurrentRate`: Refund the crypto currency price, at the current rate.
+
+            *`Fiat`: Refund the invoice currency, at the rate when the refund will be sent.
+
+            *`OverpaidAmount`: Refund the crypto currency amount that was overpaid.
+
+            *`Custom`: Specify the amount, currency, and rate of the refund. (see `customAmount` and `customCurrency`)'
+          x-enumNames:
+          - RateThen
+          - CurrentRate
+          - OverpaidAmount
+          - Fiat
+          - Custom
+          enum:
+          - RateThen
+          - CurrentRate
+          - OverpaidAmount
+          - Fiat
+          - Custom
+        subtractPercentage:
+          type: string
+          format: decimal
+          description: Optional percentage by which to reduce the refund, e.g. as processing charge or to compensate for the mining fee.
+          example: '2.1'
+        customAmount:
+          type: string
+          format: decimal
+          description: The amount to refund if the `refundVariant` is `Custom`.
+          example: '5.00'
+        customCurrency:
+          type: string
+          description: The currency to refund if the `refundVariant` is `Custom`
+          example: USD
+    TimeSpanMinutes:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: minutes
+      description: A span of times in minutes
+    MarkInvoiceStatusRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          description: Mark an invoice as completed or invalid.
+          allOf:
+          - $ref: '#/components/schemas/InvoiceStatusMark'
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
     CheckoutOptions:
       type: object
       additionalProperties: false
@@ -700,221 +830,10 @@ components:
           - string
           - 'null'
           description: The language code (eg. en-US, en, fr-FR...) of the language presented to your customer in the checkout page. BTCPay Server tries to match the best language available. If null or not set, will fallback on the store's default language. You can see the list of language codes with [this operation](#operation/langCodes).
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    PayoutMethodId:
+    StoreId:
       type: string
-      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
-      example: BTC-LN
-    RefundInvoiceRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - refundVariant
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: 'Name of the pull payment (Default: ''Refund'' followed by the invoice id)'
-        description:
-          type: string
-          description: Description of the pull payment
-        payoutMethodId:
-          $ref: '#/components/schemas/PayoutMethodId'
-        refundVariant:
-          type: string
-          description: '* `RateThen`: Refund the crypto currency price, at the rate the invoice got paid.
-
-            * `CurrentRate`: Refund the crypto currency price, at the current rate.
-
-            *`Fiat`: Refund the invoice currency, at the rate when the refund will be sent.
-
-            *`OverpaidAmount`: Refund the crypto currency amount that was overpaid.
-
-            *`Custom`: Specify the amount, currency, and rate of the refund. (see `customAmount` and `customCurrency`)'
-          x-enumNames:
-          - RateThen
-          - CurrentRate
-          - OverpaidAmount
-          - Fiat
-          - Custom
-          enum:
-          - RateThen
-          - CurrentRate
-          - OverpaidAmount
-          - Fiat
-          - Custom
-        subtractPercentage:
-          type: string
-          format: decimal
-          description: Optional percentage by which to reduce the refund, e.g. as processing charge or to compensate for the mining fee.
-          example: '2.1'
-        customAmount:
-          type: string
-          format: decimal
-          description: The amount to refund if the `refundVariant` is `Custom`.
-          example: '5.00'
-        customCurrency:
-          type: string
-          description: The currency to refund if the `refundVariant` is `Custom`
-          example: USD
-    PaymentMethodId:
-      type: string
-      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
-      example: BTC-CHAIN
-    InvoiceStatus:
-      type: string
-      description: The status of the invoice
-      x-enumNames:
-      - New
-      - Processing
-      - Expired
-      - Invalid
-      - Settled
-      enum:
-      - New
-      - Processing
-      - Expired
-      - Invalid
-      - Settled
-    UpdateInvoiceRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        metadata:
-          $ref: '#/components/schemas/InvoiceMetadata'
-    ReceiptOptions:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type:
-          - boolean
-          - 'null'
-          description: A public page will be accessible once the invoice is settled. If null or unspecified, it will fallback to the store's settings. (The default store settings is true)
-        showQR:
-          type:
-          - boolean
-          - 'null'
-          default: null
-          description: Show the QR code of the receipt in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
-        showPayments:
-          type:
-          - boolean
-          - 'null'
-          default: null
-          description: Show the payment list in the public receipt page. If null or unspecified, it will fallback to the store's settings. (The default store setting is true)
-    InvoiceStatusMark:
-      type: string
-      description: ''
-      x-enumNames:
-      - Invalid
-      - Settled
-      enum:
-      - Invalid
-      - Settled
-    PullPaymentData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the pull payment
-        name:
-          type: string
-          description: Name given to pull payment when it was created
-        description:
-          type: string
-          description: Description given to pull payment when it was created
-        currency:
-          type: string
-          example: BTC
-          description: The currency of the pull payment's amount
-        amount:
-          type: string
-          format: decimal
-          example: '1.12000000'
-          description: The amount in the currency of this pull payment as a decimal string
-        BOLT11Expiration:
-          type: string
-          example: 30
-          description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
-        autoApproveClaims:
-          type:
-          - boolean
-          - 'null'
-          example: false
-          default: false
-          description: Any payouts created for this pull payment will skip the approval phase upon creation
-        archived:
-          type: boolean
-          description: Whether this pull payment is archived
-        viewLink:
-          type: string
-          description: The link to a page to claim payouts to this pull payment
-    InvoiceDataList:
-      type: array
-      items:
-        allOf:
-        - type: object
-          properties:
-            paymentMethods:
-              type: array
-              items:
-                $ref: '#/components/schemas/InvoicePaymentMethodDataModel'
-        - $ref: '#/components/schemas/InvoiceData'
-    InvoiceId:
-      type: string
-      description: The invoice ID
-      example: HMprBnL9BTXWuPvpoKBS6e
-    InvoiceAdditionalStatus:
-      type: string
-      description: An additional status that describes why an invoice is in its current status.
-      x-enumNames:
-      - None
-      - PaidLate
-      - PaidPartial
-      - Marked
-      - Invalid
-      - PaidOver
-      enum:
-      - None
-      - PaidLate
-      - PaidPartial
-      - Marked
-      - Invalid
-      - PaidOver
-    Payment:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          description: A unique identifier for this payment
-        receivedDate:
-          description: The date the payment was recorded
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        value:
-          type: string
-          format: decimal
-          description: The value of the payment
-        fee:
-          type: string
-          format: decimal
-          description: The fee paid for the payment
-        status:
-          $ref: '#/components/schemas/PaymentStatus'
-        destination:
-          type: string
-          description: The destination the payment was made to
-    TimeSpan:
-      type: number
-      format: int32
-      example: 90
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     InvoiceMetadata:
       type: object
       additionalProperties: true
@@ -1055,11 +974,142 @@ components:
             - object
             - 'null'
             description: A custom JSON object that represents information displayed on the receipt page of an invoice.
-    TimeSpanMinutes:
+    Payment:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: A unique identifier for this payment
+        receivedDate:
+          description: The date the payment was recorded
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        value:
+          type: string
+          format: decimal
+          description: The value of the payment
+        fee:
+          type: string
+          format: decimal
+          description: The fee paid for the payment
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+        destination:
+          type: string
+          description: The destination the payment was made to
+    InvoiceData:
       allOf:
-      - $ref: '#/components/schemas/TimeSpan'
-      format: minutes
-      description: A span of times in minutes
+      - $ref: '#/components/schemas/InvoiceDataBase'
+      - type: object
+        additionalProperties: false
+        properties:
+          id:
+            $ref: '#/components/schemas/InvoiceId'
+          storeId:
+            description: The store identifier that the invoice belongs to
+            allOf:
+            - $ref: '#/components/schemas/StoreId'
+          amount:
+            type: string
+            format: decimal
+            description: The amount of the invoice. Note that the amount will be zero for a top-up invoice that is paid after invoice expiry.
+            example: '5.00'
+          paidAmount:
+            type: string
+            format: decimal
+            description: The actual amount paid by the customer/buyer.
+            example: '5.00'
+          currency:
+            type: string
+            description: The currency of the invoice
+            example: USD
+          type:
+            $ref: '#/components/schemas/InvoiceType'
+          checkoutLink:
+            type: string
+            description: The link to the checkout page, where you can redirect the customer
+          createdTime:
+            description: The creation time of the invoice
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+          expirationTime:
+            description: The expiration time of the invoice
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+          monitoringExpiration:
+            description: Expiration time for monitoring of the invoice for any changes
+            allOf:
+            - $ref: '#/components/schemas/UnixTimestamp'
+          status:
+            $ref: '#/components/schemas/InvoiceStatus'
+          additionalStatus:
+            $ref: '#/components/schemas/InvoiceAdditionalStatus'
+          availableStatusesForManualMarking:
+            type: array
+            description: The statuses the invoice can be manually marked as
+            items:
+              $ref: '#/components/schemas/InvoiceStatus'
+          archived:
+            type: boolean
+            description: true if the invoice is archived
+    PaymentStatus:
+      type: string
+      description: The status of the payment
+      x-enumNames:
+      - Invalid
+      - Processing
+      - Settled
+      enum:
+      - Invalid
+      - Processing
+      - Settled
+    PullPaymentData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the pull payment
+        name:
+          type: string
+          description: Name given to pull payment when it was created
+        description:
+          type: string
+          description: Description given to pull payment when it was created
+        currency:
+          type: string
+          example: BTC
+          description: The currency of the pull payment's amount
+        amount:
+          type: string
+          format: decimal
+          example: '1.12000000'
+          description: The amount in the currency of this pull payment as a decimal string
+        BOLT11Expiration:
+          type: string
+          example: 30
+          description: If lightning is activated, do not accept BOLT11 invoices with expiration less than … days
+        autoApproveClaims:
+          type:
+          - boolean
+          - 'null'
+          example: false
+          default: false
+          description: Any payouts created for this pull payment will skip the approval phase upon creation
+        archived:
+          type: boolean
+          description: Whether this pull payment is archived
+        viewLink:
+          type: string
+          description: The link to a page to claim payouts to this pull payment
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
     InvoiceRefundTriggerData:
       type: object
       additionalProperties: false
@@ -1100,56 +1150,6 @@ components:
           format: decimal
           description: The amount by which the invoice is overpaid
           example: '2.00'
-    InvoiceType:
-      type: string
-      description: The type of the invoice
-      x-enumNames:
-      - Standard
-      - TopUp
-      enum:
-      - Standard
-      - TopUp
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
-    InvoiceDataBase:
-      properties:
-        metadata:
-          $ref: '#/components/schemas/InvoiceMetadata'
-        checkout:
-          type:
-          - object
-          - 'null'
-          description: Additional settings to customize the checkout flow
-          allOf:
-          - $ref: '#/components/schemas/CheckoutOptions'
-        receipt:
-          type:
-          - object
-          - 'null'
-          description: Additional settings to customize the public receipt
-          allOf:
-          - $ref: '#/components/schemas/ReceiptOptions'
-    SpeedPolicy:
-      type: string
-      description: "This is a risk mitigation parameter for the merchant to configure how they want to fulfill orders depending on the number of block confirmations for the transaction made by the consumer on the selected cryptocurrency.\n`\"HighSpeed\"`: 0 confirmations (1 confirmation if RBF enabled in transaction)   \n`\"MediumSpeed\"`: 1 confirmation   \n`\"LowMediumSpeed\"`: 2 confirmations   \n`\"LowSpeed\"`: 6 confirmations\n"
-      x-enumNames:
-      - HighSpeed
-      - MediumSpeed
-      - LowSpeed
-      - LowMediumSpeed
-      enum:
-      - HighSpeed
-      - MediumSpeed
-      - LowSpeed
-      - LowMediumSpeed
   parameters:
     StoreId:
       name: storeId
