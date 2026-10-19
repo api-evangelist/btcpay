@@ -5,7 +5,78 @@ info:
   description: '# Introduction
 
 
-    The BTCPay Server Greenfield API is a REST API.'
+    The BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+
+
+    # Authentication
+
+
+    You can authenticate either via Basic Auth or an API key. It''s recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the ''Unrestricted access'' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.
+
+
+    If you want to simplify the process of creating API keys for your users, you can use the Authorization endpoint to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the API Authorization Flow docs page.
+
+
+    # Usage examples
+
+
+    Use **Basic Auth** to read store information with cURL:
+
+    ```bash
+
+    BTCPAY_INSTANCE="https://mainnet.demo.btcpayserver.org"
+
+    USER="MyTestUser@gmail.com"
+
+    PASSWORD="notverysecurepassword"
+
+    PERMISSION="btcpay.store.canmodifystoresettings"
+
+    BODY="$(echo "{}" | jq --arg "a" "$PERMISSION" ''. + {permissions:[$a]}'')"
+
+
+    API_KEY="$(curl -s \
+
+    -H "Content-Type: application/json" \
+
+    --user "$USER:$PASSWORD" \
+
+    -X POST \
+
+    -d "$BODY" \
+
+    "$BTCPAY_INSTANCE/api/v1/api-keys" | jq -r .apiKey)"
+
+    ```
+
+
+    Use an **API key** to read store information with cURL:
+
+    ```bash
+
+    STORE_ID="yourStoreId"
+
+
+    curl -s \
+
+    -H "Content-Type: application/json" \
+
+    -H "Authorization: token $API_KEY" \
+
+    -X GET \
+
+    "$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID"
+
+    ```
+
+
+    You can find more examples on our docs for different programming languages:
+
+    - cURL
+
+    - Javascript/Node.Js
+
+    - PHP'
   contact:
     name: BTCPay Server
     url: https://btcpayserver.org
@@ -13,12 +84,8 @@ info:
     name: MIT
     url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
 servers:
-- url: https://{btcpay-host}
-  description: Your BTCPay Server instance
-  variables:
-    btcpay-host:
-      default: mainnet.demo.btcpayserver.org
-      description: The hostname of your BTCPay Server instance
+- url: /
+  description: BTCPay Server Greenfield API
 security:
 - API_Key: []
   Basic: []
@@ -80,6 +147,7 @@ paths:
       description: View information about the stores' configured payment method
       operationId: StorePaymentMethods_GetStorePaymentMethod
       parameters:
+      - $ref: '#/components/parameters/PaymentMethodId'
       - $ref: '#/components/parameters/StoreId'
       - name: includeConfig
         in: query
@@ -87,7 +155,6 @@ paths:
         description: Fetch the config of the payment methods, if `true`, the permission `btcpay.store.canmodifystoresettings` is required.
         schema:
           type: boolean
-      - $ref: '#/components/parameters/PaymentMethodId'
       responses:
         '200':
           description: The payment method config
@@ -118,8 +185,8 @@ paths:
       description: Update information about the stores' configured payment method
       operationId: StorePaymentMethods_UpdateStorePaymentMethod
       parameters:
-      - $ref: '#/components/parameters/StoreId'
       - $ref: '#/components/parameters/PaymentMethodId'
+      - $ref: '#/components/parameters/StoreId'
       requestBody:
         content:
           application/json:
@@ -155,8 +222,8 @@ paths:
       description: Delete information about the stores' configured payment method
       operationId: StorePaymentMethods_DeleteStorePaymentMethod
       parameters:
-      - $ref: '#/components/parameters/StoreId'
       - $ref: '#/components/parameters/PaymentMethodId'
+      - $ref: '#/components/parameters/StoreId'
       responses:
         '200':
           description: The configuration got deleted
@@ -178,31 +245,10 @@ paths:
         Basic: []
 components:
   schemas:
-    ProblemDetails:
-      type: object
-      description: Description of an error happening during processing of the request
-      properties:
-        code:
-          type: string
-          description: An error code describing the error
-        message:
-          type: string
-          description: User friendly error message about the error
-    OnChainPaymentMethodBaseData:
-      type: object
-      additionalProperties: false
-      properties:
-        derivationScheme:
-          type: string
-          description: The derivation scheme
-          example: xpub...
-        label:
-          type: string
-          description: A label that will be shown in the UI
-        accountKeyPath:
-          type: string
-          description: The wallet fingerprint followed by the keypath to derive the account key used for signing operation or creating PSBTs
-          example: abcd82a1/84'/0'/0'
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
     UpdatePaymentMethodConfig:
       type: object
       properties:
@@ -220,21 +266,58 @@ components:
           description: The new payment method config, leave null or unspecified to not change current setting
           default: null
           oneOf:
-          - $ref: '#/components/schemas/OnChainPaymentMethodBaseData'
-          - $ref: '#/components/schemas/LightningNetworkPaymentMethodBaseData'
           - $ref: '#/components/schemas/LNURLPayPaymentMethodBaseData'
-          - type: string
-            title: Lightning connection string
-            description: A lightning connection string or `Internal Node` (See [this documentation](https://github.com/btcpayserver/btcpayserver.lightning) for the format)
+          - $ref: '#/components/schemas/LightningNetworkPaymentMethodBaseData'
+          - $ref: '#/components/schemas/OnChainPaymentMethodBaseData'
+          - description: Any other unofficial payment method data
+            type: object
+            additionalProperties: true
           - type: string
             title: Derivation scheme
             description: A derivation scheme in NBXplorer's format (See [this documentation](https://github.com/dgarage/NBXplorer/blob/master/docs/API.md#derivation-scheme) for the format)
           - type: string
+            title: Lightning connection string
+            description: A lightning connection string or `Internal Node` (See [this documentation](https://github.com/btcpayserver/btcpayserver.lightning) for the format)
+          - type: string
             title: Output descriptor
             description: An output descriptor. Only a subset of them are supported. (See [this documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/descriptors.md) for the format)
-          - description: Any other unofficial payment method data
-            type: object
-            additionalProperties: true
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    LightningNetworkPaymentMethodBaseData:
+      type: object
+      additionalProperties: false
+      properties:
+        connectionString:
+          type: string
+          description: The lightning connection string. Set to 'Internal Node' to use the internal node. (See [this doc](https://github.com/btcpayserver/BTCPayServer.Lightning/blob/master/README.md#examples) for some example)
+          example: type=clightning;server=...
+    OnChainPaymentMethodBaseData:
+      type: object
+      additionalProperties: false
+      properties:
+        derivationScheme:
+          type: string
+          description: The derivation scheme
+          example: xpub...
+        label:
+          type: string
+          description: A label that will be shown in the UI
+        accountKeyPath:
+          type: string
+          description: The wallet fingerprint followed by the keypath to derive the account key used for signing operation or creating PSBTs
+          example: abcd82a1/84'/0'/0'
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
     GenericPaymentMethodData:
       type: object
       additionalProperties: false
@@ -249,9 +332,9 @@ components:
           additionalProperties: false
           description: Associated dynamic data based on payment method type.
           oneOf:
-          - $ref: '#/components/schemas/OnChainPaymentMethodBaseData'
-          - $ref: '#/components/schemas/LightningNetworkPaymentMethodBaseData'
           - $ref: '#/components/schemas/LNURLPayPaymentMethodBaseData'
+          - $ref: '#/components/schemas/LightningNetworkPaymentMethodBaseData'
+          - $ref: '#/components/schemas/OnChainPaymentMethodBaseData'
           - description: Any other unofficial payment method data
             type: object
             additionalProperties: true
@@ -268,22 +351,6 @@ components:
         lud21Enabled:
           type: boolean
           description: Whether to include a [LUD-21](https://github.com/lnurl/luds/blob/luds/21.md) verify URL in LNURL-pay callback responses, enabling external services to verify payment settlement without authentication.
-    LightningNetworkPaymentMethodBaseData:
-      type: object
-      additionalProperties: false
-      properties:
-        connectionString:
-          type: string
-          description: The lightning connection string. Set to 'Internal Node' to use the internal node. (See [this doc](https://github.com/btcpayserver/BTCPayServer.Lightning/blob/master/README.md#examples) for some example)
-          example: type=clightning;server=...
-    PaymentMethodId:
-      type: string
-      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
-      example: BTC-CHAIN
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
   parameters:
     StoreId:
       name: storeId
@@ -303,13 +370,13 @@ components:
   securitySchemes:
     API_Key:
       type: apiKey
-      in: header
+      description: "BTCPay Server supports authenticating and authorizing users through an API Key that is generated by them. Send the API Key as a header value to Authorization with the format: `token {token}`. For a smoother experience, you can generate a url that redirects users to an API key creation screen.\n\n The following permissions are available to the context of the user creating the API Key:\n\n* `btcpay.impersonation.canimpersonate`: Can impersonate users\n* `btcpay.user.candeleteuser`: Delete user\n* `btcpay.user.canmanagenotificationsforuser`: Manage your notifications\n* `btcpay.user.canmodifyprofile`: Manage your profile\n* `btcpay.user.canviewnotificationsforuser`: View your notifications\n* `btcpay.user.canviewprofile`: View your profile\n* `unrestricted`: Unrestricted access\n\nThe following permissions are available if the user is an administrator:\n\n* `btcpay.server.cancreatelightninginvoiceinternalnode`: Create invoices with internal lightning node\n* `btcpay.server.cancreateuser`: Create new users\n* `btcpay.server.canmanageusers`: Manage users\n* `btcpay.server.canmodifyserversettings`: Manage your server\n* `btcpay.server.canuseinternallightningnode`: Use the internal lightning node\n* `btcpay.server.canviewlightninginvoiceinternalnode`: View invoices from internal lightning node\n* `btcpay.server.canviewusers`: View users\n\nThe following permissions applies to all stores of the user, you can limit to a specific store with the following format: `btcpay.store.cancreateinvoice:6HSHAEU4iYWtjxtyRs9KyPjM9GAQp8kw2T9VWbGG1FnZ`:\n\n* `btcpay.store.canarchivepullpayments`: Archive your pull payments\n* `btcpay.store.canbroadcasttransactions`: Broadcast wallet transactions\n* `btcpay.store.cancanceltransactions`: Cancel wallet transactions\n* `btcpay.store.cancreateinvoice`: Create an invoice\n* `btcpay.store.cancreatelightninginvoice`: Create invoices from the lightning nodes associated with your stores\n* `btcpay.store.cancreatenonapprovedpullpayments`: Create non-approved pull payments\n* `btcpay.store.cancreatepullpayments`: Create pull payments\n* `btcpay.store.cancreatetransactions`: Create wallet transactions\n* `btcpay.store.cancreditsubscribers`: Credit your subscribers\n* `btcpay.store.canmanageinvoicestatus`: Manage invoice status\n* `btcpay.store.canmanagelegacyaccesstokens`: Manage legacy access tokens\n* `btcpay.store.canmanagepayouts`: Manage payouts\n* `btcpay.store.canmanagepullpayments`: Manage your pull payments\n* `btcpay.store.canmanagesubscribers`: Manage your subscribers\n* `btcpay.store.canmanagewallets`: Manage wallets\n* `btcpay.store.canmanagewalletsettings`: Manage wallet settings\n* `btcpay.store.canmanagewallettransactions`: Manage wallet transactions\n* `btcpay.store.canmodifyinvoices`: Modify invoices\n* `btcpay.store.canmodifyofferings`: Modify your offerings\n* `btcpay.store.canmodifypaymentrequests`: Modify your payment requests\n* `btcpay.store.canmodifystoresettings`: Modify your stores\n* `btcpay.store.cansendstoreemails`: Send store emails\n* `btcpay.store.cansigntransactions`: Sign wallet transactions\n* `btcpay.store.canuselightningnode`: Use the lightning nodes associated with your stores\n* `btcpay.store.canviewinvoices`: View invoices\n* `btcpay.store.canviewlightninginvoice`: View the lightning invoices associated with your stores\n* `btcpay.store.canviewofferings`: View your offerings\n* `btcpay.store.canviewpaymentrequests`: View your payment requests\n* `btcpay.store.canviewpayouts`: View payouts\n* `btcpay.store.canviewpullpayments`: View your pull payments\n* `btcpay.store.canviewreports`: View your reports\n* `btcpay.store.canviewstoresettings`: View your stores\n* `btcpay.store.canviewwallet`: View wallets\n* `btcpay.store.webhooks.canmodifywebhooks`: Modify stores webhooks\n\nNote that API Keys only limits permission of a user and can never expand it. If an API Key has the permission `btcpay.server.canmodifyserversettings` but that the user account creating this API Key is not administrator, the API Key will not be able to modify the server settings.\nSome permissions may include other permissions, see [this operation](#operation/permissionsMetadata).\n"
       name: Authorization
-      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+      in: header
     Basic:
       type: http
-      scheme: basic
-      description: HTTP Basic Authentication with email and password
+      description: BTCPay Server supports authenticating and authorizing users through the Basic HTTP authentication scheme during the first five minutes after account creation or when the user explicitly enables it. Send the user and password encoded in base64 with the format `Basic {base64(username:password)}`. Using this authentication method implicitly provides you with the `unrestricted` permission
+      scheme: Basic
 externalDocs:
-  description: Check out our examples on how to use the API
-  url: https://docs.btcpayserver.org/Development/GreenFieldExample/
+  description: BTCPay Greenfield Plugins API
+  url: https://docs.btcpayserver.org/API/Greenfield/Plugins/

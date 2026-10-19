@@ -5,7 +5,78 @@ info:
   description: '# Introduction
 
 
-    The BTCPay Server Greenfield API is a REST API.'
+    The BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+
+
+    # Authentication
+
+
+    You can authenticate either via Basic Auth or an API key. It''s recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the ''Unrestricted access'' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.
+
+
+    If you want to simplify the process of creating API keys for your users, you can use the Authorization endpoint to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the API Authorization Flow docs page.
+
+
+    # Usage examples
+
+
+    Use **Basic Auth** to read store information with cURL:
+
+    ```bash
+
+    BTCPAY_INSTANCE="https://mainnet.demo.btcpayserver.org"
+
+    USER="MyTestUser@gmail.com"
+
+    PASSWORD="notverysecurepassword"
+
+    PERMISSION="btcpay.store.canmodifystoresettings"
+
+    BODY="$(echo "{}" | jq --arg "a" "$PERMISSION" ''. + {permissions:[$a]}'')"
+
+
+    API_KEY="$(curl -s \
+
+    -H "Content-Type: application/json" \
+
+    --user "$USER:$PASSWORD" \
+
+    -X POST \
+
+    -d "$BODY" \
+
+    "$BTCPAY_INSTANCE/api/v1/api-keys" | jq -r .apiKey)"
+
+    ```
+
+
+    Use an **API key** to read store information with cURL:
+
+    ```bash
+
+    STORE_ID="yourStoreId"
+
+
+    curl -s \
+
+    -H "Content-Type: application/json" \
+
+    -H "Authorization: token $API_KEY" \
+
+    -X GET \
+
+    "$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID"
+
+    ```
+
+
+    You can find more examples on our docs for different programming languages:
+
+    - cURL
+
+    - Javascript/Node.Js
+
+    - PHP'
   contact:
     name: BTCPay Server
     url: https://btcpayserver.org
@@ -13,12 +84,8 @@ info:
     name: MIT
     url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
 servers:
-- url: https://{btcpay-host}
-  description: Your BTCPay Server instance
-  variables:
-    btcpay-host:
-      default: mainnet.demo.btcpayserver.org
-      description: The hostname of your BTCPay Server instance
+- url: /
+  description: BTCPay Server Greenfield API
 security:
 - API_Key: []
   Basic: []
@@ -48,12 +115,13 @@ paths:
           description: The store could not be found
       security:
       - API_Key:
-        - btcpay.store.canmodifystoresettings
+        - btcpay.store.canviewstoresettings
         Basic: []
     post:
       tags:
       - Stores (Users)
-      summary: Add a store user
+      summary: Add or invite a store user
+      description: Add a store user. By default, this creates a store invitation. To add the user directly, set `requireInvitation` to `false`; this requires server settings permission.
       operationId: Stores_AddStoreUser
       parameters:
       - $ref: '#/components/parameters/StoreId'
@@ -62,12 +130,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreUserData'
+              $ref: '#/components/schemas/AddStoreUserDataRequest'
         required: true
         x-position: 1
       responses:
         '200':
-          description: The user was added
+          description: The user was added, or an invitation was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddStoreUserResult'
         '400':
           description: A list of errors that occurred when adding the store user
           content:
@@ -79,7 +151,7 @@ paths:
         '404':
           description: The store or user could not be found
         '409':
-          description: 'Error code: `duplicate-store-user-role`. Removing this user would result in the store having no owner.'
+          description: 'Error codes: `already-store-user`'
           content:
             application/json:
               schema:
@@ -88,21 +160,20 @@ paths:
       - API_Key:
         - btcpay.store.canmodifystoresettings
         Basic: []
-  /api/v1/stores/{storeId}/users/{idOrEmail}:
     put:
       tags:
       - Stores (Users)
-      summary: Updates a store user
-      operationId: Stores_UpdateStoreUser
+      summary: Update a store user role
+      description: Update the role of an existing store user. The user id or email must be provided in the request body.
+      operationId: Stores_UpdateStoreUserByRequest
       parameters:
       - $ref: '#/components/parameters/StoreId'
-      - $ref: '#/components/parameters/UserIdOrEmail'
       requestBody:
         x-name: request
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoreUserData'
+              $ref: '#/components/schemas/StoreUserDataRequest'
         required: true
         x-position: 1
       responses:
@@ -118,6 +189,169 @@ paths:
           description: If you are authenticated but forbidden to update store users
         '404':
           description: The store or user could not be found
+        '409':
+          description: 'Error codes: `store-user-role-orphaned`, `duplicate-store-user-role`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+  /api/v1/stores/{storeId}/users/invitations:
+    get:
+      tags:
+      - Stores (Users)
+      summary: Get pending store invitations
+      description: View pending and expired invitations for the specified store.
+      operationId: Stores_GetStoreInvitations
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      responses:
+        '200':
+          description: The store invitations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreInvitationDataList'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store's invitations
+        '404':
+          description: The store could not be found
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+  /api/v1/invitations/{token}:
+    get:
+      tags:
+      - Stores (Users)
+      summary: Get a store invitation
+      description: Get invitation details from its token before accepting or declining it.
+      operationId: Stores_GetStoreInvitation
+      parameters:
+      - $ref: '#/components/parameters/StoreInvitationToken'
+      responses:
+        '200':
+          description: The store invitation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreInvitationData'
+        '403':
+          description: If you are authenticated but forbidden to modify your profile
+        '404':
+          description: 'Error code: `store-invitation-not-found`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.user.canmodifyprofile
+        Basic: []
+    post:
+      tags:
+      - Stores (Users)
+      summary: Accept a store invitation
+      description: Accept the current user's pending invitation identified by its token.
+      operationId: Stores_AcceptStoreInvitation
+      parameters:
+      - $ref: '#/components/parameters/StoreInvitationToken'
+      responses:
+        '200':
+          description: The invitation was accepted
+        '400':
+          description: 'Error code: `invalid-role`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: If you are authenticated but forbidden to modify your profile
+        '404':
+          description: 'Error code: `store-invitation-not-found`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '409':
+          description: 'Error code: `already-store-user`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '410':
+          description: 'Error code: `store-invitation-expired`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.user.canmodifyprofile
+        Basic: []
+    delete:
+      tags:
+      - Stores (Users)
+      summary: Decline a store invitation
+      description: Decline the current user's invitation identified by its token.
+      operationId: Stores_DeclineStoreInvitation
+      parameters:
+      - $ref: '#/components/parameters/StoreInvitationToken'
+      responses:
+        '200':
+          description: The invitation was declined
+        '403':
+          description: If you are authenticated but forbidden to modify your profile
+        '404':
+          description: 'Error code: `store-invitation-not-found`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.user.canmodifyprofile
+        Basic: []
+  /api/v1/stores/{storeId}/users/{idOrEmail}:
+    put:
+      tags:
+      - Stores (Users)
+      summary: Update a store user role
+      description: Update the role of an existing store user.
+      operationId: Stores_UpdateStoreUser
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/UserIdOrEmail'
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreUserDataRequest'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: The user was updated
+        '400':
+          description: A list of errors that occurred when updating the store user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '403':
+          description: If you are authenticated but forbidden to update store users
+        '404':
+          description: The store or user could not be found
+        '409':
+          description: 'Error codes: `store-user-role-orphaned`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
       security:
       - API_Key:
         - btcpay.store.canmodifystoresettings
@@ -154,94 +388,127 @@ paths:
       - API_Key:
         - btcpay.store.canmodifystoresettings
         Basic: []
+  /api/v1/stores/{storeId}/users/{idOrEmail}/invitation:
+    post:
+      tags:
+      - Stores (Users)
+      summary: Resend a store invitation
+      description: Generate and deliver a new token for an existing pending store invitation.
+      operationId: Stores_ResendStoreInvitation
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/UserIdOrEmail'
+      responses:
+        '200':
+          description: The replacement invitation token and link
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreInvitationResult'
+        '403':
+          description: If you are authenticated but forbidden to modify store users
+        '404':
+          description: 'Error codes: `user-not-found`, `store-invitation-not-found`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+    delete:
+      tags:
+      - Stores (Users)
+      summary: Cancel a store invitation
+      description: Cancel the specified user's pending store invitation.
+      operationId: Stores_CancelStoreInvitation
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/UserIdOrEmail'
+      responses:
+        '200':
+          description: The invitation was cancelled
+        '403':
+          description: If you are authenticated but forbidden to modify store users
+        '404':
+          description: 'Error codes: `user-not-found`, `store-invitation-not-found`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
 components:
   schemas:
-    ApplicationUserData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-          description: The id of the user
-        email:
-          type: string
-          description: The email of the user
-        name:
-          type:
-          - string
-          - 'null'
-          description: The name of the user
-        imageUrl:
-          type:
-          - string
-          - 'null'
-          description: The profile picture URL of the user
-        invitationUrl:
-          type:
-          - string
-          - 'null'
-          description: The pending invitation URL of the user
-        emailConfirmed:
-          type: boolean
-          description: True if the email has been confirmed by the user
-        requiresEmailConfirmation:
-          type: boolean
-          description: True if the email requires confirmation to log in
-        approved:
-          type: boolean
-          description: True if an admin has approved the user
-        requiresApproval:
-          type: boolean
-          description: True if the instance requires approval to log in
-        storeQuota:
-          type:
-          - number
-          - 'null'
-          description: Per-user override for the max number of stores this user can create. Null means the server default applies
-        created:
-          type:
-          - number
-          - 'null'
-          description: The creation date of the user as a unix timestamp. Null if created before v1.0.5.6
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        disabled:
-          type: boolean
-          description: True if an admin has disabled the user
-        roles:
-          type: array
-          items:
-            type: string
-          description: The roles of the user
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
     StoreId:
       type: string
       description: Store ID of the item
       example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    StoreUserData:
+    StoreInvitationDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/StoreInvitationData'
+    AddStoreUserDataRequest:
       allOf:
+      - $ref: '#/components/schemas/StoreUserDataRequest'
       - type: object
         properties:
-          userId:
-            type: string
-            description: The id of the user (Deprecated, use `id` instead)
-            deprecated: true
-          role:
-            type: string
-            description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest` (Deprecated, use `storeRole` instead)
-            deprecated: true
-          storeRole:
-            type: string
-            description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest`
-      - $ref: '#/components/schemas/ApplicationUserData'
+          requireInvitation:
+            type:
+            - boolean
+            - 'null'
+            description: Whether to create a store invitation instead of adding the user directly. Defaults to `true`. Setting this to `false` requires server settings permission.
     StoreUserDataList:
       type: array
       items:
         $ref: '#/components/schemas/StoreUserData'
+    AddStoreUserResult:
+      type: object
+      properties:
+        storeInvitation:
+          allOf:
+          - $ref: '#/components/schemas/StoreInvitationResult'
+          description: Invitation details when an invitation was created.
+    StoreInvitationData:
+      type: object
+      properties:
+        storeId:
+          type: string
+          description: The id of the invited store
+        storeName:
+          type: string
+          description: The name of the invited store
+        userId:
+          type: string
+          description: The id of the invited user
+        userEmail:
+          type: string
+          description: The email of the invited user
+        roleId:
+          type: string
+          description: The store role assigned by the invitation
+        invitedByUserId:
+          type:
+          - string
+          - 'null'
+          description: The id of the user who created the invitation
+        created:
+          type: string
+          format: date-time
+          description: The invitation creation time
+        expiresAt:
+          type: string
+          format: date-time
+          description: The invitation expiration time
+        isExpired:
+          type: boolean
+          description: Whether the invitation has expired
+        isForCurrentUser:
+          type: boolean
+          description: Whether the invitation belongs to the authenticated user
     ValidationProblemDetails:
       type: array
       description: An array of validation errors of the request
@@ -265,6 +532,36 @@ components:
         message:
           type: string
           description: User friendly error message about the error
+    StoreUserData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the user
+        email:
+          type: string
+          description: The email of the user
+        roleId:
+          type: string
+          description: The store role id of the user
+    StoreUserDataRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id or email of the user
+        storeRole:
+          type: string
+          description: The role of the user. Default roles are `Owner`, `Manager`, `Employee` and `Guest`
+    StoreInvitationResult:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The invitation token
+        link:
+          type: string
+          description: The invitation link
   parameters:
     StoreId:
       name: storeId
@@ -280,16 +577,23 @@ components:
       description: The user's id or email
       schema:
         type: string
+    StoreInvitationToken:
+      name: token
+      in: path
+      required: true
+      description: The raw store invitation token
+      schema:
+        type: string
   securitySchemes:
     API_Key:
       type: apiKey
-      in: header
+      description: "BTCPay Server supports authenticating and authorizing users through an API Key that is generated by them. Send the API Key as a header value to Authorization with the format: `token {token}`. For a smoother experience, you can generate a url that redirects users to an API key creation screen.\n\n The following permissions are available to the context of the user creating the API Key:\n\n* `btcpay.impersonation.canimpersonate`: Can impersonate users\n* `btcpay.user.candeleteuser`: Delete user\n* `btcpay.user.canmanagenotificationsforuser`: Manage your notifications\n* `btcpay.user.canmodifyprofile`: Manage your profile\n* `btcpay.user.canviewnotificationsforuser`: View your notifications\n* `btcpay.user.canviewprofile`: View your profile\n* `unrestricted`: Unrestricted access\n\nThe following permissions are available if the user is an administrator:\n\n* `btcpay.server.cancreatelightninginvoiceinternalnode`: Create invoices with internal lightning node\n* `btcpay.server.cancreateuser`: Create new users\n* `btcpay.server.canmanageusers`: Manage users\n* `btcpay.server.canmodifyserversettings`: Manage your server\n* `btcpay.server.canuseinternallightningnode`: Use the internal lightning node\n* `btcpay.server.canviewlightninginvoiceinternalnode`: View invoices from internal lightning node\n* `btcpay.server.canviewusers`: View users\n\nThe following permissions applies to all stores of the user, you can limit to a specific store with the following format: `btcpay.store.cancreateinvoice:6HSHAEU4iYWtjxtyRs9KyPjM9GAQp8kw2T9VWbGG1FnZ`:\n\n* `btcpay.store.canarchivepullpayments`: Archive your pull payments\n* `btcpay.store.canbroadcasttransactions`: Broadcast wallet transactions\n* `btcpay.store.cancanceltransactions`: Cancel wallet transactions\n* `btcpay.store.cancreateinvoice`: Create an invoice\n* `btcpay.store.cancreatelightninginvoice`: Create invoices from the lightning nodes associated with your stores\n* `btcpay.store.cancreatenonapprovedpullpayments`: Create non-approved pull payments\n* `btcpay.store.cancreatepullpayments`: Create pull payments\n* `btcpay.store.cancreatetransactions`: Create wallet transactions\n* `btcpay.store.cancreditsubscribers`: Credit your subscribers\n* `btcpay.store.canmanageinvoicestatus`: Manage invoice status\n* `btcpay.store.canmanagelegacyaccesstokens`: Manage legacy access tokens\n* `btcpay.store.canmanagepayouts`: Manage payouts\n* `btcpay.store.canmanagepullpayments`: Manage your pull payments\n* `btcpay.store.canmanagesubscribers`: Manage your subscribers\n* `btcpay.store.canmanagewallets`: Manage wallets\n* `btcpay.store.canmanagewalletsettings`: Manage wallet settings\n* `btcpay.store.canmanagewallettransactions`: Manage wallet transactions\n* `btcpay.store.canmodifyinvoices`: Modify invoices\n* `btcpay.store.canmodifyofferings`: Modify your offerings\n* `btcpay.store.canmodifypaymentrequests`: Modify your payment requests\n* `btcpay.store.canmodifystoresettings`: Modify your stores\n* `btcpay.store.cansendstoreemails`: Send store emails\n* `btcpay.store.cansigntransactions`: Sign wallet transactions\n* `btcpay.store.canuselightningnode`: Use the lightning nodes associated with your stores\n* `btcpay.store.canviewinvoices`: View invoices\n* `btcpay.store.canviewlightninginvoice`: View the lightning invoices associated with your stores\n* `btcpay.store.canviewofferings`: View your offerings\n* `btcpay.store.canviewpaymentrequests`: View your payment requests\n* `btcpay.store.canviewpayouts`: View payouts\n* `btcpay.store.canviewpullpayments`: View your pull payments\n* `btcpay.store.canviewreports`: View your reports\n* `btcpay.store.canviewstoresettings`: View your stores\n* `btcpay.store.canviewwallet`: View wallets\n* `btcpay.store.webhooks.canmodifywebhooks`: Modify stores webhooks\n\nNote that API Keys only limits permission of a user and can never expand it. If an API Key has the permission `btcpay.server.canmodifyserversettings` but that the user account creating this API Key is not administrator, the API Key will not be able to modify the server settings.\nSome permissions may include other permissions, see [this operation](#operation/permissionsMetadata).\n"
       name: Authorization
-      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+      in: header
     Basic:
       type: http
-      scheme: basic
-      description: HTTP Basic Authentication with email and password
+      description: BTCPay Server supports authenticating and authorizing users through the Basic HTTP authentication scheme during the first five minutes after account creation or when the user explicitly enables it. Send the user and password encoded in base64 with the format `Basic {base64(username:password)}`. Using this authentication method implicitly provides you with the `unrestricted` permission
+      scheme: Basic
 externalDocs:
-  description: Check out our examples on how to use the API
-  url: https://docs.btcpayserver.org/Development/GreenFieldExample/
+  description: BTCPay Greenfield Plugins API
+  url: https://docs.btcpayserver.org/API/Greenfield/Plugins/

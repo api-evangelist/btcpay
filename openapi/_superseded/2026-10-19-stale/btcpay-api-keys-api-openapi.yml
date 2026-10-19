@@ -1,0 +1,271 @@
+openapi: 3.2.0
+info:
+  title: BTCPay Greenfield API Keys API
+  version: v1
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: API Keys
+  description: API Key operations
+paths:
+  /api/v1/api-keys/{apikey}:
+    delete:
+      operationId: ApiKeys_DeleteApiKey
+      tags:
+      - API Keys
+      summary: Revoke an API Key
+      description: Revoke the current API key so that it cannot be used anymore
+      parameters:
+      - name: apikey
+        in: path
+        required: true
+        description: The API Key to revoke
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The key has been deleted
+        '404':
+          description: The key is not found for this user
+      security:
+      - API_Key:
+        - unrestricted
+        Basic: []
+  /api/v1/users/{idOrEmail}/api-keys/{apikey}:
+    delete:
+      operationId: ApiKeys_DeleteUserApiKey
+      tags:
+      - API Keys
+      summary: Revoke an API Key of target user
+      description: Revoke the API key of a target user so that it cannot be used anymore
+      parameters:
+      - $ref: '#/components/parameters/UserIdOrEmail'
+      - name: apikey
+        in: path
+        required: true
+        description: The API Key to revoke
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The key has been deleted
+        '404':
+          description: The key is not found for this user
+      security:
+      - API_Key:
+        - unrestricted
+        Basic: []
+  /api/v1/api-keys/current:
+    get:
+      operationId: ApiKeys_GetCurrentApiKey
+      tags:
+      - API Keys
+      summary: Get the current API Key information
+      description: View information about the current API key
+      responses:
+        '200':
+          description: Information about the current API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyData'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key:
+        - btcpay.server.canmanageusers
+        Basic: []
+    delete:
+      operationId: ApiKeys_DeleteCurrentApiKey
+      tags:
+      - API Keys
+      summary: Revoke the current API Key
+      description: Revoke the current API key so that it cannot be used anymore
+      responses:
+        '200':
+          description: The key was revoked and is no longer usable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyData'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key: []
+  /api/v1/api-keys:
+    post:
+      operationId: ApiKeys_CreateApiKey
+      tags:
+      - API Keys
+      summary: Create a new API Key
+      responses:
+        '200':
+          description: Information about the new API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyData'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                label:
+                  type:
+                  - string
+                  - 'null'
+                  description: The label of the new API Key
+                permissions:
+                  type:
+                  - array
+                  - 'null'
+                  description: The permissions granted to this API Key (See API Key Authentication)
+                  items:
+                    type: string
+      security:
+      - API_Key:
+        - unrestricted
+        Basic: []
+  /api/v1/users/{idOrEmail}/api-keys:
+    post:
+      operationId: ApiKeys_CreateUserApiKey
+      tags:
+      - API Keys
+      summary: Create a new API Key for a user
+      parameters:
+      - $ref: '#/components/parameters/UserIdOrEmail'
+      responses:
+        '200':
+          description: Information about the new API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKeyData'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                label:
+                  type:
+                  - string
+                  - 'null'
+                  description: The label of the new API Key
+                permissions:
+                  type:
+                  - array
+                  - 'null'
+                  description: The permissions granted to this API Key (See API Key Authentication)
+                  items:
+                    type: string
+      security:
+      - API_Key:
+        - btcpay.server.canmanageusers
+        Basic: []
+components:
+  parameters:
+    UserIdOrEmail:
+      name: idOrEmail
+      in: path
+      required: true
+      description: The user's id or email
+      schema:
+        type: string
+  schemas:
+    ApiKeyData:
+      type: object
+      additionalProperties: false
+      properties:
+        apiKey:
+          type: string
+          description: The API Key to use for API Key Authentication
+        label:
+          type: string
+          description: The label given by the user to this API Key
+        permissions:
+          type: array
+          description: The permissions associated to this API Key (can be scoped to a specific store)
+          items:
+            type: string
+          example:
+          - btcpay.server.canmanageusers
+          - btcpay.server.canmanageusers:2KxSpc9V5zDWfUbvgYiZuAfka4wUhGF96F75Ao8y4zHP
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

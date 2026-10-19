@@ -1,0 +1,184 @@
+openapi: 3.2.0
+info:
+  title: BTCPay Greenfield Files API
+  version: v1
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Files
+  description: File operations
+paths:
+  /api/v1/files:
+    get:
+      operationId: Files_GetFiles
+      tags:
+      - Files
+      summary: Get all files
+      description: Load all files that exist.
+      parameters: []
+      responses:
+        '200':
+          description: Files found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileData'
+        '401':
+          description: Missing authorization for loading the files
+      security:
+      - API_Key:
+        - btcpay.server.canmodifyserversettings
+        Basic: []
+    post:
+      tags:
+      - Files
+      summary: Uploads a file
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                file:
+                  type: string
+                  description: The profile picture
+                  format: binary
+      operationId: Files_UploadFile
+      responses:
+        '200':
+          description: Uploads a file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileData'
+        '415':
+          description: The upload did not work
+      security:
+      - API_Key:
+        - btcpay.server.canmodifyserversettings
+        Basic: []
+  /api/v1/files/{fileId}:
+    get:
+      operationId: Files_GetFile
+      tags:
+      - Files
+      summary: Get file
+      description: View information about the specified file
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        description: The file information to fetch
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileData'
+        '401':
+          description: Missing authorization for loading the file
+      security:
+      - API_Key:
+        - btcpay.server.canmodifyserversettings
+        Basic: []
+    delete:
+      tags:
+      - Files
+      summary: Delete file
+      description: Deletes the file
+      operationId: Files_DeleteFile
+      parameters:
+      - name: fileId
+        in: path
+        required: true
+        description: The file to delete
+        schema:
+          type: string
+      responses:
+        '200':
+          description: File deleted successfully
+        '404':
+          description: The file could not be found
+      security:
+      - API_Key:
+        - btcpay.server.canmodifyserversettings
+        Basic: []
+components:
+  schemas:
+    FileData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: The id of the file
+        userId:
+          type: string
+          description: The id of the user that uploaded the file
+        uri:
+          type: string
+          description: The internal URI of the file
+        url:
+          type:
+          - string
+          - 'null'
+          description: The full URL of the file
+        originalName:
+          type:
+          - string
+          - 'null'
+          description: The original name of the file
+        storageName:
+          type:
+          - string
+          - 'null'
+          description: The storage name of the file
+        created:
+          type:
+          - number
+          - 'null'
+          description: The creation date of the file as a unix timestamp
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

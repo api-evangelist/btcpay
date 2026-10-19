@@ -5,7 +5,78 @@ info:
   description: '# Introduction
 
 
-    The BTCPay Server Greenfield API is a REST API.'
+    The BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+
+
+    # Authentication
+
+
+    You can authenticate either via Basic Auth or an API key. It''s recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the ''Unrestricted access'' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.
+
+
+    If you want to simplify the process of creating API keys for your users, you can use the Authorization endpoint to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the API Authorization Flow docs page.
+
+
+    # Usage examples
+
+
+    Use **Basic Auth** to read store information with cURL:
+
+    ```bash
+
+    BTCPAY_INSTANCE="https://mainnet.demo.btcpayserver.org"
+
+    USER="MyTestUser@gmail.com"
+
+    PASSWORD="notverysecurepassword"
+
+    PERMISSION="btcpay.store.canmodifystoresettings"
+
+    BODY="$(echo "{}" | jq --arg "a" "$PERMISSION" ''. + {permissions:[$a]}'')"
+
+
+    API_KEY="$(curl -s \
+
+    -H "Content-Type: application/json" \
+
+    --user "$USER:$PASSWORD" \
+
+    -X POST \
+
+    -d "$BODY" \
+
+    "$BTCPAY_INSTANCE/api/v1/api-keys" | jq -r .apiKey)"
+
+    ```
+
+
+    Use an **API key** to read store information with cURL:
+
+    ```bash
+
+    STORE_ID="yourStoreId"
+
+
+    curl -s \
+
+    -H "Content-Type: application/json" \
+
+    -H "Authorization: token $API_KEY" \
+
+    -X GET \
+
+    "$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID"
+
+    ```
+
+
+    You can find more examples on our docs for different programming languages:
+
+    - cURL
+
+    - Javascript/Node.Js
+
+    - PHP'
   contact:
     name: BTCPay Server
     url: https://btcpayserver.org
@@ -13,12 +84,8 @@ info:
     name: MIT
     url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
 servers:
-- url: https://{btcpay-host}
-  description: Your BTCPay Server instance
-  variables:
-    btcpay-host:
-      default: mainnet.demo.btcpayserver.org
-      description: The hostname of your BTCPay Server instance
+- url: /
+  description: BTCPay Server Greenfield API
 security:
 - API_Key: []
   Basic: []
@@ -408,6 +475,112 @@ paths:
         Basic: []
 components:
   schemas:
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    PointOfSaleAppRequest:
+      allOf:
+      - $ref: '#/components/schemas/PointOfSaleBaseData'
+      - type: object
+        properties:
+          template:
+            type: string
+            description: JSON of item available in the app
+    PointOfSaleAppData:
+      allOf:
+      - $ref: '#/components/schemas/PointOfSaleBaseData'
+      - type: object
+        properties:
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/AppItem'
+            description: JSON object of app items
+            example:
+            - id: green tea
+              title: Green Tea
+              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
+              image: ~/img/pos-sample/green-tea.jpg
+              price: '1.0'
+              priceType: Fixed
+              buyButtonText: null
+              inventory: 5
+              paymentMethods: null
+              disabled: false
+            - id: black tea
+              title: Black Tea
+              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
+              image: ~/img/pos-sample/black-tea.jpg
+              price: '2.0'
+              priceType: Fixed
+              buyButtonText: Test Buy Button Text
+              inventory: null
+              paymentMethods: null
+              disabled: false
+    AppItem:
+      type: object
+      properties:
+        id:
+          type: string
+          example: green-tea
+          description: Unique ID of the item
+        title:
+          type: string
+          example: Green Tea
+          description: The display name of the item
+        description:
+          type: string
+          example: Lovely, fresh and tender.
+          description: A description text for the item
+        image:
+          type: string
+          example: http://teashop.com/img/green-tea.jpg
+          description: An image URL for the item
+        price:
+          type:
+          - string
+          - 'null'
+          format: decimal
+          example: '21.0'
+        priceType:
+          type: string
+          x-enumNames:
+          - Fixed
+          - Minimum
+          - Topup
+          enum:
+          - Fixed
+          - Minimum
+          - Topup
+        buyButtonText:
+          type: string
+          example: Buy me!
+          description: A custom text for the buy button for the item
+        inventory:
+          type:
+          - integer
+          - 'null'
+          example: 21
+          description: The remaining stock the item
+        disabled:
+          type: boolean
+          description: If true, the item does not appear in the list by default.
+          default: false
+    AppSalesStatsItem:
+      type: object
+      properties:
+        date:
+          type: integer
+          description: UNIX timestamp of the beginning of that day
+        label:
+          type: string
+          description: Short date as label
+          example: Jul 21
+        salesCount:
+          type: integer
+          example: 21
+          description: Total sales on that day
     FileData:
       type: object
       additionalProperties: false
@@ -509,23 +682,14 @@ components:
             type:
             - string
             - 'null'
-            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
+            description: Deprecated. Use webhooks instead. Callback notification URL to POST to once when an invoice is paid and once when there are enough blockchain confirmations.
+            deprecated: true
           tagline:
             type:
             - string
             - 'null'
             description: Tagline for the app displayed to user
             example: I can't believe it's not butter
-          disqusEnabled:
-            type:
-            - boolean
-            - 'null'
-            description: Whether Disqus is enabled for the app
-          disqusShortname:
-            type:
-            - string
-            - 'null'
-            description: Disqus shortname to used for the app
           soundsEnabled:
             type:
             - boolean
@@ -605,74 +769,6 @@ components:
             - string
             - 'null'
             description: Form ID to request customer data
-    AppItem:
-      type: object
-      properties:
-        id:
-          type: string
-          example: green-tea
-          description: Unique ID of the item
-        title:
-          type: string
-          example: Green Tea
-          description: The display name of the item
-        description:
-          type: string
-          example: Lovely, fresh and tender.
-          description: A description text for the item
-        image:
-          type: string
-          example: http://teashop.com/img/green-tea.jpg
-          description: An image URL for the item
-        price:
-          type:
-          - string
-          - 'null'
-          format: decimal
-          example: '21.0'
-        priceType:
-          type: string
-          x-enumNames:
-          - Fixed
-          - Topup
-          - Minimum
-          enum:
-          - Fixed
-          - Topup
-          - Minimum
-        buyButtonText:
-          type: string
-          example: Buy me!
-          description: A custom text for the buy button for the item
-        inventory:
-          type:
-          - integer
-          - 'null'
-          example: 21
-          description: The remaining stock the item
-        disabled:
-          type: boolean
-          description: If true, the item does not appear in the list by default.
-          default: false
-    UnixTimestamp:
-      type: number
-      format: int32
-      example: 1592312018
-      description: A unix timestamp in seconds
-    AppSalesStatsItem:
-      type: object
-      properties:
-        date:
-          type: integer
-          description: UNIX timestamp of the beginning of that day
-        label:
-          type: string
-          description: Short date as label
-          example: Jul 21
-        salesCount:
-          type: integer
-          example: 21
-          description: Total sales on that day
     AppItemStats:
       type: object
       properties:
@@ -694,90 +790,32 @@ components:
           type: string
           description: The formatted total amount of sales of that item
           example: 615.21 USD
-    CrowdfundAppData:
+    UnixTimestamp:
+      type: number
+      format: int32
+      example: 1592312018
+      description: A unix timestamp in seconds
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    CrowdfundAppRequest:
       allOf:
       - $ref: '#/components/schemas/CrowdfundBaseData'
       - type: object
         properties:
-          perks:
-            type: object
-            description: JSON of perks available in the app
-            example:
-            - description: null
-              id: test perk
-              image: null
-              price:
-                type: 2
-                formatted: $100.00
-                value: 100.0
-              title: test perk
-              buyButtonText: null
-              inventory: null
-              paymentMethods: null
-              disabled: false
-            - description: this is an amazing perk
-              id: test test
-              image: https://mainnet.demo.btcpayserver.org/img/errorpages/404_nicolas.jpg
-              price:
-                type: 1
-                formatted: $69.42
-                value: 69.42
-              title: test test
-              buyButtonText: null
-              inventory: 5
-              paymentMethods: null
-              disabled: false
-            - description: null
-              id: f$t45hj764325
-              image: null
-              price:
-                type: 0
-                formatted: null
-                value: null
-              title: amazing perk
-              buyButtonText: button text
-              inventory: null
-              paymentMethods: null
-              disabled: true
-    PointOfSaleAppRequest:
-      allOf:
-      - $ref: '#/components/schemas/PointOfSaleBaseData'
-      - type: object
-        properties:
-          template:
+          perksTemplate:
             type: string
-            description: JSON of item available in the app
-    PointOfSaleAppData:
-      allOf:
-      - $ref: '#/components/schemas/PointOfSaleBaseData'
-      - type: object
-        properties:
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/AppItem'
-            description: JSON object of app items
-            example:
-            - id: green tea
-              title: Green Tea
-              description: Lovely, fresh and tender, Meng Ding Gan Lu ('sweet dew') is grown in the lush Meng Ding Mountains of the southwestern province of Sichuan where it has been cultivated for over a thousand years.
-              image: ~/img/pos-sample/green-tea.jpg
-              price: '1.0'
-              priceType: Fixed
-              buyButtonText: null
-              inventory: 5
-              paymentMethods: null
-              disabled: false
-            - id: black tea
-              title: Black Tea
-              description: Tian Jian Tian Jian means 'heavenly tippy tea' in Chinese, and it describes the finest grade of dark tea. Our Tian Jian dark tea is from Hunan province which is famous for making some of the best dark teas available.
-              image: ~/img/pos-sample/black-tea.jpg
-              price: '2.0'
-              priceType: Fixed
-              buyButtonText: Test Buy Button Text
-              inventory: null
-              paymentMethods: null
-              disabled: false
+            description: JSON of perks available in the app
     AppSalesStats:
       type: object
       properties:
@@ -789,14 +827,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AppSalesStatsItem'
-    CrowdfundAppRequest:
-      allOf:
-      - $ref: '#/components/schemas/CrowdfundBaseData'
-      - type: object
-        properties:
-          perksTemplate:
-            type: string
-            description: JSON of perks available in the app
     PointOfSaleBaseData:
       allOf:
       - $ref: '#/components/schemas/AppBaseData'
@@ -910,7 +940,8 @@ components:
             type:
             - string
             - 'null'
-            description: Callback notification url to POST to once when invoice is paid for and once when there are enough blockchain confirmations
+            description: Deprecated. Use webhooks instead. Callback notification URL to POST to once when an invoice is paid and once when there are enough blockchain confirmations.
+            deprecated: true
           redirectUrl:
             type:
             - string
@@ -968,31 +999,52 @@ components:
           - 'null'
           description: If true, the app does not appear in the apps list by default.
           default: false
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
+    CrowdfundAppData:
+      allOf:
+      - $ref: '#/components/schemas/CrowdfundBaseData'
+      - type: object
         properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
-    StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+          perks:
+            type: object
+            description: JSON of perks available in the app
+            example:
+            - description: null
+              id: test perk
+              image: null
+              price:
+                type: 2
+                formatted: $100.00
+                value: 100.0
+              title: test perk
+              buyButtonText: null
+              inventory: null
+              paymentMethods: null
+              disabled: false
+            - description: this is an amazing perk
+              id: test test
+              image: https://mainnet.demo.btcpayserver.org/img/errorpages/404_nicolas.jpg
+              price:
+                type: 1
+                formatted: $69.42
+                value: 69.42
+              title: test test
+              buyButtonText: null
+              inventory: 5
+              paymentMethods: null
+              disabled: false
+            - description: null
+              id: f$t45hj764325
+              image: null
+              price:
+                type: 0
+                formatted: null
+                value: null
+              title: amazing perk
+              buyButtonText: button text
+              inventory: null
+              paymentMethods: null
+              disabled: true
   parameters:
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
     AppId:
       name: appId
       in: path
@@ -1000,16 +1052,23 @@ components:
       description: App ID
       schema:
         type: string
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
   securitySchemes:
     API_Key:
       type: apiKey
-      in: header
+      description: "BTCPay Server supports authenticating and authorizing users through an API Key that is generated by them. Send the API Key as a header value to Authorization with the format: `token {token}`. For a smoother experience, you can generate a url that redirects users to an API key creation screen.\n\n The following permissions are available to the context of the user creating the API Key:\n\n* `btcpay.impersonation.canimpersonate`: Can impersonate users\n* `btcpay.user.candeleteuser`: Delete user\n* `btcpay.user.canmanagenotificationsforuser`: Manage your notifications\n* `btcpay.user.canmodifyprofile`: Manage your profile\n* `btcpay.user.canviewnotificationsforuser`: View your notifications\n* `btcpay.user.canviewprofile`: View your profile\n* `unrestricted`: Unrestricted access\n\nThe following permissions are available if the user is an administrator:\n\n* `btcpay.server.cancreatelightninginvoiceinternalnode`: Create invoices with internal lightning node\n* `btcpay.server.cancreateuser`: Create new users\n* `btcpay.server.canmanageusers`: Manage users\n* `btcpay.server.canmodifyserversettings`: Manage your server\n* `btcpay.server.canuseinternallightningnode`: Use the internal lightning node\n* `btcpay.server.canviewlightninginvoiceinternalnode`: View invoices from internal lightning node\n* `btcpay.server.canviewusers`: View users\n\nThe following permissions applies to all stores of the user, you can limit to a specific store with the following format: `btcpay.store.cancreateinvoice:6HSHAEU4iYWtjxtyRs9KyPjM9GAQp8kw2T9VWbGG1FnZ`:\n\n* `btcpay.store.canarchivepullpayments`: Archive your pull payments\n* `btcpay.store.canbroadcasttransactions`: Broadcast wallet transactions\n* `btcpay.store.cancanceltransactions`: Cancel wallet transactions\n* `btcpay.store.cancreateinvoice`: Create an invoice\n* `btcpay.store.cancreatelightninginvoice`: Create invoices from the lightning nodes associated with your stores\n* `btcpay.store.cancreatenonapprovedpullpayments`: Create non-approved pull payments\n* `btcpay.store.cancreatepullpayments`: Create pull payments\n* `btcpay.store.cancreatetransactions`: Create wallet transactions\n* `btcpay.store.cancreditsubscribers`: Credit your subscribers\n* `btcpay.store.canmanageinvoicestatus`: Manage invoice status\n* `btcpay.store.canmanagelegacyaccesstokens`: Manage legacy access tokens\n* `btcpay.store.canmanagepayouts`: Manage payouts\n* `btcpay.store.canmanagepullpayments`: Manage your pull payments\n* `btcpay.store.canmanagesubscribers`: Manage your subscribers\n* `btcpay.store.canmanagewallets`: Manage wallets\n* `btcpay.store.canmanagewalletsettings`: Manage wallet settings\n* `btcpay.store.canmanagewallettransactions`: Manage wallet transactions\n* `btcpay.store.canmodifyinvoices`: Modify invoices\n* `btcpay.store.canmodifyofferings`: Modify your offerings\n* `btcpay.store.canmodifypaymentrequests`: Modify your payment requests\n* `btcpay.store.canmodifystoresettings`: Modify your stores\n* `btcpay.store.cansendstoreemails`: Send store emails\n* `btcpay.store.cansigntransactions`: Sign wallet transactions\n* `btcpay.store.canuselightningnode`: Use the lightning nodes associated with your stores\n* `btcpay.store.canviewinvoices`: View invoices\n* `btcpay.store.canviewlightninginvoice`: View the lightning invoices associated with your stores\n* `btcpay.store.canviewofferings`: View your offerings\n* `btcpay.store.canviewpaymentrequests`: View your payment requests\n* `btcpay.store.canviewpayouts`: View payouts\n* `btcpay.store.canviewpullpayments`: View your pull payments\n* `btcpay.store.canviewreports`: View your reports\n* `btcpay.store.canviewstoresettings`: View your stores\n* `btcpay.store.canviewwallet`: View wallets\n* `btcpay.store.webhooks.canmodifywebhooks`: Modify stores webhooks\n\nNote that API Keys only limits permission of a user and can never expand it. If an API Key has the permission `btcpay.server.canmodifyserversettings` but that the user account creating this API Key is not administrator, the API Key will not be able to modify the server settings.\nSome permissions may include other permissions, see [this operation](#operation/permissionsMetadata).\n"
       name: Authorization
-      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+      in: header
     Basic:
       type: http
-      scheme: basic
-      description: HTTP Basic Authentication with email and password
+      description: BTCPay Server supports authenticating and authorizing users through the Basic HTTP authentication scheme during the first five minutes after account creation or when the user explicitly enables it. Send the user and password encoded in base64 with the format `Basic {base64(username:password)}`. Using this authentication method implicitly provides you with the `unrestricted` permission
+      scheme: Basic
 externalDocs:
-  description: Check out our examples on how to use the API
-  url: https://docs.btcpayserver.org/Development/GreenFieldExample/
+  description: BTCPay Greenfield Plugins API
+  url: https://docs.btcpayserver.org/API/Greenfield/Plugins/

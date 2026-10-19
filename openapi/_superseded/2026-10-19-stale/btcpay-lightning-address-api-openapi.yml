@@ -1,0 +1,197 @@
+openapi: 3.2.0
+info:
+  title: BTCPay Greenfield Lightning address API
+  version: v1
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Lightning address
+  description: Lightning address configuration
+paths:
+  /api/v1/stores/{storeId}/lightning-addresses:
+    get:
+      tags:
+      - Lightning address
+      summary: Get store configured lightning addresses
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      operationId: StoreLightningAddresses_GetStoreLightningAddresses
+      responses:
+        '200':
+          description: The lightning addresses configured in the store
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightningAddressData'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store/wallet
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+  /api/v1/stores/{storeId}/lightning-addresses/{username}:
+    get:
+      tags:
+      - Lightning address
+      summary: Get store configured lightning address
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - name: username
+        in: path
+        required: true
+        description: The lightning address username
+        schema:
+          type: string
+      operationId: StoreLightningAddresses_GetStoreLightningAddress
+      responses:
+        '200':
+          description: The lightning address configured in the store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningAddressData'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store/wallet
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+    post:
+      tags:
+      - Lightning address
+      summary: Add or update store configured lightning address
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - name: username
+        in: path
+        required: true
+        description: the lightning address username
+        schema:
+          type: string
+      operationId: StoreLightningAddresses_AddOrUpdateStoreLightningAddress
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LightningAddressData'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: The lightning address configured in the store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningAddressData'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store/wallet
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+    delete:
+      tags:
+      - Lightning address
+      summary: Remove configured lightning address
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - name: username
+        in: path
+        required: true
+        description: The lightning address username
+        schema:
+          type: string
+      description: Remove store configured lightning address
+      operationId: StoreLightningAddresses_RemoveStoreLightningAddress
+      responses:
+        '200':
+          description: Lightning address removed
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store/wallet
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+components:
+  schemas:
+    LightningAddressData:
+      type: object
+      additionalProperties: false
+      properties:
+        username:
+          type: string
+          description: The username of the lightning address
+        currencyCode:
+          type:
+          - string
+          - 'null'
+          description: The currency to generate the invoices for this lightning address in. Leave null lto use the store default.
+        min:
+          type:
+          - string
+          - 'null'
+          description: The minimum amount in sats this ln address allows
+        max:
+          type:
+          - string
+          - 'null'
+          description: The maximum amount in sats this ln address allows
+        invoiceMetadata:
+          type:
+          - object
+          - 'null'
+          description: The invoice metadata as JSON.
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+  parameters:
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

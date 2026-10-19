@@ -1,0 +1,432 @@
+openapi: 3.2.0
+info:
+  title: BTCPay Greenfield Stores (Payout Processors) API
+  version: v1
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Stores (Payout Processors)
+  description: Stores (Payout Processors) operations
+paths:
+  /api/v1/stores/{storeId}/payout-processors:
+    get:
+      tags:
+      - Stores (Payout Processors)
+      summary: Get store configured payout processors
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      operationId: StorePayoutProcessors_GetStorePayoutProcessors
+      responses:
+        '200':
+          description: configured payout processors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PayoutProcessorData'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+  /api/v1/stores/{storeId}/payout-processors/{processor}/{paymentMethodId}:
+    delete:
+      tags:
+      - Stores (Payout Processors)
+      summary: Remove store configured payout processor
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - name: processor
+        in: path
+        required: true
+        description: The processor
+        schema:
+          type: string
+      - $ref: '#/components/parameters/PaymentMethodId'
+      operationId: StorePayoutProcessors_RemoveStorePayoutProcessor
+      responses:
+        '200':
+          description: removed
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canmodifystoresettings
+        Basic: []
+  /api/v1/stores/{storeId}/payout-processors/OnChainAutomatedPayoutSenderFactory/{paymentMethodId}:
+    get:
+      tags:
+      - Stores (Payout Processors)
+      summary: Get configured store onchain automated payout processors
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/PaymentMethodId'
+      operationId: GreenfieldStoreAutomatedOnChainPayoutProcessorsController_GetStoreOnChainAutomatedPayoutProcessorsForPaymentMethod
+      responses:
+        '200':
+          description: configured processors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OnChainAutomatedTransferSettings'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+    put:
+      tags:
+      - Stores (Payout Processors)
+      summary: Update configured store onchain automated payout processors
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/PaymentMethodId'
+      operationId: GreenfieldStoreAutomatedOnChainPayoutProcessorsController_UpdateStoreOnChainAutomatedPayoutProcessorForPaymentMethod
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOnChainAutomatedTransferSettings'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: configured processor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnChainAutomatedTransferSettings'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+  /api/v1/stores/{storeId}/payout-processors/LightningAutomatedPayoutSenderFactory/{payoutMethodId}:
+    get:
+      tags:
+      - Stores (Payout Processors)
+      summary: Get configured store Lightning automated payout processors
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/PayoutMethodId'
+      operationId: GreenfieldStoreAutomatedLightningPayoutProcessorsController_GetStoreLightningAutomatedPayoutProcessorsForPaymentMethod
+      responses:
+        '200':
+          description: configured processors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightningAutomatedTransferSettings'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+    put:
+      tags:
+      - Stores (Payout Processors)
+      summary: Update configured store Lightning automated payout processors
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      - $ref: '#/components/parameters/PayoutMethodId'
+      operationId: GreenfieldStoreAutomatedLightningPayoutProcessorsController_UpdateStoreLightningAutomatedPayoutProcessor
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLightningAutomatedTransferSettings'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: configured processor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LightningAutomatedTransferSettings'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+  /api/v1/stores/{storeId}/payout-processors/OnChainAutomatedTransferSenderFactory:
+    get:
+      tags:
+      - Stores (Payout Processors)
+      summary: Get configured store onchain automated payout processors
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      operationId: GreenfieldStoreAutomatedOnChainPayoutProcessorsController_GetStoreOnChainAutomatedTransferSenderFactory
+      responses:
+        '200':
+          description: configured processors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OnChainAutomatedTransferSettings'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+    put:
+      tags:
+      - Stores (Payout Processors)
+      summary: Update configured store onchain automated payout processors
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      operationId: GreenfieldStoreAutomatedOnChainPayoutProcessorsController_UpdateStoreOnChainAutomatedTransferSenderFactory
+      requestBody:
+        x-name: request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOnChainAutomatedTransferSettings'
+        required: true
+        x-position: 1
+      responses:
+        '200':
+          description: configured processor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnChainAutomatedTransferSettings'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+  /api/v1/stores/{storeId}/payout-processors/LightningAutomatedPayoutSenderFactory:
+    get:
+      tags:
+      - Stores (Payout Processors)
+      summary: Get configured store Lightning automated payout processors
+      parameters:
+      - $ref: '#/components/parameters/StoreId'
+      operationId: GreenfieldStoreAutomatedLightningPayoutProcessorsController_GetStoreLightningAutomatedPayoutSenderFactory
+      responses:
+        '200':
+          description: configured processors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightningAutomatedTransferSettings'
+        '403':
+          description: If you are authenticated but forbidden to view the specified store
+        '404':
+          description: The key is not found for this store
+      security:
+      - API_Key:
+        - btcpay.store.canviewstoresettings
+        Basic: []
+components:
+  schemas:
+    UpdateLightningAutomatedTransferSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        intervalSeconds:
+          description: How often should the processor run
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+        cancelPayoutAfterFailures:
+          description: How many failures should the processor tolerate before cancelling the payout
+          type:
+          - number
+          - 'null'
+        processNewPayoutsInstantly:
+          description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
+          type: boolean
+          default: false
+    LightningAutomatedTransferSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        payoutMethodId:
+          $ref: '#/components/schemas/PayoutMethodId'
+        intervalSeconds:
+          description: How often should the processor run
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+        cancelPayoutAfterFailures:
+          description: How many failures should the processor tolerate before cancelling the payout
+          type:
+          - number
+          - 'null'
+        processNewPayoutsInstantly:
+          description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
+          type: boolean
+          default: false
+    OnChainAutomatedTransferSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        payoutMethodId:
+          $ref: '#/components/schemas/PayoutMethodId'
+        feeTargetBlock:
+          type: number
+          description: How many blocks should the fee rate calculation target to confirm in.
+        intervalSeconds:
+          description: How often should the processor run
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+        threshold:
+          type: string
+          format: decimal
+          minimum: 0
+          description: Only process payouts when this payout sum is reached.
+          example: '0.1'
+        processNewPayoutsInstantly:
+          description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
+          type: boolean
+          default: false
+    PayoutProcessorData:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: unique identifier of the payout processor
+          type: string
+        friendlyName:
+          description: Human name of the payout processor
+          type: string
+        payoutMethods:
+          description: Supported, payment methods by this processor
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    TimeSpan:
+      type: number
+      format: int32
+      example: 90
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    TimeSpanSeconds:
+      allOf:
+      - $ref: '#/components/schemas/TimeSpan'
+      format: seconds
+      description: A span of times in seconds
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    UpdateOnChainAutomatedTransferSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        feeTargetBlock:
+          type:
+          - number
+          - 'null'
+          description: How many blocks should the fee rate calculation target to confirm in. Set to 1 if not provided
+        intervalSeconds:
+          description: How often should the processor run
+          allOf:
+          - $ref: '#/components/schemas/TimeSpanSeconds'
+        threshold:
+          type: string
+          format: decimal
+          minimum: 0
+          description: Only process payouts when this payout sum is reached.
+          example: '0.1'
+        processNewPayoutsInstantly:
+          description: Skip the interval when ane eligible payout has been approved (or created with pre-approval)
+          type: boolean
+          default: false
+  parameters:
+    PayoutMethodId:
+      name: payoutMethodId
+      in: path
+      required: true
+      description: The payout method id
+      schema:
+        $ref: '#/components/schemas/PayoutMethodId'
+      example: BTC-CHAIN
+    StoreId:
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    PaymentMethodId:
+      name: paymentMethodId
+      in: path
+      required: true
+      description: The payment method id of the payment method to update
+      schema:
+        $ref: '#/components/schemas/PaymentMethodId'
+      example: BTC-CHAIN
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

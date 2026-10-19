@@ -5,7 +5,78 @@ info:
   description: '# Introduction
 
 
-    The BTCPay Server Greenfield API is a REST API.'
+    The BTCPay Server Greenfield API is a REST API. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+
+
+    # Authentication
+
+
+    You can authenticate either via Basic Auth or an API key. It''s recommended to use an API key for better security. You can create an API key in the BTCPay Server UI under `Account` -> `Manage Account` -> `API keys`. You can restrict the API key for one or multiple stores and for specific permissions. For testing purposes, you can give it the ''Unrestricted access'' permission. On production you should limit the permissions to the actual endpoints you use, you can see the required permission on the API docs at the top of each endpoint under `AUTHORIZATIONS`.
+
+
+    If you want to simplify the process of creating API keys for your users, you can use the Authorization endpoint to predefine permissions and redirect your users to the BTCPay Server Authorization UI. You can find more information about this on the API Authorization Flow docs page.
+
+
+    # Usage examples
+
+
+    Use **Basic Auth** to read store information with cURL:
+
+    ```bash
+
+    BTCPAY_INSTANCE="https://mainnet.demo.btcpayserver.org"
+
+    USER="MyTestUser@gmail.com"
+
+    PASSWORD="notverysecurepassword"
+
+    PERMISSION="btcpay.store.canmodifystoresettings"
+
+    BODY="$(echo "{}" | jq --arg "a" "$PERMISSION" ''. + {permissions:[$a]}'')"
+
+
+    API_KEY="$(curl -s \
+
+    -H "Content-Type: application/json" \
+
+    --user "$USER:$PASSWORD" \
+
+    -X POST \
+
+    -d "$BODY" \
+
+    "$BTCPAY_INSTANCE/api/v1/api-keys" | jq -r .apiKey)"
+
+    ```
+
+
+    Use an **API key** to read store information with cURL:
+
+    ```bash
+
+    STORE_ID="yourStoreId"
+
+
+    curl -s \
+
+    -H "Content-Type: application/json" \
+
+    -H "Authorization: token $API_KEY" \
+
+    -X GET \
+
+    "$BTCPAY_INSTANCE/api/v1/stores/$STORE_ID"
+
+    ```
+
+
+    You can find more examples on our docs for different programming languages:
+
+    - cURL
+
+    - Javascript/Node.Js
+
+    - PHP'
   contact:
     name: BTCPay Server
     url: https://btcpayserver.org
@@ -13,12 +84,8 @@ info:
     name: MIT
     url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
 servers:
-- url: https://{btcpay-host}
-  description: Your BTCPay Server instance
-  variables:
-    btcpay-host:
-      default: mainnet.demo.btcpayserver.org
-      description: The hostname of your BTCPay Server instance
+- url: /
+  description: BTCPay Server Greenfield API
 security:
 - API_Key: []
   Basic: []
@@ -174,8 +241,8 @@ paths:
         Basic: []
   /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}:
     parameters:
-    - $ref: '#/components/parameters/WebhookId'
     - $ref: '#/components/parameters/DeliveryId'
+    - $ref: '#/components/parameters/WebhookId'
     get:
       operationId: Webhooks_GetWebhookDelivery
       tags:
@@ -197,8 +264,8 @@ paths:
         Basic: []
   /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}/request:
     parameters:
-    - $ref: '#/components/parameters/WebhookId'
     - $ref: '#/components/parameters/DeliveryId'
+    - $ref: '#/components/parameters/WebhookId'
     get:
       operationId: Webhooks_GetWebhookDeliveryRequests
       tags:
@@ -223,8 +290,8 @@ paths:
         Basic: []
   /api/v1/webhooks/{webhookId}/deliveries/{deliveryId}/redeliver:
     parameters:
-    - $ref: '#/components/parameters/WebhookId'
     - $ref: '#/components/parameters/DeliveryId'
+    - $ref: '#/components/parameters/WebhookId'
     post:
       operationId: Webhooks_RedeliverWebhookDelivery
       tags:
@@ -245,39 +312,1349 @@ paths:
       - API_Key:
         - btcpay.store.webhooks.canmodifywebhooks
         Basic: []
+webhooks:
+  SubscriberCreated:
+    post:
+      operationId: Webhook_SubscriberCreated
+      summary: SubscriberCreated
+      description: A new subscriber has been created
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriberEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  SubscriberCredited:
+    post:
+      operationId: Webhook_SubscriberCredited
+      summary: SubscriberCredited
+      description: A subscriber has been credited
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriberCreditedEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  SubscriberCharged:
+    post:
+      operationId: Webhook_SubscriberCharged
+      summary: SubscriberCharged
+      description: A subscriber has been charged
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriberChargedEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  SubscriberActivated:
+    post:
+      operationId: Webhook_SubscriberActivated
+      summary: SubscriberActivated
+      description: A subscriber has been activated
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriberEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  SubscriberPhaseChanged:
+    post:
+      operationId: Webhook_SubscriberPhaseChanged
+      summary: SubscriberPhaseChanged
+      description: A subscriber's phase has changed
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriberPhaseChangedEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  SubscriberDisabled:
+    post:
+      operationId: Webhook_SubscriberDisabled
+      summary: SubscriberDisabled
+      description: A subscriber has been disabled
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriberDisabledEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PaymentReminder:
+    post:
+      operationId: Webhook_PaymentReminder
+      summary: PaymentReminder
+      description: A subscriber payment reminder has been sent
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriberEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PlanStarted:
+    post:
+      operationId: Webhook_PlanStarted
+      summary: PlanStarted
+      description: A subscriber plan has started
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookPlanStartedEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  SubscriberNeedUpgrade:
+    post:
+      operationId: Webhook_SubscriberNeedUpgrade
+      summary: SubscriberNeedUpgrade
+      description: A subscriber needs to upgrade their plan
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriberEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  InvoiceCreated:
+    post:
+      operationId: Webhook_InvoiceCreated
+      summary: InvoiceCreated
+      description: A new invoice has been created
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInvoiceEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  InvoiceExpired:
+    post:
+      operationId: Webhook_InvoiceExpired
+      summary: InvoiceExpired
+      description: An invoice expired
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInvoiceExpiredEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  InvoiceReceivedPayment:
+    post:
+      operationId: Webhook_InvoiceReceivedPayment
+      summary: InvoiceReceivedPayment
+      description: An invoice received a payment
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInvoiceReceivedPaymentEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  InvoicePaymentSettled:
+    post:
+      operationId: Webhook_InvoicePaymentSettled
+      summary: InvoicePaymentSettled
+      description: A payment relating to an invoice has settled
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInvoicePaymentSettledEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  InvoiceProcessing:
+    post:
+      operationId: Webhook_InvoiceProcessing
+      summary: InvoiceProcessing
+      description: Triggers when an invoice is fully paid, but doesn't have the required amount of confirmations on the blockchain yet according to your store's settings.
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInvoiceProcessingEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  InvoiceInvalid:
+    post:
+      operationId: Webhook_InvoiceInvalid
+      summary: InvoiceInvalid
+      description: An invoice became invalid
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInvoiceInvalidEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  InvoiceSettled:
+    post:
+      operationId: Webhook_InvoiceSettled
+      summary: InvoiceSettled
+      description: Triggers when an invoice is considered settled and the merchant can proceed with the order's delivery. The invoice now has enough confirmations on the blockchain (if paid on-chain) according to your store's configuration.
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInvoiceSettledEvent'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PaymentRequestCreated:
+    post:
+      operationId: Webhook_PaymentRequestCreated
+      summary: PaymentRequestCreated
+      description: A new payment request has been created
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paymentRequestId:
+                  type: string
+                  description: The id of the payment request
+                status:
+                  type: string
+                  enum:
+                  - Completed
+                  - Expired
+                  - Pending
+                  description: The status of the payment request
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PaymentRequestUpdated:
+    post:
+      operationId: Webhook_PaymentRequestUpdated
+      summary: PaymentRequestUpdated
+      description: A payment request has been updated
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paymentRequestId:
+                  type: string
+                  description: The id of the payment request
+                status:
+                  type: string
+                  enum:
+                  - Completed
+                  - Expired
+                  - Pending
+                  description: The status of the payment request
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PaymentRequestArchived:
+    post:
+      operationId: Webhook_PaymentRequestArchved
+      summary: PaymentRequestArchived
+      description: A payment request has been archived
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paymentRequestId:
+                  type: string
+                  description: The id of the payment request
+                status:
+                  type: string
+                  enum:
+                  - Completed
+                  - Expired
+                  - Pending
+                  description: The status of the payment request
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PaymentRequestStatusChanged:
+    post:
+      operationId: Webhook_PaymentRequestStatusChanged
+      summary: PaymentRequestStatusChanged
+      description: A payment request has had its status changed
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paymentRequestId:
+                  type: string
+                  description: The id of the payment request
+                status:
+                  type: string
+                  enum:
+                  - Completed
+                  - Expired
+                  - Pending
+                  description: The status of the payment request
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PayoutCreated:
+    post:
+      operationId: Webhook_PayoutCreated
+      summary: PayoutCreated
+      description: A payout has been created
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payoutId:
+                  type: string
+                  description: The id of the payout
+                pullPaymentId:
+                  type:
+                  - string
+                  - 'null'
+                  description: The id of the pull payment this payout belongs to
+                payoutState:
+                  $ref: '#/components/schemas/PayoutState'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PayoutApproved:
+    post:
+      operationId: Webhook_PayoutApproved
+      summary: PayoutApproved
+      description: A payout has been approved
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payoutId:
+                  type: string
+                  description: The id of the payout
+                pullPaymentId:
+                  type:
+                  - string
+                  - 'null'
+                  description: The id of the pull payment this payout belongs to
+                payoutState:
+                  $ref: '#/components/schemas/PayoutState'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  PayoutUpdated:
+    post:
+      operationId: Webhook_PayoutUpdated
+      summary: PayoutUpdated
+      description: A payout has been updated
+      parameters:
+      - in: header
+        name: BTCPay-Sig
+        required: true
+        description: The HMAC of the body's byte with the secret's of the webhook. `sha256=HMAC256(UTF8(webhook's secret), body)`
+        schema:
+          type: string
+          example: sha256=b438519edde5c8144a4f9bcec51a9d346eca6506887c2ceeae1c0092884a97b9
+      tags:
+      - Webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payoutId:
+                  type: string
+                  description: The id of the payout
+                pullPaymentId:
+                  type:
+                  - string
+                  - 'null'
+                  description: The id of the pull payment this payout belongs to
+                payoutState:
+                  $ref: '#/components/schemas/PayoutState'
+      responses:
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
 components:
-  parameters:
-    WebhookId:
-      name: webhookId
-      in: path
-      required: true
-      description: The webhook id
-      schema:
-        type: string
-    DeliveryId:
-      name: deliveryId
-      in: path
-      required: true
-      description: The id of the delivery
-      schema:
-        type: string
-    StoreId:
-      name: storeId
-      in: path
-      required: true
-      description: The store ID
-      schema:
-        $ref: '#/components/schemas/StoreId'
   schemas:
-    WebhookDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/WebhookData'
+    WebhookInvoiceReceivedPaymentEvent:
+      description: Callback sent if the `type` is `InvoiceReceivedPayment`
+      allOf:
+      - $ref: '#/components/schemas/WebhookInvoiceEvent'
+      - type: object
+        properties:
+          afterExpiration:
+            type: boolean
+            description: Whether this payment has been sent after expiration of the invoice
+          paymentMethodId:
+            allOf:
+            - $ref: '#/components/schemas/PaymentMethodId'
+            type: string
+            description: What payment method was used for this payment
+          payment:
+            description: Details about the payment
+            allOf:
+            - $ref: '#/components/schemas/Payment'
+    WebhookSubscriberDisabledEvent:
+      description: Callback sent if the `type` is `SubscriberDisabled`
+      allOf:
+      - $ref: '#/components/schemas/WebhookSubscriberEvent'
+      - type: object
+        properties:
+          reason:
+            $ref: '#/components/schemas/WebhookSubscriberDisabledReason'
+            description: Whether the subscriber was disabled because of a suspension or expiration.
+            example: Suspension
+          suspensionReason:
+            type:
+            - string
+            - 'null'
+            description: Suspension reason provided by the merchant when `reason` is `Suspension`.
+            example: Spam behavior detected.
+    Payment:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: A unique identifier for this payment
+        receivedDate:
+          description: The date the payment was recorded
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        value:
+          type: string
+          format: decimal
+          description: The value of the payment
+        fee:
+          type: string
+          format: decimal
+          description: The fee paid for the payment
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+        destination:
+          type: string
+          description: The destination the payment was made to
+    WebhookSubscriptionEvent:
+      description: Base data for subscription webhooks.
+      allOf:
+      - $ref: '#/components/schemas/WebhookEvent'
+      - type: object
+        properties:
+          storeId:
+            type: string
+            description: The store id of the subscription's event
+            allOf:
+            - $ref: '#/components/schemas/StoreId'
+    WebhookPlanStartedEvent:
+      description: Callback sent if the `type` is `PlanStarted`
+      allOf:
+      - $ref: '#/components/schemas/WebhookSubscriberEvent'
+      - type: object
+        properties:
+          autoRenew:
+            type: boolean
+            description: Whether the plan got renewed automatically.
+    WebhookSubscriberEvent:
+      description: Callback sent for subscription events tied to a subscriber.
+      allOf:
+      - $ref: '#/components/schemas/WebhookSubscriptionEvent'
+      - type: object
+        properties:
+          subscriber:
+            $ref: '#/components/schemas/SubscriberModel'
+            description: Subscriber associated with the event.
+    WebhookSubscriberCreditedEvent:
+      description: Callback sent if the `type` is `SubscriberCredited`
+      allOf:
+      - $ref: '#/components/schemas/WebhookSubscriberEvent'
+      - type: object
+        properties:
+          total:
+            type: string
+            format: decimal
+            description: Subscriber's total credit after the adjustment.
+            example: '110.00'
+          amount:
+            type: string
+            format: decimal
+            description: Amount credited to the subscriber.
+            example: '10.00'
+          currency:
+            type: string
+            description: Currency of the credit adjustment.
+            example: USD
     UnixTimestamp:
       type: number
       format: int32
       example: 1592312018
       description: A unix timestamp in seconds
+    WebhookData:
+      allOf:
+      - $ref: '#/components/schemas/WebhookDataBase'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The id of the webhook
+    WebhookInvoiceSettledEvent:
+      description: Callback sent if the `type` is `InvoiceSettled`
+      allOf:
+      - $ref: '#/components/schemas/WebhookInvoiceEvent'
+      - type: object
+        properties:
+          manuallyMarked:
+            type: boolean
+            description: Whether the invoice has been manually marked as confirmed
+      - type: object
+        properties:
+          overPaid:
+            type: boolean
+            description: Whether this invoice has received more money than expected
+    CreateOfferingModel:
+      type: object
+      description: New offering data to create.
+      required:
+      - appName
+      properties:
+        appName:
+          type:
+          - string
+          - 'null'
+          description: Display name of the related [application](#tag/Apps).
+          example: Example App
+        successRedirectUrl:
+          type:
+          - string
+          - 'null'
+          description: The default URL to redirect to after a plan checkout is successful.
+          example: https://example.com/success
+        metadata:
+          type: object
+          description: Custom metadata for the offering.
+          additionalProperties: true
+          example:
+            category: saas
+            region: us
+        features:
+          type:
+          - array
+          - 'null'
+          description: List of features included in this offering.
+          items:
+            $ref: '#/components/schemas/FeatureModel'
+    OfferingModel:
+      allOf:
+      - $ref: '#/components/schemas/CreateOfferingModel'
+      - type: object
+        description: Represents an offering available in a store.
+        required:
+        - appName
+        properties:
+          id:
+            $ref: '#/components/schemas/OfferingId'
+          storeId:
+            $ref: '#/components/schemas/StoreId'
+          appId:
+            type: string
+            description: Identifier of the related [application](#tag/Apps).
+            example: app-001
+          plans:
+            type:
+            - array
+            - 'null'
+            description: List of plans available for this offering.
+            items:
+              $ref: '#/components/schemas/OfferingPlanModel'
+    PayoutState:
+      type: string
+      example: AwaitingPayment
+      description: The state of the payout (`AwaitingApproval`, `AwaitingPayment`, `InProgress`, `Completed`, `Cancelled`)
+      x-enumNames:
+      - AwaitingApproval
+      - AwaitingPayment
+      - Cancelled
+      - Completed
+      - InProgress
+      enum:
+      - AwaitingApproval
+      - AwaitingPayment
+      - Cancelled
+      - Completed
+      - InProgress
+    WebhookEvent:
+      type: object
+      additionalProperties: false
+      properties:
+        deliveryId:
+          type: string
+          description: The delivery id of the webhook
+        webhookId:
+          type: string
+          description: The id of the webhook
+        originalDeliveryId:
+          type: string
+          description: If this delivery is a redelivery, the is the delivery id of the original delivery.
+        isRedelivery:
+          type: boolean
+          description: True if this delivery is a redelivery
+        type:
+          type: string
+          description: The type of this event, current available are `InvoiceCreated`, `InvoiceReceivedPayment`, `InvoiceProcessing`, `InvoiceExpired`, `InvoiceSettled`, `InvoiceInvalid`, `InvoicePaymentSettled`, `PaymentRequestCreated`, `PaymentRequestUpdated`, `PaymentRequestArchived`, `PaymentRequestStatusChanged`, `PayoutCreated`, `PayoutApproved`, `PayoutUpdated`, `SubscriberCreated`, `SubscriberCredited`, `SubscriberCharged`, `SubscriberActivated`, `SubscriberPhaseChanged`, `SubscriberDisabled`, `PaymentReminder`, `PlanStarted`, and `SubscriberNeedUpgrade`.
+        timestamp:
+          description: The timestamp when this delivery has been created
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    WebhookInvoiceEvent:
+      allOf:
+      - $ref: '#/components/schemas/WebhookEvent'
+      - type: object
+        properties:
+          storeId:
+            type: string
+            description: The store id of the invoice's event
+            allOf:
+            - $ref: '#/components/schemas/StoreId'
+          invoiceId:
+            type: string
+            description: The invoice id of the invoice's event
+          metadata:
+            type: object
+            description: User-supplied metadata added to the invoice at the time of its creation
+    ValidationProblemDetails:
+      type: array
+      description: An array of validation errors of the request
+      items:
+        type: object
+        description: A specific validation error on a json property
+        properties:
+          path:
+            type: string
+            description: The json path of the property which failed validation
+          message:
+            type: string
+            description: User friendly error message about the validation
+    WebhookInvoiceProcessingEvent:
+      description: Callback sent if the `type` is `InvoiceProcessing`
+      allOf:
+      - $ref: '#/components/schemas/WebhookInvoiceEvent'
+      - type: object
+        properties:
+          overPaid:
+            type: boolean
+            description: Whether this invoice has received more money than expected
+    SubscriberModel:
+      type: object
+      description: Represents a subscriber of an offering.
+      properties:
+        created:
+          type: integer
+          format: unix-time
+          description: Timestamp when the subscription was created.
+          example: 1710598234
+        customer:
+          $ref: '#/components/schemas/CustomerModel'
+          description: Customer associated with the subscription.
+        offering:
+          $ref: '#/components/schemas/OfferingModel'
+          description: Offering associated with the subscription.
+        plan:
+          $ref: '#/components/schemas/OfferingPlanModel'
+          description: Current active plan of the subscriber.
+        periodEnd:
+          type:
+          - integer
+          - 'null'
+          format: unix-time
+          description: End of the current billing period.
+          example: 1713200000
+        trialEnd:
+          type:
+          - integer
+          - 'null'
+          format: unix-time
+          description: End of the subscriber's trial period.
+          example: 1711000000
+        gracePeriodEnd:
+          type:
+          - integer
+          - 'null'
+          format: unix-time
+          description: End of the grace period.
+          example: 1711500000
+        isActive:
+          type: boolean
+          description: Indicates if the subscription is active. (Phase is not `Expired`, and not suspended)
+          example: true
+        isSuspended:
+          type: boolean
+          description: Indicates if the subscription is suspended.
+          example: false
+        suspensionReason:
+          type:
+          - string
+          - 'null'
+          description: Reason for suspension, if applicable.
+          example: Suspicious activity detected
+        autoRenew:
+          type: boolean
+          description: Indicates if the subscription renews automatically.
+          example: true
+        metadata:
+          type: object
+          description: Custom metadata for the subscription.
+          additionalProperties: true
+          example:
+            segment: beta
+        processingInvoiceId:
+          type:
+          - string
+          - 'null'
+          description: ID of the invoice being processed.
+          example: inv_88443
+        nextPlan:
+          $ref: '#/components/schemas/OfferingPlanModel'
+          description: Plan scheduled for next billing cycle.
+        scheduledPlan:
+          $ref: '#/components/schemas/OfferingPlanModel'
+          description: Plan scheduled to activate at the end of the current billing period.
+        scheduledPlanActivatesAt:
+          type:
+          - integer
+          - 'null'
+          format: unix-time
+          description: Timestamp when the scheduled plan change will activate.
+          example: 1713200000
+        phase:
+          $ref: '#/components/schemas/SubscriptionPhase'
+    OfferingPlanModel:
+      type: object
+      description: Represents a pricing plan for an offering.
+      properties:
+        id:
+          $ref: '#/components/schemas/PlanId'
+        name:
+          type: string
+          description: Display name of the plan.
+          example: Starter Plan
+        status:
+          type: string
+          description: Current status of the plan.
+          enum:
+          - Active
+          - Retired
+          example: Active
+        price:
+          type: string
+          description: Price of the plan as a numeric string.
+          pattern: ^[0-9]+(\.[0-9]+)?$
+          example: '19.99'
+        currency:
+          type: string
+          description: Currency code for the price.
+          example: USD
+        recurringType:
+          type: string
+          description: Recurring interval for billing.
+          enum:
+          - Lifetime
+          - Monthly
+          - Quarterly
+          - Yearly
+          example: Monthly
+        gracePeriodDays:
+          type: integer
+          description: Number of grace period days after expiry.
+          example: 7
+        trialDays:
+          type: integer
+          description: Number of trial days before billing.
+          example: 14
+        description:
+          type: string
+          description: Short description of the plan.
+          example: Standard monthly subscription.
+        memberCount:
+          type: integer
+          description: Maximum number of members allowed under this plan.
+          example: 10
+        optimisticActivation:
+          type: boolean
+          description: Indicates if the plan is activated before payment confirmation.
+          example: true
+        features:
+          type: array
+          description: List of feature identifiers included in this plan.
+          items:
+            type: string
+          example:
+          - feature-analytics
+        renewable:
+          type: boolean
+          description: Indicates if the plan can be renewed.
+          example: true
+        metadata:
+          type: object
+          description: Custom metadata for the plan.
+          additionalProperties: true
+          example:
+            tier: standard
+    WebhookInvoicePaymentSettledEvent:
+      description: Callback sent if the `type` is `InvoicePaymentSettled`
+      allOf:
+      - $ref: '#/components/schemas/WebhookInvoiceReceivedPaymentEvent'
+    CustomerModel:
+      type: object
+      description: Represents a customer associated with a store.
+      properties:
+        storeId:
+          $ref: '#/components/schemas/StoreId'
+        id:
+          $ref: '#/components/schemas/CustomerId'
+        externalId:
+          type: string
+          description: External system identifier for the customer.
+          example: ext_4455
+        identities:
+          type: object
+          description: Identity attributes for matching and lookup (e.g., email, username).
+          additionalProperties: true
+          example:
+            Email: subscriber@example.com
+        metadata:
+          type: object
+          description: Custom metadata associated with the customer.
+          additionalProperties: true
+          example:
+            segment: premium
+            locale: en-US
+    SubscriptionPhase:
+      type: string
+      description: Lifecycle phase of the subscription.
+      enum:
+      - Expired
+      - Grace
+      - Normal
+      - Trial
+      example: Normal
+    WebhookDataUpdate:
+      allOf:
+      - $ref: '#/components/schemas/WebhookDataBase'
+      - type: object
+        properties:
+          secret:
+            type:
+            - string
+            - 'null'
+            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will not be changed.
+    WebhookDataCreate:
+      allOf:
+      - $ref: '#/components/schemas/WebhookDataBase'
+      - type: object
+        properties:
+          secret:
+            type:
+            - string
+            - 'null'
+            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will be auto-generated.
+    StoreId:
+      type: string
+      description: Store ID of the item
+      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
+    WebhookInvoiceInvalidEvent:
+      description: Callback sent if the `type` is `InvoiceInvalid`
+      allOf:
+      - $ref: '#/components/schemas/WebhookInvoiceEvent'
+      - type: object
+        properties:
+          manuallyMarked:
+            type: boolean
+            description: Whether the invoice has been manually marked as confirmed. If false, this invoice has received payments which could not confirm in time.
+    WebhookSubscriberDisabledReason:
+      type: string
+      description: Reason why the subscriber was disabled.
+      enum:
+      - Expired
+      - Suspension
+      example: Suspension
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
+    WebhookDeliveryData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the delivery
+        timestamp:
+          type: number
+          description: Timestamp of when the delivery should have been broadcasted
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        deliveryTime:
+          type: number
+          description: Timestamp of when the delivery has actually been broadcasted. A delay with `timestamp` means your service either failed to process earlier deliveries or is taking too long to respond.
+          allOf:
+          - $ref: '#/components/schemas/UnixTimestamp'
+        httpCode:
+          type:
+          - number
+          - 'null'
+          description: HTTP code received by the remote service, if any.
+        errorMessage:
+          type: string
+          description: User friendly error message, if any.
+        status:
+          type: string
+          description: 'Whether the delivery failed or not (possible values are: `Failed`, `HttpError`, `HttpSuccess`)'
+    WebhookInvoiceExpiredEvent:
+      description: Callback sent if the `type` is `InvoiceExpired`
+      allOf:
+      - $ref: '#/components/schemas/WebhookInvoiceEvent'
+      - type: object
+        properties:
+          partiallyPaid:
+            type: boolean
+            description: Whether the invoice received some payments before being expired.
+    OfferingId:
+      type: string
+      description: Offering's ID
+      example: offering_DKWhZGB6PZsgTcPwpf
+    PlanId:
+      type: string
+      description: Plan's ID
+      example: plan_KZMVyuQp3v2vFWnEUM
+    WebhookDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebhookData'
+    WebhookSubscriberChargedEvent:
+      description: Callback sent if the `type` is `SubscriberCharged`
+      allOf:
+      - $ref: '#/components/schemas/WebhookSubscriberEvent'
+      - type: object
+        properties:
+          total:
+            type: string
+            format: decimal
+            description: Subscriber's total credit after the charge.
+            example: '90.00'
+          amount:
+            type: string
+            format: decimal
+            description: Amount charged from the subscriber.
+            example: '10.00'
+          currency:
+            type: string
+            description: Currency of the charge.
+            example: USD
+    PaymentStatus:
+      type: string
+      description: The status of the payment
+      x-enumNames:
+      - Invalid
+      - Processing
+      - Settled
+      enum:
+      - Invalid
+      - Processing
+      - Settled
+    WebhookSubscriberPhaseChangedEvent:
+      description: Callback sent if the `type` is `SubscriberPhaseChanged`
+      allOf:
+      - $ref: '#/components/schemas/WebhookSubscriberEvent'
+      - type: object
+        properties:
+          previousPhase:
+            allOf:
+            - $ref: '#/components/schemas/SubscriptionPhase'
+            description: Previous subscription phase.
+            example: Trial
+          currentPhase:
+            allOf:
+            - $ref: '#/components/schemas/SubscriptionPhase'
+            description: Current subscription phase.
+            example: Normal
+    WebhookDataCreateResult:
+      allOf:
+      - $ref: '#/components/schemas/WebhookData'
+      - type: object
+        properties:
+          secret:
+            type:
+            - string
+            - 'null'
+            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). Value of the auto-generated or custom secret.
+    CustomerId:
+      type: string
+      description: Unique identifier of the customer.
+      example: cust_GUGnpx3311fkaqGk7f
+    FeatureModel:
+      type: object
+      description: Represents a feature that can be included in an offering or plan.
+      required:
+      - description
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the feature.
+          example: feature-analytics
+        description:
+          type: string
+          description: Short description of the feature.
+          example: Access to analytics dashboard.
+    WebhookDeliveryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebhookDeliveryData'
     WebhookDataBase:
       type: object
       additionalProperties: false
@@ -306,102 +1683,38 @@ components:
               items:
                 type: string
               description: 'If `everything` is false, the specific events that the endpoint is interested in. Current events are: `InvoiceCreated`, `InvoiceReceivedPayment`, `InvoiceProcessing`, `InvoiceExpired`, `InvoiceSettled`, `InvoiceInvalid`, `InvoicePaymentSettled`, `PaymentRequestCreated`, `PaymentRequestUpdated`, `PaymentRequestArchived`, `PaymentRequestStatusChanged`, `PayoutCreated`, `PayoutApproved`, `PayoutUpdated`, `SubscriberCreated`, `SubscriberCredited`, `SubscriberCharged`, `SubscriberActivated`, `SubscriberPhaseChanged`, `SubscriberDisabled`, `PaymentReminder`, `PlanStarted`, `SubscriberNeedUpgrade`.'
-    WebhookDataUpdate:
-      allOf:
-      - $ref: '#/components/schemas/WebhookDataBase'
-      - type: object
-        properties:
-          secret:
-            type:
-            - string
-            - 'null'
-            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will not be changed.
-    WebhookDataCreate:
-      allOf:
-      - $ref: '#/components/schemas/WebhookDataBase'
-      - type: object
-        properties:
-          secret:
-            type:
-            - string
-            - 'null'
-            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). If left out, null, or empty, the secret will be auto-generated.
-    WebhookDeliveryList:
-      type: array
-      items:
-        $ref: '#/components/schemas/WebhookDeliveryData'
-    WebhookData:
-      allOf:
-      - type: object
-        properties:
-          id:
-            type: string
-            description: The id of the webhook
-      - $ref: '#/components/schemas/WebhookDataBase'
-    WebhookDeliveryData:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The id of the delivery
-        timestamp:
-          type: number
-          description: Timestamp of when the delivery should have been broadcasted
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        deliveryTime:
-          type: number
-          description: Timestamp of when the delivery has actually been broadcasted. A delay with `timestamp` means your service either failed to process earlier deliveries or is taking too long to respond.
-          allOf:
-          - $ref: '#/components/schemas/UnixTimestamp'
-        httpCode:
-          type:
-          - number
-          - 'null'
-          description: HTTP code received by the remote service, if any.
-        errorMessage:
-          type: string
-          description: User friendly error message, if any.
-        status:
-          type: string
-          description: 'Whether the delivery failed or not (possible values are: `Failed`, `HttpError`, `HttpSuccess`)'
-    ValidationProblemDetails:
-      type: array
-      description: An array of validation errors of the request
-      items:
-        type: object
-        description: A specific validation error on a json property
-        properties:
-          path:
-            type: string
-            description: The json path of the property which failed validation
-          message:
-            type: string
-            description: User friendly error message about the validation
+  parameters:
     StoreId:
-      type: string
-      description: Store ID of the item
-      example: 9CiNzKoANXxmk5ayZngSXrHTiVvvgCrwrpFQd4m2K776
-    WebhookDataCreateResult:
-      allOf:
-      - $ref: '#/components/schemas/WebhookData'
-      - type: object
-        properties:
-          secret:
-            type:
-            - string
-            - 'null'
-            description: Must be used by the callback receiver to ensure the delivery comes from BTCPay Server. BTCPay Server includes the `BTCPay-Sig` HTTP header, whose format is `sha256=HMAC256(UTF8(webhook's secret), body)`. The pattern to authenticate the webhook is similar to [how to secure webhooks in Github](https://docs.github.com/webhooks/securing/). Value of the auto-generated or custom secret.
+      name: storeId
+      in: path
+      required: true
+      description: The store ID
+      schema:
+        $ref: '#/components/schemas/StoreId'
+    DeliveryId:
+      name: deliveryId
+      in: path
+      required: true
+      description: The id of the delivery
+      schema:
+        type: string
+    WebhookId:
+      name: webhookId
+      in: path
+      required: true
+      description: The webhook id
+      schema:
+        type: string
   securitySchemes:
     API_Key:
       type: apiKey
-      in: header
+      description: "BTCPay Server supports authenticating and authorizing users through an API Key that is generated by them. Send the API Key as a header value to Authorization with the format: `token {token}`. For a smoother experience, you can generate a url that redirects users to an API key creation screen.\n\n The following permissions are available to the context of the user creating the API Key:\n\n* `btcpay.impersonation.canimpersonate`: Can impersonate users\n* `btcpay.user.candeleteuser`: Delete user\n* `btcpay.user.canmanagenotificationsforuser`: Manage your notifications\n* `btcpay.user.canmodifyprofile`: Manage your profile\n* `btcpay.user.canviewnotificationsforuser`: View your notifications\n* `btcpay.user.canviewprofile`: View your profile\n* `unrestricted`: Unrestricted access\n\nThe following permissions are available if the user is an administrator:\n\n* `btcpay.server.cancreatelightninginvoiceinternalnode`: Create invoices with internal lightning node\n* `btcpay.server.cancreateuser`: Create new users\n* `btcpay.server.canmanageusers`: Manage users\n* `btcpay.server.canmodifyserversettings`: Manage your server\n* `btcpay.server.canuseinternallightningnode`: Use the internal lightning node\n* `btcpay.server.canviewlightninginvoiceinternalnode`: View invoices from internal lightning node\n* `btcpay.server.canviewusers`: View users\n\nThe following permissions applies to all stores of the user, you can limit to a specific store with the following format: `btcpay.store.cancreateinvoice:6HSHAEU4iYWtjxtyRs9KyPjM9GAQp8kw2T9VWbGG1FnZ`:\n\n* `btcpay.store.canarchivepullpayments`: Archive your pull payments\n* `btcpay.store.canbroadcasttransactions`: Broadcast wallet transactions\n* `btcpay.store.cancanceltransactions`: Cancel wallet transactions\n* `btcpay.store.cancreateinvoice`: Create an invoice\n* `btcpay.store.cancreatelightninginvoice`: Create invoices from the lightning nodes associated with your stores\n* `btcpay.store.cancreatenonapprovedpullpayments`: Create non-approved pull payments\n* `btcpay.store.cancreatepullpayments`: Create pull payments\n* `btcpay.store.cancreatetransactions`: Create wallet transactions\n* `btcpay.store.cancreditsubscribers`: Credit your subscribers\n* `btcpay.store.canmanageinvoicestatus`: Manage invoice status\n* `btcpay.store.canmanagelegacyaccesstokens`: Manage legacy access tokens\n* `btcpay.store.canmanagepayouts`: Manage payouts\n* `btcpay.store.canmanagepullpayments`: Manage your pull payments\n* `btcpay.store.canmanagesubscribers`: Manage your subscribers\n* `btcpay.store.canmanagewallets`: Manage wallets\n* `btcpay.store.canmanagewalletsettings`: Manage wallet settings\n* `btcpay.store.canmanagewallettransactions`: Manage wallet transactions\n* `btcpay.store.canmodifyinvoices`: Modify invoices\n* `btcpay.store.canmodifyofferings`: Modify your offerings\n* `btcpay.store.canmodifypaymentrequests`: Modify your payment requests\n* `btcpay.store.canmodifystoresettings`: Modify your stores\n* `btcpay.store.cansendstoreemails`: Send store emails\n* `btcpay.store.cansigntransactions`: Sign wallet transactions\n* `btcpay.store.canuselightningnode`: Use the lightning nodes associated with your stores\n* `btcpay.store.canviewinvoices`: View invoices\n* `btcpay.store.canviewlightninginvoice`: View the lightning invoices associated with your stores\n* `btcpay.store.canviewofferings`: View your offerings\n* `btcpay.store.canviewpaymentrequests`: View your payment requests\n* `btcpay.store.canviewpayouts`: View payouts\n* `btcpay.store.canviewpullpayments`: View your pull payments\n* `btcpay.store.canviewreports`: View your reports\n* `btcpay.store.canviewstoresettings`: View your stores\n* `btcpay.store.canviewwallet`: View wallets\n* `btcpay.store.webhooks.canmodifywebhooks`: Modify stores webhooks\n\nNote that API Keys only limits permission of a user and can never expand it. If an API Key has the permission `btcpay.server.canmodifyserversettings` but that the user account creating this API Key is not administrator, the API Key will not be able to modify the server settings.\nSome permissions may include other permissions, see [this operation](#operation/permissionsMetadata).\n"
       name: Authorization
-      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+      in: header
     Basic:
       type: http
-      scheme: basic
-      description: HTTP Basic Authentication with email and password
+      description: BTCPay Server supports authenticating and authorizing users through the Basic HTTP authentication scheme during the first five minutes after account creation or when the user explicitly enables it. Send the user and password encoded in base64 with the format `Basic {base64(username:password)}`. Using this authentication method implicitly provides you with the `unrestricted` permission
+      scheme: Basic
 externalDocs:
-  description: Check out our examples on how to use the API
-  url: https://docs.btcpayserver.org/Development/GreenFieldExample/
+  description: BTCPay Greenfield Plugins API
+  url: https://docs.btcpayserver.org/API/Greenfield/Plugins/

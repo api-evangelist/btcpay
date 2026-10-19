@@ -1,0 +1,189 @@
+openapi: 3.2.0
+info:
+  title: BTCPay Greenfield Server Info API
+  version: v1
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Server Info
+  description: Server Info operations
+paths:
+  /api/v1/server/info:
+    get:
+      tags:
+      - Server Info
+      summary: Get server info
+      description: Information about the server, chains and sync states
+      operationId: ServerInfo_GetServerInfo
+      responses:
+        '200':
+          description: Server information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationServerInfoData'
+        '401':
+          description: Missing authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      security:
+      - API_Key: []
+        Basic: []
+  /api/v1/server/roles:
+    get:
+      tags:
+      - Server Info
+      summary: Get store's roles
+      description: View information about the store's roles at the server's scope
+      operationId: Server_GetStoreRoles
+      responses:
+        '200':
+          description: The user roles available at the server's scope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleData'
+        '403':
+          description: If you are authenticated but forbidden to get the store's roles
+        '404':
+          description: Store not found
+      security:
+      - API_Key:
+        - btcpay.server.canmodifyserversettings
+        Basic: []
+components:
+  schemas:
+    ApplicationServerInfoData:
+      type: object
+      properties:
+        version:
+          type: string
+          description: BTCPay Server version
+        onion:
+          type: string
+          description: The Tor hostname
+        supportedPaymentMethods:
+          type: array
+          description: The payment methods this server supports
+          items:
+            type: string
+        fullySynched:
+          type: boolean
+          description: True if the instance is fully synchronized, according to NBXplorer
+        syncStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationServerInfoSyncStatusData'
+    RoleData:
+      type: object
+      properties:
+        id:
+          description: The role's Id (Same as role if the role is created at server level, if the role is created at the store level the format is `STOREID::ROLE`)
+          type: string
+          example: Owner
+        role:
+          description: The role's name
+          type: string
+          example: Owner
+        permissions:
+          description: The permissions attached to this role
+          type: array
+          items:
+            type: string
+          example:
+          - btcpay.store.canmodifystoresettings
+        isServerRole:
+          description: Whether this role is at the scope of the store or scope of the server
+          type: boolean
+          example: true
+    ApplicationServerInfoNodeStatusData:
+      type:
+      - object
+      - 'null'
+      description: Detailed sync status of the internal full node
+      properties:
+        headers:
+          type: integer
+          description: The height of the chain of header of the internal full node
+        blocks:
+          type: integer
+          description: The height of the latest validated block of the internal full node
+        verificationProgress:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          description: The current synchronization progress
+    PaymentMethodId:
+      type: string
+      description: "Payment method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning   \n- `\"BTC-LNURL\"`: LNURL"
+      example: BTC-CHAIN
+    ApplicationServerInfoSyncStatusData:
+      type: object
+      description: Detailed sync status
+      properties:
+        paymentMethodId:
+          $ref: '#/components/schemas/PaymentMethodId'
+        nodeInformation:
+          $ref: '#/components/schemas/ApplicationServerInfoNodeStatusData'
+        chainHeight:
+          type: integer
+          description: The height of the chain of header of the internal indexer
+        syncHeight:
+          type:
+          - number
+          - 'null'
+          format: integer
+          description: The height of the latest indexed block of the internal indexer
+        available:
+          type: boolean
+          description: True if the full node and the indexer are fully synchronized
+    ProblemDetails:
+      type: object
+      description: Description of an error happening during processing of the request
+      properties:
+        code:
+          type: string
+          description: An error code describing the error
+        message:
+          type: string
+          description: User friendly error message about the error
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/

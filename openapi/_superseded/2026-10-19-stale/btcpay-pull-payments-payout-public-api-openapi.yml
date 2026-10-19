@@ -1,0 +1,180 @@
+openapi: 3.2.0
+info:
+  title: BTCPay Greenfield Pull payments payout (Public) API
+  version: v1
+  description: '# Introduction
+
+
+    The BTCPay Server Greenfield API is a REST API.'
+  contact:
+    name: BTCPay Server
+    url: https://btcpayserver.org
+  license:
+    name: MIT
+    url: https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+servers:
+- url: https://{btcpay-host}
+  description: Your BTCPay Server instance
+  variables:
+    btcpay-host:
+      default: mainnet.demo.btcpayserver.org
+      description: The hostname of your BTCPay Server instance
+security:
+- API_Key: []
+  Basic: []
+tags:
+- name: Pull payments payout (Public)
+  description: Pull payments payout (Public) operations
+paths:
+  /api/v1/pull-payments/{pullPaymentId}/payouts/{payoutId}:
+    parameters:
+    - name: pullPaymentId
+      in: path
+      required: true
+      description: The ID of the pull payment
+      schema:
+        type: string
+    - name: payoutId
+      in: path
+      required: true
+      description: The ID of the pull payment payout
+      schema:
+        type: string
+    get:
+      summary: Get Payout
+      operationId: PullPayments_GetPayout
+      description: Get payout
+      responses:
+        '200':
+          description: A specific payout of a pull payment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutData'
+        '404':
+          description: Pull payment payout not found
+      tags:
+      - Pull payments payout (Public)
+      security: []
+components:
+  schemas:
+    PayoutData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the payout
+        revision:
+          type: integer
+          description: The revision number of the payout. This revision number is incremented when the payout amount or destination is modified before the approval.
+        pullPaymentId:
+          type: string
+          description: The id of the pull payment this payout belongs to
+        date:
+          type: string
+          description: The creation date of the payout as a unix timestamp
+        destination:
+          type: string
+          example: 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+          description: The destination of the payout (can be an address or a BIP21 url)
+        originalCurrency:
+          type: string
+          example: USD
+          description: The currency before being converted into the payout's currency
+        originalAmount:
+          type: string
+          format: decimal
+          example: '10399.18'
+          description: The amount in originalCurrency before being converted into the payout's currency
+        payoutCurrency:
+          type: string
+          example: BTC
+          description: The currency of the payout after conversion.
+        payoutAmount:
+          type:
+          - string
+          - 'null'
+          format: decimal
+          example: '1.12300000'
+          description: The amount in payoutCurrency after conversion. (This property is set after the payout has been Approved)
+        payoutMethodId:
+          $ref: '#/components/schemas/PayoutMethodId'
+        state:
+          $ref: '#/components/schemas/PayoutState'
+        paymentProof:
+          $ref: '#/components/schemas/PayoutPaymentProof'
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional information around the payout that can be supplied. The mentioned properties are all optional and you can introduce any json format you wish.
+          example:
+            source: Payout created through the API
+          anyOf:
+          - title: General information
+            properties:
+              source:
+                type:
+                - string
+                - 'null'
+                description: The source of the payout creation. Shown on the payout list page.
+              sourceLink:
+                type:
+                - string
+                - 'null'
+                format: url
+                description: A link to the source of the payout creation. Shown on the payout list page.
+    PayoutPaymentProof:
+      type: object
+      additionalProperties: true
+      description: Additional information around how the payout is being or has been paid out. The mentioned properties are all optional (except `proofType`) and you can introduce any json format you wish.
+      properties:
+        proofType:
+          type: string
+          description: The type of payment proof it is.
+      anyOf:
+      - properties:
+          link:
+            type:
+            - string
+            - 'null'
+            format: url
+            description: A link to the proof of payout payment.
+      - properties:
+          id:
+            type:
+            - string
+            - 'null'
+            description: A unique identifier to the proof of payout payment.
+    PayoutMethodId:
+      type: string
+      description: "Payout method IDs. Available payment method IDs for Bitcoin are:  \n- `\"BTC-CHAIN\"`: Onchain   \n-`\"BTC-LN\"`: Lightning"
+      example: BTC-LN
+    PayoutState:
+      type: string
+      example: AwaitingPayment
+      description: The state of the payout (`AwaitingApproval`, `AwaitingPayment`, `InProgress`, `Completed`, `Cancelled`)
+      x-enumNames:
+      - AwaitingApproval
+      - AwaitingPayment
+      - InProgress
+      - Completed
+      - Cancelled
+      enum:
+      - AwaitingApproval
+      - AwaitingPayment
+      - InProgress
+      - Completed
+      - Cancelled
+  securitySchemes:
+    API_Key:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'BTCPay Server API key. Format: ''token {apiKey}'''
+    Basic:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication with email and password
+externalDocs:
+  description: Check out our examples on how to use the API
+  url: https://docs.btcpayserver.org/Development/GreenFieldExample/
