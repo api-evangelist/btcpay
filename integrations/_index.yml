@@ -75,3 +75,16 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: btcpay-digital-ocean-own
+  label: Digital Ocean (own)
+  partner: digital-ocean
+  partner_name: Digital Ocean (own)
+  category: Business Apps
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.digitalocean.com/apps/btcpay-server
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
