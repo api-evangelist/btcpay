@@ -64,62 +64,176 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-BTCPay Server is a self-hosted, open-source Bitcoin and cryptocurrency payment processor. It provides merchants and developers a censorship-resistant, zero-fee, privacy-preserving alternative to hosted payment processors. The platform supports on-chain Bitcoin payments as well as Lightning Network transactions.
+BTCPay Server is a self-hosted, open-source Bitcoin and cryptocurrency payment processor with a comprehensive REST API (Greenfield API v1) for managing stores, invoices, wallets, Lightning Network nodes, payment requests, pull payments, webhooks, users, and server configuration. It operates with zero fees, no third-party dependency, and is released under the MIT license.
 
-## API
+**Areas:** Bitcoin · Cryptocurrency · Payments · Lightning Network · Open Source · Self-Hosted
 
-BTCPay Server exposes the **Greenfield API v1**, a full-featured REST API served at `/api/v1` on any BTCPay Server instance. The API is documented with an OpenAPI 3.0 specification available at `/swagger/v1/swagger.json` on each deployment.
+## BTCPay Server on APIs.io
 
-### Key Resource Areas
+Everything profiled for BTCPay Server is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/btcpay/](https://apis.io/providers/btcpay/)** — or go straight to one of the APIs or properties below.
 
-| Controller | Description |
+### APIs (31)
+
+- [BTCPay Server API Keys API](https://apis.io/apis/btcpay/btcpay-api-keys-api/) — API Key operations
+- [BTCPay Server Apps API](https://apis.io/apis/btcpay/btcpay-apps-api/) — App operations
+- [BTCPay Server Authorization API](https://apis.io/apis/btcpay/btcpay-authorization-api/) — Authorization operations
+- [BTCPay Server Crowdfund API](https://apis.io/apis/btcpay/btcpay-crowdfund-api/) — Crowdfund operations
+- [BTCPay Server Files API](https://apis.io/apis/btcpay/btcpay-files-api/) — File operations
+- [BTCPay Server Health API](https://apis.io/apis/btcpay/btcpay-health-api/) — Health operations
+- [BTCPay Server Invoices API](https://apis.io/apis/btcpay/btcpay-invoices-api/) — Invoice operations
+- [BTCPay Server Lightning address API](https://apis.io/apis/btcpay/btcpay-lightning-address-api/) — Lightning address configuration
+- [BTCPay Server Lightning (Internal Node) API](https://apis.io/apis/btcpay/btcpay-lightning-internal-node-api/) — Lightning (Internal Node) operations
+- [BTCPay Server Lightning (Store) API](https://apis.io/apis/btcpay/btcpay-lightning-store-api/) — Lightning (Store) operations
+- [BTCPay Server Miscelleneous API](https://apis.io/apis/btcpay/btcpay-miscelleneous-api/) — Miscelleneous operations
+- [BTCPay Server Notifications (Current User) API](https://apis.io/apis/btcpay/btcpay-notifications-current-user-api/) — Notifications operations
+- [BTCPay Server Payment Requests API](https://apis.io/apis/btcpay/btcpay-payment-requests-api/) — Payment Requests operations
+- [BTCPay Server Payout Processors API](https://apis.io/apis/btcpay/btcpay-payout-processors-api/) — Payout Processors operations
+- [BTCPay Server Point of Sale API](https://apis.io/apis/btcpay/btcpay-point-of-sale-api/) — Point of Sale operations
+- [BTCPay Server Pull payments (Management) API](https://apis.io/apis/btcpay/btcpay-pull-payments-management-api/) — Pull payments (Management) operations
+- [BTCPay Server Pull payments payout (Public) API](https://apis.io/apis/btcpay/btcpay-pull-payments-payout-public-api/) — Pull payments payout (Public) operations
+- [BTCPay Server Pull payments (Public) API](https://apis.io/apis/btcpay/btcpay-pull-payments-public-api/) — Pull payments (Public) operations
+- [BTCPay Server ServerEmail API](https://apis.io/apis/btcpay/btcpay-serveremail-api/) — Server Email Settings operations
+- [BTCPay Server Store (Payment Methods) API](https://apis.io/apis/btcpay/btcpay-store-payment-methods-api/) — Store Payment Methods operations
+- [BTCPay Server Store Wallet (On Chain) API](https://apis.io/apis/btcpay/btcpay-store-wallet-on-chain-api/) — Store Wallet (On Chain) operations
+- [BTCPay Server Stores API](https://apis.io/apis/btcpay/btcpay-stores-api/) — Store operations
+- [BTCPay Server Stores (Email) API](https://apis.io/apis/btcpay/btcpay-stores-email-api/) — Store Emails operations
+- [BTCPay Server Stores (Payout Processors) API](https://apis.io/apis/btcpay/btcpay-stores-payout-processors-api/) — Stores (Payout Processors) operations
+- [BTCPay Server Stores (Payouts) API](https://apis.io/apis/btcpay/btcpay-stores-payouts-api/) — Store pull payment payout operations
+- [BTCPay Server Stores (Rates) API](https://apis.io/apis/btcpay/btcpay-stores-rates-api/) — Stores rate information and configuration
+- [BTCPay Server Stores (Users) API](https://apis.io/apis/btcpay/btcpay-stores-users-api/) — Store Users operations
+- [BTCPay Server Subscriptions API](https://apis.io/apis/btcpay/btcpay-subscriptions-api/) — Subscription operations
+- [BTCPay Server Users API](https://apis.io/apis/btcpay/btcpay-users-api/) — User operations
+- [BTCPay Server Webhooks API](https://apis.io/apis/btcpay/btcpay-webhooks-api/) — Webhook operations
+- [BTCPay Server Server Info API](https://apis.io/apis/btcpay/btcpay-server-info-api/) — Server Info operations
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Btcpay Agentic Access](https://apis.io/agentic-access/btcpay/btcpay-agentic-access/)
+
+#### Collections (31)
+
+Postman and Open Collection request collections.
+
+- [BTCPay Greenfield API Keys API](https://apis.io/collections/btcpay/open-btcpay-api-keys-api/)
+- [BTCPay Greenfield API Keys Apps API](https://apis.io/collections/btcpay/open-btcpay-apps-api/)
+- [BTCPay Greenfield API Keys Authorization API](https://apis.io/collections/btcpay/open-btcpay-authorization-api/)
+- [BTCPay Greenfield API Keys Crowdfund API](https://apis.io/collections/btcpay/open-btcpay-crowdfund-api/)
+- [BTCPay Greenfield API Keys Files API](https://apis.io/collections/btcpay/open-btcpay-files-api/)
+- [BTCPay Greenfield API Keys Health API](https://apis.io/collections/btcpay/open-btcpay-health-api/)
+- [BTCPay Greenfield API Keys Invoices API](https://apis.io/collections/btcpay/open-btcpay-invoices-api/)
+- [BTCPay Greenfield API Keys Lightning address API](https://apis.io/collections/btcpay/open-btcpay-lightning-address-api/)
+- [BTCPay Greenfield API Keys Lightning (Internal Node) API](https://apis.io/collections/btcpay/open-btcpay-lightning-internal-node-api/)
+- [BTCPay Greenfield API Keys Lightning (Store) API](https://apis.io/collections/btcpay/open-btcpay-lightning-store-api/)
+- [BTCPay Greenfield API Keys Miscelleneous API](https://apis.io/collections/btcpay/open-btcpay-miscelleneous-api/)
+- [BTCPay Greenfield API Keys Notifications (Current User) API](https://apis.io/collections/btcpay/open-btcpay-notifications-current-user-api/)
+- [BTCPay Greenfield API Keys Payment Requests API](https://apis.io/collections/btcpay/open-btcpay-payment-requests-api/)
+- [BTCPay Greenfield API Keys Payout Processors API](https://apis.io/collections/btcpay/open-btcpay-payout-processors-api/)
+- [BTCPay Greenfield API Keys Point of Sale API](https://apis.io/collections/btcpay/open-btcpay-point-of-sale-api/)
+- [BTCPay Greenfield API Keys Pull payments (Management) API](https://apis.io/collections/btcpay/open-btcpay-pull-payments-management-api/)
+- [BTCPay Greenfield API Keys Pull payments payout (Public) API](https://apis.io/collections/btcpay/open-btcpay-pull-payments-payout-public-api/)
+- [BTCPay Greenfield API Keys Pull payments (Public) API](https://apis.io/collections/btcpay/open-btcpay-pull-payments-public-api/)
+- [BTCPay Greenfield API Keys ServerEmail API](https://apis.io/collections/btcpay/open-btcpay-serveremail-api/)
+- [BTCPay Greenfield API Keys ServerInfo API](https://apis.io/collections/btcpay/open-btcpay-serverinfo-api/)
+- [BTCPay Greenfield API Keys Store (Payment Methods) API](https://apis.io/collections/btcpay/open-btcpay-store-payment-methods-api/)
+- [BTCPay Greenfield API Keys Store Wallet (On Chain) API](https://apis.io/collections/btcpay/open-btcpay-store-wallet-on-chain-api/)
+- [BTCPay Greenfield API Keys Stores API](https://apis.io/collections/btcpay/open-btcpay-stores-api/)
+- [BTCPay Greenfield API Keys Stores (Email) API](https://apis.io/collections/btcpay/open-btcpay-stores-email-api/)
+- [BTCPay Greenfield API Keys Stores (Payout Processors) API](https://apis.io/collections/btcpay/open-btcpay-stores-payout-processors-api/)
+- …and 6 more published on APIs.io
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Btcpay Authentication](https://apis.io/security/btcpay/btcpay-authentication/)
+- [Btcpay Domain Security](https://apis.io/security/btcpay/btcpay-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Plans](https://apis.io/plans/btcpay/plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rate Limits](https://apis.io/rate-limits/btcpay/rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Finops](https://apis.io/finops/btcpay/finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://btcpayserver.org)
+- [Documentation](https://docs.btcpayserver.org)
+- [Support](https://docs.btcpayserver.org/Support/)
+- [Changelog](https://github.com/btcpayserver/btcpayserver/releases)
+- [Blog](https://blog.btcpayserver.org)
+- [Privacy policy](https://btcpayserver.org/privacy-policy/)
+- [GitHub](https://github.com/btcpayserver)
+- [Status](https://status.btcpayserver.org)
+
+## API Evangelist rating
+
+**Kin Score 35.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
 |---|---|
-| Stores | Create and manage payment stores |
-| Invoices | Create, query, update, and archive invoices |
-| Wallets | On-chain Bitcoin wallet operations |
-| Lightning Network | Node management, channels, payments, and addresses |
-| Payment Requests | Reusable payment request links |
-| Pull Payments | Batch payouts and refunds |
-| Payouts | Manage and approve payout batches |
-| Payout Processors | Automated on-chain and Lightning payout processing |
-| Webhooks | Event-driven HTTP callbacks |
-| Notifications | In-app notification management |
-| Users | User account creation and management |
-| API Keys | Programmatic API key management |
-| Server Info | Server health, version, and configuration |
-| Apps | Point-of-sale, crowdfunding, and payment button apps |
-| Files | File upload and management |
-| Reports | Payment and sales reporting |
-| Rates | Exchange rate queries and configuration |
-| Email | Store and server-level email configuration |
-| Roles | Server and store role/permission management |
+| Discoverability | 66.1 |
+| Contract quality | 49.6 |
+| Contract governance | 13.6 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 5.3 |
 
-### Authentication
+**Agent readiness 29.8** — agent-ready
 
-- **API Keys** (recommended): Generated via `Account > Manage account > API keys` or programmatically via the Create API Key endpoint. Supports granular permissions (e.g., `btcpay.store.cancreateinvoice`, `btcpay.store.canviewinvoices`).
-- **HTTP Basic Auth**: Username and password; suitable for server-level operations.
-- **Interactive Authorization Flow**: OAuth-like redirect flow allowing third-party applications to request scoped API keys from users.
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-### Base URL
+**Regulatory alignment 15.2** — Payments
 
-```
-https://{your-btcpay-host}/api/v1
-```
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/btcpay/](https://apis.io/providers/btcpay/).
 
-## Pricing
+## How this profile is made
 
-BTCPay Server is **free and open-source** (MIT license). There are no transaction fees, no API call fees, and no licensing costs. Infrastructure costs (hosting a VPS) are the only operational expense for self-hosted deployments.
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-## Resources
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for BTCPay Server: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-- **Website**: https://btcpayserver.org
-- **Documentation**: https://docs.btcpayserver.org
-- **API Reference**: https://docs.btcpayserver.org/API/Greenfield/v1/
-- **GitHub**: https://github.com/btcpayserver/btcpayserver
-- **Community Chat**: https://chat.btcpayserver.org/
-- **Releases / Changelog**: https://github.com/btcpayserver/btcpayserver/releases
-- **Third-Party Hosts**: https://btcpayserver.org/third-party-hosts/
+## Open an issue
 
-## License
-
-MIT — see https://github.com/btcpayserver/btcpayserver/blob/master/LICENSE
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/btcpay/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
